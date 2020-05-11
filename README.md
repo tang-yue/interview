@@ -1,17 +1,35 @@
 前端面试题 供自己复习用
+<!-- 面试 8 家 -->
 
 面试总结
-
 阿里巴巴 --- 某CBU部门 面试复盘
-
-
 阿里旅行 面试复盘
-
-
 高思教育集团   面试复盘
 
+跟谁学 ---- 面试复盘
+1、浏览器缓存，有哪些字段
 
-字节跳动  ---- 商品部门 面试复盘
+2、 同步异步函数， 然后看执行结果
+
+3、 手写一个js 快排
+
+4、 说下vue里 data 为什么是对象
+
+5、解释下 prototype 和__proto__  的区别是什么
+
+
+网易 ---- 音乐事业部
+
+1、浏览器缓存， 浏览器是如何判断一个文件，从本地拿，还是从服务器请求。
+
+2、移动端 1px 问题
+
+3、服务器端是如何种植cookie值的
+
+4、高阶函数
+
+
+字节跳动  ---- 广告业务部门 面试复盘
 
 1、react 16 新增了哪些特性，某个属性的，应用场景， 有什么好处
 
@@ -78,7 +96,46 @@ VIPKID 面试复盘
 #### 小程序的渲染机制是什么？
 
 
+## vue 篇
 
+### vue 双向绑定原理
+
+[vue 双向绑定原理1](https://www.zhihu.com/search?type=content&q=vue%20%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A%E5%8E%9F%E7%90%86)
+[vue 双向绑定原理2](https://zhuanlan.zhihu.com/p/78276361)
+
+vue.js 采用数据劫持结合发布-订阅模式，通过Object.defineProperty来劫持各个属性的 setter,getter, 在数据变动时发布消息给订阅者，触发响应的监听回调。
+
+Observer 监听器：用来监听属性的变化通知订阅者
+Watcher 订阅者：收到属性的变化，然后更新视图
+Compile 解析器：解析指令，初始化模版，绑定订阅者
+
+
+为什么在 Vue 3.0 采用了 Proxy, 抛弃了 Object.defineProperty ?
+
+优势1: Proxy 可以直接监听对象，而definePropery只能监听属性，只有通过递归调用才能监听对象。
+优势2: Proxy 可以直接监听数组变化，而defineProperty 只提供了八种方法检测数组的变化。
+优势3: Proxy 有13中拦截方式，多于defineProperty
+优势4: Proxy 返回一个新对象，可以只操作新对象，而defineProperty只能遍历对象属性直接修改
+
+
+[手写双向数据绑定](https://juejin.im/post/5acc17cb51882555745a03f8)
+
+### vue 3.0 有哪些新特性
+
+1、 压缩包体积更小
+
+2、 Object.defineProperty -> Proxy
+
+Object.defineProperty 直接操作对象的属性， proxy 操作变为 对整个对象的操作。颗粒度变大。
+
+3、Virtual DOM 重构
+
+4、 更好的支持TypeScript
+
+[vue 3.0 新特性](https://www.zhihu.com/search?type=content&q=vue3.0%20%E6%96%B0%E5%A2%9E%E4%BA%86%E5%93%AA%E4%BA%9B%E7%89%B9%E6%80%A7)
+
+
+### vue 
 
 ### 1、vue 的生命周期
 
@@ -545,6 +602,7 @@ const vNode = vdom('div', null,
 ```
 
 [前端路由简介以及vue-router 实现原理](https://zhuanlan.zhihu.com/p/37730038)
+[前端路由参考文章](https://github.com/webfansplz/article/issues/1)
 
 hash 模式
 
@@ -567,31 +625,9 @@ history 模式
 HTML5 多两个 API pushState 和 replaceState ,,, 改变url 地址 且不会发送请求 popstate
 
 
-vue 3.0 有哪些新特性
-
-[vue 3.0 新特性](https://www.zhihu.com/search?type=content&q=vue3.0%20%E6%96%B0%E5%A2%9E%E4%BA%86%E5%93%AA%E4%BA%9B%E7%89%B9%E6%80%A7)
-
-1、 压缩包体积更小
-
-2、 Object.defineProperty -> Proxy
-
-Object.defineProperty 直接操作对象的属性， proxy 操作变为 对整个对象的操作。颗粒度变大。
-
-3、Virtual DOM 重构
-
-4、 更好的支持TypeScript
 
 
 
-[vue 双向绑定原理](https://www.zhihu.com/search?type=content&q=vue%20%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A%E5%8E%9F%E7%90%86)
-
-数据劫持结合发布订阅模式来实现双向绑定的。
-
-数据劫持 通过 Object.defineProperty 方法
-
-Observer 监听器：用来监听属性的变化通知订阅者
-Watcher 订阅者：收到属性的变化，然后更新视图
-Compile 解析器：解析指令，初始化模版，绑定订阅者
 
 
 
