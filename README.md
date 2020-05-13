@@ -28,6 +28,8 @@
 
 4、高阶函数
 
+5、1px 问题，移除微信字体影响的问题。
+
 
 字节跳动  ---- 广告业务部门 面试复盘
 
@@ -623,6 +625,23 @@ window.addEventListener('hashchange', matchAndUpdate)
 history 模式
 
 HTML5 多两个 API pushState 和 replaceState ,,, 改变url 地址 且不会发送请求 popstate
+
+
+首页白屏优化实践。
+
+ssr ------- 服务端渲染
+
+预渲染 
+
+骨架图
+
+骨架屏
+
+浏览器缓存
+
+文章参考
+https://segmentfault.com/a/1190000008377508
+
 
 
 
