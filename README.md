@@ -25,7 +25,7 @@ document.documentElement.style.fontSize = document.documentElement.clientWidth/1
 ```
 
 最为关键的地方：那么如何把UE 图中获取的像素单位的值，转换为以rem 为单位的值呢？
-公式 ** 元素宽度/UE图宽度 x 100rem **
+公式 **元素宽度/UE图宽度 x 100rem**
 
 [参考rem 布局原理](https://zhuanlan.zhihu.com/p/30413803)
 
