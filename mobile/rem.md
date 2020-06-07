@@ -124,6 +124,7 @@ module.exports = {
 #### 5、疑问
 
 1、移动端的时候，都是哪些 属性 不转rem ？
+
 2、那么都转rem了，移动端 1px 问题 是不是就没有了？
 
 [参考rem 布局原理](https://zhuanlan.zhihu.com/p/30413803)
