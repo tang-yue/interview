@@ -1,2 +1,3 @@
 思维导图
-![webpack](./webpack.png)
+
+![webpack](https://tang-yue.github.io/fe-interview/webpack/webpack.png)
