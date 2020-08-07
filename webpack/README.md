@@ -23,11 +23,31 @@
 - 服务端和客户端使用websocket实现长链接
 - webpack 监听 源文件的变化，即当开发者保存文件时，触发webpack 的重新编译。
 - webpack 监听源文件的变化，即当开发者保存文件时触发 webpack 的重新编译
-      + 每次编译都会生成hash值， 已改动模块的json文件，已改动模块代码的js文件
-      + 编译完成后通过socket 向客户端推送当前编译的 hash 戳
+      - 每次编译都会生成hash值， 已改动模块的json文件，已改动模块代码的js文件
+        + 编译完成后通过socket 向客户端推送当前编译的 hash 戳
 - 客户的 websocket 监听到又文件改动推送过来的hash戳，会和上一次对比
       + 一致则走缓存
       + 不一致则通过ajax 和 jsonp 向服务端获取最新资源
 - 使用 内存 文件系统去替换有修改的内容实现局部刷新
 
 [参考文章](https://juejin.im/post/6844903933157048333)
+
+### 长效缓存
+
+目标是 仅当该文件内容变动才改变该文件名字的hash值
+
+1、提取一些不常更新的第三库。 设置 optimization 的 splitChunks的 cacheGroups。splitChunks 提取模块， 
+cacheGroups。
+
+2、配置推荐 chunkHash，只有相关代码变化了，才打包出新的hash 文件
+
+3、按需加载js；code split
+
+[参考文章](https://zhuanlan.zhihu.com/p/85997402)
+
+### Three Sharking 原理
+
+删除 js 中 用不上的死代码
+
+
+
