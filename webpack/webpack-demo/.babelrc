@@ -1,0 +1,9 @@
+{
+  "presets": [
+    ["@babel/preset-env", 
+      {
+        "modules": false   // 为了 mode production 时候， 使用 tree-shaking
+      }
+    ]
+  ]
+}
