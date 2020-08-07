@@ -7,7 +7,7 @@
 html5 
 ## webpack
 
-[深入浅出 Webpack 书籍笔记](./webpack/booknote.md)
+[深入浅出 Webpack 书籍笔记及webpck-demo](./webpack)
 
 工作饱和了 ～～～～～
 

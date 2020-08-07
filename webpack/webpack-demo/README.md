@@ -70,3 +70,6 @@ module: {
 }
 ```
 
+[该demo参考文章1](https://zhuanlan.zhihu.com/p/99959392)
+[该demo参考文章2](https://github.com/LinDaiDai/webpack-example)
+
