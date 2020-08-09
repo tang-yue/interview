@@ -17,7 +17,7 @@ html5
 
 [输入URL到页面的呈现](https://juejin.im/post/6844904021308735502)
 
-[promise 必问](https://juejin.im/post/6844904077537574919#heading-16)
+[有关promise](./promise)
 
 ## coding
 
