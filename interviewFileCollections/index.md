@@ -12,6 +12,10 @@ webpack 类 相关文章
 
 [博客](https://github.com/careteenL/blog)
 
+promise 相关文章
+
+[promise 45道](https://juejin.im/post/6844904077537574919w)
+
 
 
 
