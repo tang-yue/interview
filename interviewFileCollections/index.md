@@ -16,6 +16,8 @@ promise 相关文章
 
 [promise 45道](https://juejin.im/post/6844904077537574919w)
 
+[头条面经](https://juejin.im/post/6844904088337907720)
+
 
 
 

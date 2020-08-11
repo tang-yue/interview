@@ -40,12 +40,20 @@
 
 12:00 到 12:25  写 半小时 promise 和喝水
 
+8月11日
 
+今日要完成的任务
 
+输入url 到页面发生了什么
 
+复习浏览器工作原理
 
+2:00  到  2:30  复习了 event loop
 
+4:20 分    egg   4:28 分  看 了 egg  看到了 5:00
 
+部署后端应用  -----
 
-  
-       
+前端应用
+
+https://github.com/jiangshanmeta/leetcode-notebook

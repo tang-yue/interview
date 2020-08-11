@@ -43,14 +43,19 @@ cacheGroups。
 
 2、配置推荐 chunkHash，只有相关代码变化了，才打包出新的hash 文件
 
-3、按需加载js；code split
+3、按需加载js；code split；
 
 [参考文章](https://zhuanlan.zhihu.com/p/85997402)
 
-#### Three Sharking 原理
+#### Tree Shaking 原理
 
-删除 js 中 用不上的死代码
+删除 js 中 用不上的死代码，找出使用的代码。
 
+基于 ES6 的静态引用，tree shaking 通过扫描 ES6 的 export，找出被 import 的内容并添加到最终代码中。
+
+webpack 的实现是把所有 import 标记为有使用/无使用两种，在后续压缩时进行区别处理，把没用的都删除。
+
+[参考文章](https://juejin.im/post/6844903774192926728)
 
 #### babel 原理
 
