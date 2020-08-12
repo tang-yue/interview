@@ -57,3 +57,22 @@
 前端应用
 
 https://github.com/jiangshanmeta/leetcode-notebook
+
+8月12日
+
+今天要学习的内容
+
+浏览器工作原理    必须要学习完
+
+遗留的  promise 相关问题
+
+http/https      vue问题   react     
+
+加油 
+
+
+奥利给
+
+
+8月13日
+

@@ -13,9 +13,10 @@ html5
 
 ## web
 
-[浏览器缓存](./baseNote/cache.md)
+[浏览器工作原理相关](./browser-works/browser.md)
 
-[输入URL到页面的呈现](https://juejin.im/post/6844904021308735502)
+
+## javascript
 
 [有关promise](./promise)
 
