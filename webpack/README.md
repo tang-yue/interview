@@ -1,6 +1,6 @@
 该书籍 思维导图
 
-![webpack](https://tang-yue.github.io/fe-interview/webpack/webpack.png)
+![webpack](https://tang-yue.github.io/interview/webpack/webpack.png)
 
 
 常见的相关面试题

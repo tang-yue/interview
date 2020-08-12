@@ -101,7 +101,7 @@ js 是 单线程的， 有了Event Loop 的加持， JS 才能非阻塞地运行
 
 流程图如下：
 
-![event-loop](https://tang-yue.github.io/fe-interview/promise/event-loop.jpg)
+![event-loop](https://tang-yue.github.io/interview/promise/event-loop.jpg)
 
 
 总结：
@@ -190,7 +190,7 @@ Etag 和 Last-Modified 相似，但是 ETag 相对 Last-Modified 也有其优势
 
 流程图如下：
 
-![browser-cache](https://tang-yue.github.io/fe-interview/browser-works/browser-cache.png)
+![browser-cache](https://tang-yue.github.io/interview/browser-works/browser-cache.png)
 
 
 
