@@ -66,7 +66,7 @@ https://github.com/jiangshanmeta/leetcode-notebook
 
 遗留的  promise 相关问题
 
-http/https      vue问题   react     
+http/https vue问题   react     
 
 加油 
 
