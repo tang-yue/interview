@@ -6,6 +6,7 @@ promise
 宏任务包括： script、setTimeout、setInterval、setImmediate、I/O、UI rendering （浏览器独有）、 requestAnimationFrame （浏览器独有）
 
 
+
 promise 相关笔记
 
 
