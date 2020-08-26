@@ -17,6 +17,7 @@ HTTP 请求分为三个部分： TCP 三次握手、http 请求响应信息、�
 + 断开连接：TCP 四次握手
 
 [参考文章](https://zhuanlan.zhihu.com/p/57895541)
+[参考文章](https://github.com/impeiran/Blog/issues/3)
 
 
 ### TCP 三次握手

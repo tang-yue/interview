@@ -16,6 +16,7 @@
 4、 说下vue里 data 为什么是对象
 
 5、解释下 prototype 和__proto__  的区别是什么
+
 [javascript中的异步](https://zephyrrro.github.io/2020/05/10/JavaScript%E7%9A%84%E5%BC%82%E6%AD%A5%E5%A4%84%E7%90%86/)
 
 
@@ -464,7 +465,6 @@ document.domain
 
 4、反向代理
 
-
 5、location.hash、  window.name、 postMessage、 document.doman
 
 JSONP 和 CORS 的对比
@@ -567,18 +567,25 @@ var Ajax={
 区别： 函数节流不管事件触发有多频繁，都会保证在规定时间内一定会执行一次真正的事件处理函数，而函数防抖只是在最后一次事件后才触发一次函数。 比如在页面的无限加载场景下，我们需要用户在滚动页面时，每隔一段时间发一次 Ajax 请求，而不是在用户停下滚动页面操作时才去请求数据。这样的场景，就适合用节流技术来实现。
 
 
+
 ```
+// 防抖函数
+// 疯狂点击按钮，每次点击的时间间隔都小于规定时间，那么相应的方法不会执行
+
 function debounce (fn, wait=300) {
     var timer
     return function () {
-        if (timer) {
-            clearTimeOut(timer)
-        }
-        timer = setTimeout({
-            fn.apply(this, arguments) 
-        }, wait)
+      if (timer) {
+        clearTimeOut(timer)
+      }
+      timer = setTimeout(() => {
+        fn.apply(this, arguments) 
+      }, wait)
     }
 }
+
+// 节流函数
+// 疯狂点击按钮，规定的时间间隔只触发一次相应的方法
 
 function throttle (fn, wait=300) {
     var prev = +new Date()

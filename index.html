@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .height {
+      height: 2000px;
+    }
+  </style>
+  <script>
+    window.onload = function() {
+      console.log('哈哈哈哈哈哈')
+      function throttle (fn, wait=300) {
+        var prev = +new Date()
+        return function () {
+          var now = +new Date() // 执行时的时间
+          if (now - prev >= 300) {
+              fn.apply(this, arguments)
+              prev = now
+          }
+        }
+      }
+
+      let num = 1;
+
+      const test = (arg) => {
+        console.log(arg);
+      }
+      
+      const fun = throttle(test, 20000)
+      // console.log(fun, 'fun fun fun', fun([40]))
+      window.onscroll = fun([20])
+    }
+  </script>
+</head>
+<body>
+  <div class="height"></div>
+</body>
+</html>

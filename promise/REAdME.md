@@ -20,7 +20,15 @@ promise 相关笔记
 ####  宏任务有哪些，微任务有哪些
 
 
-#### 简单 Promise
+#### Promise 实现
+
+[手动 实现 promise](./api-promise.js)
+
+[参考文章](https://juejin.im/post/6850037281206566919)
+
+[手动 实现 promise.all](./api-promise-all.js)
+
+[参考文章](https://juejin.im/post/6844904182017687559)
 
 
 

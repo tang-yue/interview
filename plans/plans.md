@@ -68,11 +68,20 @@ https://github.com/jiangshanmeta/leetcode-notebook
 
 http/https vue问题   react     
 
-加油 
-
+加油
 
 奥利给
 
+8月26日
 
-8月13日
+10:00 ～ 10:41 分 手写防抖函数和节流函数 以及 不用 math 求平方根。
+
+2:00 开始工作   2点30分的时候，默述所有曾经总结过的问题。
+
+
+
+
+
+
+
 

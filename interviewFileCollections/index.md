@@ -18,6 +18,8 @@ promise 相关文章
 
 [头条面经](https://juejin.im/post/6844904088337907720)
 
+[vue官方文档](https://cn.vuejs.org/v2/api/#directives)
+
 
 
 
