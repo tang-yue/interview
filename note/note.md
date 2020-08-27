@@ -94,6 +94,14 @@ VIPKID 面试复盘
 
 [深入JavaScript继承原理](https://juejin.im/post/5a96d78ef265da4e9311b4d8)
 
+三、组合式继承
+
+四、原型继承
+
+五、寄生式继承
+
+六、寄生组合式继承
+
 #### react 是如何解决问题虚拟DOM更新频繁，影响性能的。
 
 

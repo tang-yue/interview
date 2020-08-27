@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://m.jb51.net/skin/mobile2017/css/common.css">
+
+</head>
+<body>
+  <div id="example-root">测试DOMContentLoaded 与css</div>
+</body>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function (event) {
+    console.log("初始化 DOM 加载并解析")
+  })
+
+  window.addEventListener("load", function (event) {
+    console.log("window 所有资源加载完成")
+  })
+
+
+  document.onreadystatechange = function () {
+    console.log(document.readyState)
+    if(document.readyState === 'complete') {
+      console.log('初始化DOM，加载解析完成')
+    }
+  }
+
+  window.addEventListener("beforeunload", function (event) {
+    console.log('即将关闭')
+    event.returnValue = '\0/'
+  })
+
+  window.addEventListener('unload', function(event) {
+    console.log('即将关闭1')
+  })
+</script>
+</html>
+
+<!-- 
+  执行顺序如下
+  interactive
+  初始化 DOM 加载并解析
+  complete
+  初始化 DOM 加载并完成
+  window 所有资源加载完成
+  // 点击关闭按钮
+  即将关闭
+  即将关闭1
+ -->

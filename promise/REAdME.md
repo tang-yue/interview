@@ -6,8 +6,12 @@ promise
 宏任务包括： script、setTimeout、setInterval、setImmediate、I/O、UI rendering （浏览器独有）、 requestAnimationFrame （浏览器独有）
 
 
+但是requestAnimationFrame究竟是微任务还是宏任务，还有待调查，告诉浏览器---你希望执行一个动画，并且要求浏览器在下次重绘之前调用指定的回调函数更新动画。该方法需要传入一个回调函数（即动画函数）作为参数，该
+回调函数会在浏览器下一次重绘之前执行。
+
 
 promise 相关笔记
+
 
 
 

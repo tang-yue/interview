@@ -4,6 +4,8 @@
 
 仅为自己复习使用，不对外提供。
 
+我在想过去，为什么那么忙，现在还是什么都不会。
+
 
 ## 移动端
 
@@ -12,6 +14,10 @@
 ## HTML
 
 html5 
+
+## CSS
+
+[css 相关](./css)
 
 ## webpack
 
@@ -34,4 +40,11 @@ html5
 1、防抖和节流函数
 
 2、手写 new
+
+
+下面写几篇想记录的文章。
+
+## 文章
+
+[谈谈DOMContentLoaded、readystatechange、load、ready]
 
