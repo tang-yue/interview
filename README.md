@@ -46,5 +46,5 @@ html5
 
 ## 文章
 
-[谈谈DOMContentLoaded、readystatechange、load、ready]
+[谈谈DOMContentLoaded、readystatechange、load、ready](./browser-works/eventOrder.md)
 
