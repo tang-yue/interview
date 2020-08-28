@@ -1,0 +1,8 @@
+### React Fiber 原理以及为什么componentWillRecievedProps会废弃
+
+异步渲染UI的解决方案。让js可以中止渲染从而去做更高优先级的事情，比如IO操作，从而让用户更不容易感觉到卡顿，提升用户体验，借助requestIdleCallback接口，将一个大的渲染计算工作切分成小块（每个组件都是一个小块），
+每次利用帧的间隙执行几个小块任务，分多帧完成一次大的渲染任务，从而杜绝卡顿的发生。
+
+componentWillReceiveProps 可以进行异步setState的操作，不利于频繁setState的合并处理。而其替代方法 getDerivedStateFromProps由于是静态方法，无法操作到实例状态，只能通过返回新状态对实例状态进行修改，
+因此杜绝了异步setState的问题，杜绝了频繁异步setState到导致的性能问题。
+

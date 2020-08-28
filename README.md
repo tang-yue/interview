@@ -4,8 +4,7 @@
 
 仅为自己复习使用，不对外提供。
 
-我在想过去，为什么那么忙，现在还是什么都不会。
-
+我在想过去，为什么那么忙，现在还是什么都不会，一定是我什么地方做错了。
 
 ## 移动端
 
@@ -29,7 +28,7 @@ html5
 
 ## 计算机网络
 
-[图解http书籍笔记]()
+[网络相关](./network)
 
 ## javascript
 
@@ -41,10 +40,4 @@ html5
 
 2、手写 new
 
-
-下面写几篇想记录的文章。
-
-## 文章
-
-[谈谈DOMContentLoaded、readystatechange、load、ready](./browser-works/eventOrder.md)
 

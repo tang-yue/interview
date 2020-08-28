@@ -1,0 +1,16 @@
+{
+  "name": "koa-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "tangyue",
+  "license": "ISC",
+  "dependencies": {
+    "http": "0.0.1-security",
+    "koa": "^2.13.0"
+  }
+}

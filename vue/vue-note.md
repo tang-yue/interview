@@ -70,7 +70,7 @@ html 最外层  font-size: 100px
 }
 ```
 
-vdom 函数创建Virtual DOM
+4、vdom 函数创建简易Virtual DOM
 
 ```js
 function vdom(type, props, ...children) {
@@ -92,3 +92,25 @@ const vNode = vdom('div', null,
 将上面代码都复制到控制台，console.log(vNode) 即可看到 JavaScript 对象表示的Virtual DOM 树。
 
 [手写一个简易的Virtual DOM](https://zhuanlan.zhihu.com/p/68491595)
+
+
+5、依赖收集相关
+
+Data、Observer、Dep 和 Watcher 之间的关系，如下图
+
+[流程图](https://tang-yue.github.io/interview/vue/yilaishouji.png)
+
+
+Data 通过 Observer 转换成了 getter/setter 的形式来追踪变化。
+
+当外界通过 Watcher 读取数据时，会触发getter 从而将Watcher 添加到依赖中。
+
+当数据发生了变化时，会触发setter，从而向 Dep 中依赖 (Watcher) 发送通知。
+
+Watcher 接受到通知后，会向外界发送通知，变化通知到外界后可能会触发视图更新，从而可能触发用户的某个回调函数等。
+
+
+
+
+
+
