@@ -11,27 +11,18 @@
   </style>
   <script>
     window.onload = function() {
-      console.log('哈哈哈哈哈哈')
-      function throttle (fn, wait=300) {
-        var prev = +new Date()
-        return function () {
-          var now = +new Date() // 执行时的时间
-          if (now - prev >= 300) {
-              fn.apply(this, arguments)
-              prev = now
+       // 1 1 2 3 5
+       f(1) = 1
+       f(2) = f(1)
+       f(3) = f(1) + f(2)
+       f(4) = f(3) + f(2)
+       
+       function func(n) {
+          if(n  <= 2) {
+            return 1
           }
-        }
-      }
-
-      let num = 1;
-
-      const test = (arg) => {
-        console.log(arg);
-      }
-      
-      const fun = throttle(test, 20000)
-      // console.log(fun, 'fun fun fun', fun([40]))
-      window.onscroll = fun([20])
+          return func(n-1) + func(n-2)
+       }
     }
   </script>
 </head>
