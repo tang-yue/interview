@@ -288,7 +288,6 @@ Etag 和 Last-Modified 相似，但是 ETag 相对 Last-Modified 也有其优势
 
 ![browser-cache](https://tang-yue.github.io/interview/browser-works/browser-cache.png)
 
-
 [参考文章](https://juejin.im/post/6844903672556552205)
 
 

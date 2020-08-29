@@ -28,7 +28,7 @@ html5
 
 ## 计算机网络
 
-[网络相关](./network)
+[网络相关](./network)
 
 ## javascript
 
