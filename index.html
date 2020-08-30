@@ -9,21 +9,37 @@
       height: 2000px;
     }
   </style>
+  <script src="./promise/api-promise-all.js"></script>
   <script>
-    window.onload = function() {
-       // 1 1 2 3 5
-       f(1) = 1
-       f(2) = f(1)
-       f(3) = f(1) + f(2)
-       f(4) = f(3) + f(2)
-       
-       function func(n) {
-          if(n  <= 2) {
-            return 1
-          }
-          return func(n-1) + func(n-2)
-       }
-    }
+     Function.prototype.myCall = function(context = window, ...args) {
+  if(this === Function.prototype) {
+    return undefined;
+  }
+  context = context || window;
+  const fn = Symbol();
+  context[fn] = this
+  const result = context[fn](...args);
+  delete context[fn];
+  return result;
+}
+// 测试
+var value = 2;
+var obj = {
+  value: 1
+}
+
+function bar(name, age) {
+  console.log(this.value);
+  return {
+    value: this.value,
+    name: name,
+    age: age
+  }
+}
+
+bar.myCall(null);   // 2
+
+console.log(bar.myCall(obj, 'name', 18))
   </script>
 </head>
 <body>
