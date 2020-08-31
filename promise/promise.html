@@ -442,7 +442,7 @@
     // Promise.reject('err!!!')
     //   .then((res) => {
     //     console.log('success', res)
-    //   }, (err) => {
+    //   }, (err) => {  // 第二个参数相当于是catch
     //     console.log('error', err)   // 这里并没有返回 Promise.reject 所以 下面的catch 不会执行
     //   }).catch(err => {
     //     console.log('catch', err)
@@ -476,6 +476,7 @@
     // 'fail2' 'error!!!'
 
     // 执行结果
+    // 分析 报错直接被捕获到了
     // fail2 Error: error!!!
     //             at success (promise.html:468)
 
@@ -691,7 +692,7 @@
 
     // 执行结果
     // 'async1 start'
-    // 'async1'
+    // 'async2'
     // 'start'
     // 'async1 end'
 
@@ -792,7 +793,6 @@
   // console.log('srcipt start')
   // async1().then(res => console.log(res))
   // console.log('srcipt end')
-
 
   // 我的答案    错误答案          // 误以为 await 后面的promise 是有返回值，会往下执行的
   // 'script start'
@@ -1145,9 +1145,6 @@
   // 8.5 封装一个异步加载图片的方法
   
   // 8.6 限制异步操作的并发个数并尽可能快的完成全部
-
-
-
 
   </script>
 </body>

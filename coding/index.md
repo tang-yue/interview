@@ -351,3 +351,12 @@ bar.myCall(nlll);   // 2
 console.log(bar.myCall(obj, 'name', 18))
 ```
 [参考](https://github.com/ConardLi/awesome-coding-js/blob/master/JavaScript/%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0call%E3%80%81apply%E3%80%81bind.md)
+
+
+### 手写一个new
+
+```js
+function new() {
+  // new
+}
+```
