@@ -7,3 +7,11 @@
 
 
 标星号的需要重做一遍
+
+想要抛出一个错误的话，可以用下面两的任意一种：
+
+return Promise.reject(new Error('error!!!!'))
+
+// or
+
+throw new Error('error!!!')

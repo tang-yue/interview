@@ -58,12 +58,28 @@
 vdom 函数创建简易Virtual DOM
 
 ```js
+// 第一种方式
 function vdom(type, props, ...children) {
   return {
     type,
     props,
     children
   }
+}
+```
+
+```js
+// 第二种方式
+class VNode {
+  constructor(tagName, props, children) {
+    this.tagName = tagName;
+    this.props = props;
+    this.children = children;
+  }
+}
+
+const h = function (t, p, c) {
+  return new VNode(t, p, c)
 }
 ```
 
@@ -192,6 +208,90 @@ path 给真实的DOM打补丁。
 
 
 更详细的更新操作可以参考  深入浅出 vue.js  书籍
+
+### 剖析前端路由管理
+
+[参考文章](https://juejin.im/post/6844903906024095751)
+
+[vue routre 原理](https://www.zhihu.com/search?type=content&q=vue%20router%20%E5%8E%9F%E7%90%86)
+
+先定义一个父类 BaseRouter，用于实现Hash 路由和 History 路由的一些共有方法；
+
+```js
+export class BaseRouter {
+  // list 表示路由表
+  constructor(list) {
+    this.list = list;
+  }
+  // 页面渲染函数
+  render(state) {
+    let ele = this.list.find(ele => ele.path === state);
+    ele = ele ? ele : this.list.find(ele => ele.path === '*')  // 比如 404 页面
+    ELEMENT.innerText = ele.component;
+  }
+}
+```
+
+```js
+export class HashRouter extends BaseRouter {
+  constructor(list) {
+    super(list);
+    this.handler();
+    // 监听 hashchange 事件
+    window.addEventListener('hashchange', e => {
+      this.handler()
+    })
+  }
+
+   // hash 改变时，重新渲染页面
+   handler() {
+     this.render((this.getState()))
+   }
+   // 获取 hash 值
+   getState() {
+     const hash = window.location.hash;
+     return hash ? hash.slice(1) : '/'
+   }
+
+   // push 新的页面
+   push(path) {
+    window.location.hash = path;
+   }
+   // 获取默认页 url
+   getUrl(path) {
+     const href = window.location.href;
+     const i = href.indexOf('#');
+     const base = i >= 0 ? href.slice(0, i) : href;
+     return base + '#' + path;
+   }
+
+   // 替换页面
+   replace(path) {
+     window.location.replace(this.getUrl(path))
+   }
+
+   // 前进 or 后退浏览历史
+   go(n) {
+     window.history.go(n)
+   }
+}
+```
+
+### Vue 的父组件和子组件生命周期钩子执行顺序
+
+原则： 父组件的mounted在子组件mouted之后。
+
+父beforeCreate -> 父 created -> 父 beforeMount -> 子 beforeCreate -> 子created -> 子 beforeMount -> 子 mounted -> 父 mounted
+
+子组件更新过程
+
+[参考文章](https://www.cnblogs.com/wtsx-2019/p/12411987.html)
+
+### vue router 解读
+
+[参考文章](https://github.com/careteenL/vue-router)
+
+
 
 
 

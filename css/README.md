@@ -1,4 +1,103 @@
+
 ### 相关面试题
+
+### 垂直居中：
+
+1、PC端有兼容性要求，宽高固定
+
+```js
+<div class="parent">
+  <div class="child">
+
+  </div>
+</div>
+<style>
+.parent {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  border: 1px solid #eee;
+}
+.child {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+  border: 1px solid #aaa;
+  width: 100px;
+  height: 100px;
+}
+</style>
+```
+
+2、pc 端无兼容性要求，宽高不固定，推荐css-table
+```js
+<div class="parent">
+  <div class="child">
+
+  </div>
+</div>
+<style>
+.parent {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #aaa;
+    width: 200px;
+    height: 200px;
+  }
+.child {
+  display: inline-block;
+  border: 1px solid #aaa;
+}
+</style>
+```
+
+3、pc端无兼容性要求，宽高不固定，推荐flex, （这个比较好）
+```js
+<div class="parent">
+  <div class="child">
+  </div>
+</div>
+<style>
+.parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #aaa;
+    width: 200px;
+    height: 200px;
+}
+.child {
+    
+}
+</style>
+```
+
+4、pc端无兼容性要求，宽高不固定，用绝对定位怎么实现。
+
+```js
+<style>
+.wp {
+  position: relative;
+  border: 1px solid red;
+  width: 300px;
+  height: 300px;
+}
+
+.box {
+  position: absolute;
+  top: 50%;
+  left: 50%;  
+  background: green;
+  transform: translate(-50%, -50%)  
+}
+</style>
+<div class="wp">
+    <div class="box">123123</div>
+</div>
+```
 
 #### 手写flex常用的属性，并且讲出作用
 

@@ -307,6 +307,25 @@ const bubbleSort1 = (arr) => {
 
 [参见](../promise/api-promise-all.js)
 
+```js
+function all(list) {
+  return new Promise((resolve, reject) => {
+    let resValues = [];
+    let counts = 0;
+    for(let i = 0; i < list.length; i++) {
+      list[i].then(res => {
+          counts++;
+          resValues[i] = res;
+          if (counts === list.length) {
+              resolve(resValues)
+          }
+      }, err => {
+          reject(err)
+      })
+    }
+  })
+}
+```
 
 ### 手写 call, bind, apply
 
@@ -325,7 +344,7 @@ Function.prototype.myCall = function(context = window, ...args) {
     return undefined;
   }
   context = context || window;
-  const fn = Symbol(); // 纯属为了定义fn
+  const fn = Symbol();   // 纯属为了定义fn
   context[fn] = this
   const result = context[fn](...args);
   delete context[fn];
@@ -360,3 +379,54 @@ function new() {
   // new
 }
 ```
+
+### 数组排平
+输入： [1,[[2], 3, 4],5]
+返回： [1,2,3,4,5]
+
+```js
+const flatten = (arr) => {
+  const res = [];
+  for(var c of arr) {
+    if(Array.isArray(c)) {
+      res = res.concat(flatten(c))
+    } else {
+      res.push(c);
+    }
+  }
+  return res;
+}
+```
+
+### 手写双向绑定
+
+### 输出最长连续子序列
+
+### 数组里
+
+```js
+ // ['ab', 'a', '']
+
+ // 先按长度排列，然后再按字母排序
+
+ ```
+
+ ### 通过传入整数参数控制‘拉平’层数
+ 
+ 
+ ```js
+  // reduce + 递归
+  function flat(arr, num = 1) {
+    return num > 0
+    ? arr.reduce(
+      (pre, cur) => 
+        pre.concat(Array.isArray(cur) ? flat(cur, num-1): cur), []
+    ) : arr.slice();
+  }
+
+  // 全展开,执行
+  flat(arr, Infinity)
+ ```
+
+ 
+

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function fun(arr) {
+    let new_arr = [];
+    var count = 0
+     new_arr[count] = []
+     arr.forEach((v, i) => {
+        new_arr[count] = [].concat(new_arr[count])
+        if(v >= 0) {
+            
+           // console.log(new_arr[count]);
+         new_arr[count].push(v)
+            
+            // console.log(new_arr[count])
+        } else {
+            new_arr[count] = []
+            count++
+       }
+   })
+     // 比较长度
+     // 二维数组取出里面长度为最长的
+     // 转换
+      //const res = new_arr.map((item) => {
+       //   return item.join('')
+     // })
+    new_arr.sort((a, b) => a.length < b.length)
+     return new_arr[new_arr.length -1]
+}
+
+console.log(fun([1,2,3,-1,39,0,-12,14,5,3,2,9]))
+console.log('hello')
+    </script>
+</body>
+</html>

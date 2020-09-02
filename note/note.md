@@ -371,6 +371,31 @@ BFC 即Block Formatting Contexts （块级格式化上下文）。它是一个�
 </style>
 ```
 
+4、pc端无兼容性要求，宽高不固定，用绝对定位怎么实现。
+
+```js
+<style>
+.wp {
+  position: relative;
+  border: 1px solid red;
+  width: 300px;
+  height: 300px;
+}
+
+.box {
+  position: absolute;
+  top: 50%;
+  left: 50%;  
+  background: green;
+  transform: translate(-50%, -50%)  
+}
+</style>
+<div class="wp">
+    <div class="box">123123</div>
+</div>
+```
+
+
 ### 跨域问题
 
 #### 完整url的组成

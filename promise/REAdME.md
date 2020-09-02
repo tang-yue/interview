@@ -2,7 +2,7 @@ promise
 
 promise 相关笔记
 
-[参考文章](https://juejin.im/post/6844904077537574919w)
+[参考文章](https://juejin.im/post/6844904077537574919)
 
 相关面试题
 

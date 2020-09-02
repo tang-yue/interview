@@ -11,52 +11,7 @@
   </style>
   <script src="./promise/api-promise-all.js"></script>
   <script>
-//      Function.prototype.myCall = function(context = window, ...args) {
-//   if(this === Function.prototype) {
-//     return undefined;
-//   }
-//   context = context || window;
-//   const fn = Symbol();  // 这里仅仅是
-//   context[fn] = this
-//   const result = context[fn](...args);
-//   delete context[fn];
-//   return result;
-// }
-// // 测试
-// var value = 2;
-// var obj = {
-//   value: 1
-// }
-
-// function bar(name, age) {
-//   console.log(this.value);
-//   return {
-//     value: this.value,
-//     name: name,
-//     age: age
-//   }
-// }
-
-// bar.myCall(null);   // 2
-
-// console.log(bar.myCall(obj, 'name', 18))
-
-
-function SuperType(name) {
-    this.colors = name;
-}
-
-function SubType() {
-    SuperType.call(this, 'red')
-}
-
-
-var instance1 = new SubType()
-// instance1.colors.push('black');
-console.log(instance1.colors) // ['red', 'blue', 'green', 'black']
-
-// var instance2 = new SuperType()
-// console.log(instance2.colors) // ['red', 'blue', 'green']
+    
   </script>
 </head>
 <body>
