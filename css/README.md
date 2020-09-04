@@ -1,6 +1,31 @@
 
 ### 相关面试题
 
+### CSS 盒模型详解
+起源于 回答错误
+
+盒模型 分为IE盒模型和W3C 标准盒模型
+
+1. W3C 标准盒模型：
+
+熟悉 width，height 只包含内容 content，不包含border和padding。
+
+2. IE 盒模型：
+
+属性width，height包含border 和padding, 指的是 content + padding + border。
+
+在 ie8+ 浏览器中使用哪个盒模型可以由box-sizing （css 新增的属性）控制，默认值为content-box, 即标准盒模型；
+
+如果将box-sizing 设为border-box 则用的是 IE盒模型。如果在ie6,7,8中DOCTYPE缺失会触发IE模式。在当前W3C标准中盒模型是可以通过box-sizing
+
+自由的进行切换的。
+
+因为若不声明DOCTYPE类型，IE浏览器会将盒子模型解释为IE盒子模型，FireFox 等会将其解释为W3C 盒子模型；若在页面中声明了DOCTYPE类型，所有的
+
+浏览器都会把盒模型解释为 W3C 盒模型。
+
+[参考文章](https://juejin.im/post/6844903505983963143)
+
 ### 垂直居中：
 
 1、PC端有兼容性要求，宽高固定
@@ -163,7 +188,7 @@ order flex-grow (放大) flex-shrink (缩小)  flex-basis  flex align-self
 <div>
 ```
 
-第一钟 float
+第一种 float
 
 ```css
   .left {

@@ -5,25 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        .wp {
-  position: relative;
-  border: 1px solid red;
-  width: 300px;
-  height: 300px;
-}
-
-.box {
-  position: absolute;
-  background: green;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%)  
-}
+      .box {
+        width: 200px;
+        height: 200px;
+        background-color: pink;
+        padding: 20px;
+        box-sizing: border-box;
+        border: 10px solid #aaa;
+        margin: 10px;
+      }
     </style>
 </head>
 <body>
    <div class="wp">
         <div class="box">123123</div>
    </div>
+   <script>
+     
+    function func() {
+
+    }
+    const f = new func() 
+    
+    console.log(f.__proto__.constructor === func, 'xxxx')
+
+    console.log(f.__proto__ === func.prototype);
+
+    console.log(func.prototype.__proto__ === Object.prototype)
+
+    console.log(Object.prototype.__proto__ === null)
+
+    // 以上就是一个原型链
+
+    console.log(func.__proto__ === Function.prototype)   // func 又是 Function 的实例
+
+    console.log(Object.__proto__ === Function.prototype)  // true
+
+    console.log(Function.__proto__ === Function.prototype, 'xxxxx')
+
+    console.log(Function.prototype.__proto__ === Object.prototype)
+
+   </script>
 </body>
 </html>

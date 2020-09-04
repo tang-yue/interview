@@ -75,7 +75,111 @@ arr.concat()
 
 需要兼容 set、map、symbol、object
 
-放弃
+```
+const mapTag = '[object Map]';
+const setTag = '[object Set]';
+const arrayTag = '[object Array]';
+const objectTag = '[object Object]';
+
+// symbol
+const symbolTag = '[object Symbol]'
+
+const deepTag = [mapTag, setTag, arrayTag, objectTag]
+
+function isObject(target) {
+    const type = typeof target
+    return type !== null &&(type === 'object' || type === 'function')
+}
+
+function getType(target) {
+    return Object.prototype.toString.call(target)
+}
+
+function getInit(target) {
+    const Ctor = target.constructor;
+    return new Ctor()
+}
+
+function clone(target, map = new Map()) {
+
+    // 克隆原始类型
+    if(!isObject(target)) {
+        return target;
+    }
+
+    // 初始化
+    const type = getType(target);
+    let cloneTarget;
+
+    if(deepTag.includes(type)) {
+        cloneTarget = getInit(target, type)
+    }
+
+    // 防止循环引用
+    if(map.get(target)) {
+        return map.get(target);
+    }
+
+    map.set(target, cloneTarget);
+
+    // 克隆Set
+    
+    if(type === setTag) {
+        target.forEach(value => {
+            cloneTarget.add(clone(value, map))
+        });
+        return cloneTarget;
+    }
+
+    // 克隆map
+    if(type === mapTag) {
+        target.forEach((value, key) => {
+            cloneTarget.set(key, clone(value, map))
+        })
+        return cloneTarget;
+    }
+
+    // 克隆 Symbol
+    if(type === symbolTag) {
+        return Object(Symbol.prototype.valueOf.call(target));
+    }
+
+    // 克隆对象和数组
+    cloneTarget = type === arrayTag ? [] : {}
+
+    for(const key in target) {
+        cloneTarget[key] = clone(target[key], map)
+    }
+
+    return cloneTarget;
+}
+```
+
+
+```
+// 测试用列
+
+const map = new Map();
+map.set('1', '1111')
+map.set('2', '2222')
+const set = new Set([1,2,{'3':'4'}])
+
+const target = {
+    field1: 1,
+    field2: undefined,
+    field3: {
+        child: 'child'
+    },
+    field4: [2, 4, 8],
+    empty: null,
+    map,
+    set,
+    symbol: Symbol(42)
+};
+console.log(clone(target))
+```
+
+[参考如何写出一个惊艳面试官的深拷贝](http://www.conardli.top/blog/article/JS%E8%BF%9B%E9%98%B6/%E5%A6%82%E4%BD%95%E5%86%99%E5%87%BA%E4%B8%80%E4%B8%AA%E6%83%8A%E8%89%B3%E9%9D%A2%E8%AF%95%E5%AE%98%E7%9A%84%E6%B7%B1%E6%8B%B7%E8%B4%9D.html)
 
 [参考文章](https://github.com/ConardLi/awesome-coding-js/blob/master/JavaScript/%E6%B5%85%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B7%B1%E6%8B%B7%E8%B4%9D.md)
 
@@ -427,6 +531,10 @@ const flatten = (arr) => {
   // 全展开,执行
   flat(arr, Infinity)
  ```
+ 
+ ### 有效括号问题
+
+
 
  
 

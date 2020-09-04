@@ -13,7 +13,7 @@ HTTP 请求分为三个部分： TCP 三次握手、http 请求响应信息、�
 + 发送 HTTP 请求
 + 服务器处理请求并返回 HTTP 报文
 + 浏览器解析渲染页面
-+ 断开连接：TCP 四次握手
++ 断开连接：TCP 四次挥手
 
 [参考文章](https://zhuanlan.zhihu.com/p/57895541)
 [参考文章](https://github.com/impeiran/Blog/issues/3)

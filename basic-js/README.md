@@ -1,16 +1,149 @@
+## 如何优雅的说 let, const, var 的区别
+
+1. 只在 let 命令 所在的代码块内有效，块级作用域。 比如for 循环。
+
+2. let，const 不存在变量提升。
+
+3. const 声明一个只读的常量。
+
+[参考文章](https://es6.ruanyifeng.com/#docs/let)
+
+## Set 和 Map 的一些区别
+
+### Set
+
+Set 对象是值的集合，你可以按照插入的顺序迭代它的元素。Set 中的元素只会出现一次，即Set 中的元素是唯一的。
+
+属性：
++ size
+方法：
++ add
++ clear
++ delete
++ entries
++ forEach
++ has
++ keys
++ values
+
+可以用 for ... of  进行遍历
+
+### Map
+
+`Map`对象保存键值对，并且能够记住键的原始插入顺序。任何值（对象或者原始值）都可以作为一个键或一个值。
+
+属性：
++ size
+
+方法：
++ clear
++ delete
++ entries
++ forEach
++ get   // 
++ has
++ keys
++ set   // 
++ values
+
+
+
 ## symbol 属性
 
 symbol 是一种基本数据类型，
 symbol() 函数会返回symbol类型的值，该类型具有静态属性和静态方法。
 每个从Symbol() 返回的symbol值都是唯一的。一个symbol值能作为对象属性的标识符；这是数据类型仅有的目的。
 
-使用场景：
 
-+ 作为对象属性名
+### Symbol 的特性
+
+1. 独一无二性
+2. 原始类型
+3. 不可枚举
+
+### Symbol 的应用场景
+
+1. 防止XSS
+JSON 中不能存储Symbol 类型的变量，这就是防止XSS的一种手段。
+
+2. 私有属性
+
+借助Symbol类型的不可枚举，我们可以在类中模拟私有属性，控制变量读写
+
+3. 防止属性污染
+
+在某些情况下，我们可能要为对象添加一个属性，此时就有可能造成属性覆盖，用Symbol作为对象属性可以保证永远不会出现同名属性。
+
+[参考文章](https://juejin.im/post/6844903854882947080)
+
+
+## 深拷贝和拷贝的区别
+
+基本类型: 数据保存在栈内存中。
+引用类型的值实际存储在堆内存中，它在栈中只存储了一个固定长度的地址，这个地址指向堆内存中的值。
+
+浅拷贝: 如果是对象类型，只拷贝一层，如果对象的属性又是一个对象，那么此时拷贝的就是此属性的引用。
+
+简单实现一个浅拷贝：
+
+```js
+function shallowCopy() {
+    const newObj = {};
+    for(let prop in obj) {
+        if(obj.hasOwnProperty(prop)) {
+            newObj[prop] = obj[prop]
+        }
+    }
+    return newObj
+}
+```
+
+深拷贝的实现
+
+浅拷贝是只拷贝一层，深拷贝会拷贝所有属性。深拷贝前后两个对象互不影响。
+
+
+尝试自己写一个深拷贝，需要考虑下面几种情况
+
+1、属性是基本类型
+2、属性是对象，特殊对象
+3、属性是数组
+4、循环引用的情况
+
+
 
 ## 说一下 原型链
 
-var n = new Number() 创建一个Number
+流程图：
+
+[原型链]('./prototype.jpeg')
+
+```js
+function func() {
+
+}
+const f = new func()
+
+console.log(f.__proto__.constructor === func, 'xxxx')
+
+console.log(f.__proto__ === func.prototype);
+
+console.log(func.prototype.__proto__ === Object.prototype)
+
+console.log(Object.prototype.__proto__ === null)
+
+// 以上就是一个原型链
+
+console.log(func.__proto__ === Function.prototype)   // func 又是 Function 的实例
+
+console.log(Object.__proto__ === Function.prototype)  // true
+
+console.log(Function.__proto__ === Function.prototype) // true
+
+console.log(Function.prototype.__proto__ === Object.prototype)  // true
+```
+
+[参考文章](https://zhuanlan.zhihu.com/p/39549472)
 
 ## 什么是闭包
 

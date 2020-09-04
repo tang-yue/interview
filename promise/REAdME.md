@@ -22,9 +22,10 @@ setTimeout
 
 #### Promise 实现
 
-[手动 实现 promise](./api-promise.js)
+[手动 实现promise](./promise-note.md)
 
 [参考文章](https://juejin.im/post/6850037281206566919)
+[参考文章](https://github.com/careteenL/blog/issues/1)
 
 [手动 实现 promise.all](./api-promise-all.js)
 
