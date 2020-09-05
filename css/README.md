@@ -1,7 +1,6 @@
 
-### 相关面试题
+## CSS 盒模型详解
 
-### CSS 盒模型详解
 起源于 回答错误
 
 盒模型 分为IE盒模型和W3C 标准盒模型
@@ -26,7 +25,7 @@
 
 [参考文章](https://juejin.im/post/6844903505983963143)
 
-### 理解BFC原理
+## 理解BFC原理
 
 BFC 即Block Formatting Contexts （块级格式化上下文）。它是一个独立的渲染区域，里面的元素和外部的元素相互不影响。
 
@@ -48,7 +47,7 @@ BFC 即Block Formatting Contexts （块级格式化上下文）。它是一个�
 [参考2](https://muyiy.cn/question/css/39.html)
 [参考3](https://juejin.im/entry/59478ce8a0bb9f006bda9756)
 
-### 垂直居中：
+## 垂直居中：
 
 1、PC端有兼容性要求，宽高固定
 
@@ -146,7 +145,7 @@ BFC 即Block Formatting Contexts （块级格式化上下文）。它是一个�
 </div>
 ```
 
-#### 手写flex常用的属性，并且讲出作用
+## 手写flex常用的属性，并且讲出作用
 
 设置在容器上的属性
 
@@ -157,9 +156,9 @@ flex-direction flex-wrap flex-flow justify-content align-items align-content
 order flex-grow (放大) flex-shrink (缩小)  flex-basis  flex align-self
 
 
-#### animation
+## animation
 
-##### 属性详解
+### 属性详解
 
 1、animation-name：指定要绑定到选择器的关键帧的名称
 2、animation-duration: 定义动画完成一个周期需要多少秒或毫秒
@@ -190,14 +189,14 @@ order flex-grow (放大) flex-shrink (缩小)  flex-basis  flex align-self
 8、animation-play-state: 指定动画是否正在运行或已暂停
 
 
-##### keyframes: 定义动画规则，关键帧
+### keyframes: 定义动画规则，关键帧
 
 1、animationname  必需的。定义animation的名称
 2、keyframes-selector  必需的，动画持续时间的百分比
 3、css-styles  必需的，一个或多个合法的css样式属性
 
 
-#### 布局
+## 布局
 
 左边固定右边自适应
 

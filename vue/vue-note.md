@@ -217,11 +217,11 @@ Vue.directive('name', {
 })
 ```
 
-### 什么是虚拟dom
+## 什么是虚拟dom
 
 virtual DOM 是将真实的DOM的数据抽取出来，以对象的形式模拟树形结构。
 
-### vue diff 过程
+## vue diff 过程
 
 vue diff 的过程就是调用patch 函数的过程，不是暴力的覆盖原有DOM，而是比对新旧两个vnode之间有什么不同，然后根据对比的结果找出需要更新的节点进行更新。
 
@@ -237,7 +237,7 @@ path 给真实的DOM打补丁。
 
 更详细的更新操作可以参考  深入浅出 vue.js  书籍
 
-### 剖析前端路由管理
+## 剖析前端路由管理
 
 [参考文章](https://juejin.im/post/6844903906024095751)
 
@@ -305,11 +305,11 @@ export class HashRouter extends BaseRouter {
 }
 ```
 
-### vue router 解读
+## vue router 解读
 
 [参考文章](https://github.com/careteenL/vue-router)
 
-### vuex 简述
+## vuex 简述
 
 
 

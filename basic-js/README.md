@@ -391,7 +391,7 @@ anotherPerson = sayHi();  // ‘hi’
 [参考 高级js程序设计书籍]
 [深入JavaScript继承原理](https://juejin.im/post/5a96d78ef265da4e9311b4d8)
 
-### Js 垃圾回收机制
+## Js 垃圾回收机制
 
 一、Js 具有垃圾自动回收机制
 
@@ -407,7 +407,7 @@ anotherPerson = sayHi();  // ‘hi’
 
 [参考资料](https://juejin.im/post/6844903920255369230)
 
-### EventEmitter 简单实现
+## EventEmitter 简单实现
 
 [参考文章](https://www.jianshu.com/p/45994e03ac33)
 
