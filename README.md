@@ -1,6 +1,6 @@
 愿望的大小，深度，广度，热度。
 
-![知识图谱](https://tang-yue.github.io/interview/baseNote/面试题.png)
+![知识图谱](https://tang-yue.github.io/interview/baseNote/interview.png)
 
 ## 移动端
 

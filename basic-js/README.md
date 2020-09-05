@@ -136,7 +136,7 @@ bind  接收的是用逗号隔开的参数，但是不会立即执行，而是�
 
 流程图：
 
-[原型链]('https://tang-yue.github.io/interview/basic-js/prototype.jpeg')
+![原型链](https://tang-yue.github.io/interview/basic-js/prototype.jpeg)
 
 ```js
 function func() {
