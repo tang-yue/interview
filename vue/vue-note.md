@@ -1,16 +1,47 @@
+## vue 的生命周期
+
+1、beforeCreate 在实列初始化前被触发
+
+2、created 会在实列初始化之后，被添加到DOM之前触发
+
+3、beforeMount 会在元素已经准备好被添加到DOM，但还没有添加的时候触发
+
+4、mounted 会在元素创建后触发，但不确定被添加到了DOM。可以用nextTick 来保证这一点。
+
+5、beforeUpdate 会在由于数据更新将要对DOM做一些更改时触发
+
+6、updated 会在DOM 的更改已经完成后触发
+
+7、beforeDestroy 会在组件即将被销毁并且从DOM上移除时触发
+
+8、destoryed 会在组件被销毁后触发
+
 ## vue 3.0 的新特性
 
-1. 压缩包体积更小
+1. 更好的支持TypeScript
+2. Vue3 中 响应式数据原理改成proxy
+3. 新的 Composition API
+4. Virtual DOM 重构
 
-2. Virtual DOM 重构
+## Proxy 与 Object.defineProperty() 对比
 
-3. 更好的支持TypeScript
+1. proxy 可以直接监听对象而非属性，并返回一个新对象，而 Object.defineProperty() 只能劫持对象的属性，我们需要对每个对象的每个属性进行遍历。
+2. proxy 是 es6提供的新特性，兼容性不好，而 Object.defineProperty() 兼容性好，支持 IE9，IE9 以下的版本不兼容。
+3. proxy 可以直接监听数组的变化，而 Object.defineProperty() 只提供了8种检测数组的变化。
+
+### Vue 的父组件和子组件生命周期钩子执行顺序
+
+原则： 父组件的mounted在子组件mouted之后。
+
+父beforeCreate -> 父 created -> 父 beforeMount -> 子 beforeCreate -> 子created -> 子 beforeMount -> 子 mounted -> 父 mounted
+
+子组件更新过程
+
+[参考文章](https://www.cnblogs.com/wtsx-2019/p/12411987.html)
 
 ## vue 中，为什么data是一个方法返回一个对象，而不是直接赋给一个对象
 
 怕重复创建实例造成多实例共享一个数据对象。
-
-## vue 父子组件生命周期的顺序
 
 ## computed 和 watch 的区别
 
@@ -97,10 +128,9 @@ const vNode = vdom('div', null,
 
 ## 依赖收集相关
 
-
 Data、Observer、Dep 和 Watcher 之间的关系，如下图
 
-[流程图](https://tang-yue.github.io/interview/vue/yilaishouji.png)
+![流程图](https://tang-yue.github.io/interview/vue/yilaishouji.png)
 
 
 Data 通过 Observer 转换成了 getter/setter 的形式来追踪变化。
@@ -187,13 +217,11 @@ Vue.directive('name', {
 })
 ```
 
-## vue 的 diff 算法
-
 ### 什么是虚拟dom
 
 virtual DOM 是将真实的DOM的数据抽取出来，以对象的形式模拟树形结构。
 
-### diff 过程
+### vue diff 过程
 
 vue diff 的过程就是调用patch 函数的过程，不是暴力的覆盖原有DOM，而是比对新旧两个vnode之间有什么不同，然后根据对比的结果找出需要更新的节点进行更新。
 
@@ -277,19 +305,13 @@ export class HashRouter extends BaseRouter {
 }
 ```
 
-### Vue 的父组件和子组件生命周期钩子执行顺序
-
-原则： 父组件的mounted在子组件mouted之后。
-
-父beforeCreate -> 父 created -> 父 beforeMount -> 子 beforeCreate -> 子created -> 子 beforeMount -> 子 mounted -> 父 mounted
-
-子组件更新过程
-
-[参考文章](https://www.cnblogs.com/wtsx-2019/p/12411987.html)
-
 ### vue router 解读
 
 [参考文章](https://github.com/careteenL/vue-router)
+
+### vuex 简述
+
+
 
 
 

@@ -1,3 +1,7 @@
+### 指南篇
+
+[前端高级进阶指南](https://github.com/sl1673495/blogs/issues/37)
+
 webpack 类 相关文章
 
 [webpack中文文档](https://www.webpackjs.com/concepts/)
@@ -21,4 +25,9 @@ promise 相关文章
 [vue官方文档](https://cn.vuejs.org/v2/api/#directives)
 
 [react相关](https://juejin.im/post/6844904024534155277)
+
+leetcode 高频题精选
+
+[leetcode 高频题](https://github.com/Jack-cool/blog/issues/40)
+
 

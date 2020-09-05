@@ -295,7 +295,7 @@ app.use(async (ctx, next) => {
 })
 ```
 
-在main.js 文件中
+在./koa-demo/main.js 文件中
 
 [参考实现过程](https://juejin.im/post/6844904096516816904)
 

@@ -40,7 +40,6 @@ constructor(executor) {
     }
 }
 
-
 then(onFulfilled, onRejected) {
     let promise2
 
@@ -205,6 +204,7 @@ if((x !== null && typeof x === 'object') || typeof x === 'function') {
      }
 }
 
+// 下面是测试用例
 
 // let p1 = new Promise(resolve => { resolve('p1') })
 // let p2 = new Promise(resolve => { setTimeout(() => { resolve('p2') }, 3000) })
@@ -233,7 +233,7 @@ if((x !== null && typeof x === 'object') || typeof x === 'function') {
 //   })
 
 
-//   let p2 = Promise.resolve(100)
+// let p2 = Promise.resolve(100)
 // p2.then(data => {
 //   console.log(`p2 ${data}`)
 // })

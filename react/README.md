@@ -1,4 +1,23 @@
-### React Fiber 原理以及为什么componentWillRecievedProps会废弃
+## React 生命周期 react 16 版本
+
+1. 初始化阶段
++ constructor
+2. 挂载阶段
++ getDerivedStateFromProps
++ render
++ componentDidMount
+3. 更新阶段
++ getDerivedStateFromProps(props, state)
++ shouldComponentUpdate
++ render
++ getSnapshotBeforeUpdate(prevProps, prevState)
++ componentDidUpdate
+4. 卸载阶段
++ componentWillUnmount
+5. 错误处理
++ componentDidCatch
+
+## React Fiber 原理以及为什么componentWillRecievedProps会废弃
 
 异步渲染UI的解决方案。让js可以中止渲染从而去做更高优先级的事情，比如IO操作，从而让用户更不容易感觉到卡顿，提升用户体验；
 借助requestIdleCallback接口，将一个大的渲染计算工作切分成小块（每个组件都是一个小块)；

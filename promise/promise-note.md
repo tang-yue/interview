@@ -423,3 +423,8 @@ promise 的更多功能
 以上就是简版的promise
 
 
+[参考文章](https://github.com/careteenL/blog/issues/1)
+
+[参考文章](https://github.com/xieranmaya/blog/issues/3)
+
+

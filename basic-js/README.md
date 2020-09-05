@@ -47,7 +47,6 @@ Set 对象是值的集合，你可以按照插入的顺序迭代它的元素。S
 + values
 
 
-
 ## symbol 属性
 
 symbol 是一种基本数据类型，
@@ -75,7 +74,6 @@ JSON 中不能存储Symbol 类型的变量，这就是防止XSS的一种手段�
 在某些情况下，我们可能要为对象添加一个属性，此时就有可能造成属性覆盖，用Symbol作为对象属性可以保证永远不会出现同名属性。
 
 [参考文章](https://juejin.im/post/6844903854882947080)
-
 
 ## 深拷贝和拷贝的区别
 
@@ -110,7 +108,29 @@ function shallowCopy() {
 3、属性是数组
 4、循环引用的情况
 
+## javascript 模块化
 
+2009年 1月 commonJS 服务器端模块化规范 同步加载  基于CommonJS 规范实现模块体系的Node.js
+
+2009年 12月 AMD   浏览器端模块化规范   异步加载  基于AMD规范的模块化加载器 RequireJS
+
+2011年 11月 CMD  浏览器端模块化规范   异步加载    基于CMD规范的模块化加载器  Sea.js
+
+2015 年 6月   ES模块化规范    目标是整合 CommonJS 、 AMD 已有的模块化方案， 成为浏览器和服务器通用的模块化解决方案
+
+在浏览器端使用模块加载器存在很多弊端，但是 CommmonJS 规范在服务器端就很方便稳定。解决办法 预编译
+
+2017 年 webpack 就是这种预编译的模块化方案。它结合了CommonJS 和AMD 的优缺点，开发时可按照CommonJS 的编写方式，支持编译后按需加载和异步加载所有资源。
+
+[javascript模块化野史](https://juejin.im/post/5e3985396fb9a07cde64c489)
+
+## apply bind call 的区别
+
+这三个函数都是改变了当前函数的this 指向。
+
+apply 接收的是数组，并会立即执行
+call  接收的是用逗号隔开的参数，并会立即执行
+bind  接收的是用逗号隔开的参数，但是不会立即执行，而是返回一个新的函数
 
 ## 说一下 原型链
 
@@ -149,6 +169,22 @@ console.log(Function.prototype.__proto__ === Object.prototype)  // true
 
 一个可以操作外部其他函数定义的局部变量的函数，相当于一个变量作用域，作用域可以向外操作，但不可向内操作
 
+```
+  // 徒手写一个闭包
+
+  function sayHello(name) {
+    let str = `Hello, ${name}`;
+    function say() {
+      console.log(str);
+    }
+    return say;
+  }
+
+  let myHello = sayHello('abby');
+
+  myHello();  // Hello,abby
+```
+
 ## 箭头函数和普通函数的区别
 
 1. 箭头函数是匿名函数，不能作为构造函数，不能使用 new
@@ -164,24 +200,6 @@ for in 遍历对象 [[[[ 遍历字符串 key ===> 0 1 2 3 ]]]]
 for of 数组， 类对象，遍历字符串
 
 ## javascript 继承方式
-
-一、 类式继承
-
-通过修改子类的原型为父类的实列来实现继承，缺点太多。
-
-二、 构造函数式继承
-
-[深入JavaScript继承原理](https://juejin.im/post/5a96d78ef265da4e9311b4d8)
-
-三、组合式继承
-
-四、原型继承
-
-五、寄生式继承
-
-六、寄生组合式继承
-
-## 逃不过的继承方式
 
 ### 原型链继承
 
@@ -371,6 +389,7 @@ anotherPerson = sayHi();  // ‘hi’
 ### 寄生组合式继承
 
 [参考 高级js程序设计书籍]
+[深入JavaScript继承原理](https://juejin.im/post/5a96d78ef265da4e9311b4d8)
 
 ### Js 垃圾回收机制
 

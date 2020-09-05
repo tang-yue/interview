@@ -26,6 +26,28 @@
 
 [参考文章](https://juejin.im/post/6844903505983963143)
 
+### 理解BFC原理
+
+BFC 即Block Formatting Contexts （块级格式化上下文）。它是一个独立的渲染区域，里面的元素和外部的元素相互不影响。
+
+#### 触发BFC
+
+1、body 根元素
+2、浮动元素：float: left；float: right
+3、定位元素：position为absolute或fixed
+4、display：inline-block；table-cell；table-caption；flex；inline-flex
+5、overflow：hidden；scroll；auto
+
+#### 利用BFC 能解决哪些问题
+
+1、解决同一BFC容器中的相邻块级元素垂直方向的外边距重叠问题
+2、清除浮动
+3、BFC可以阻止元素被浮动元素覆盖
+
+[参考1](https://www.zhihu.com/search?type=content&q=BFC)
+[参考2](https://muyiy.cn/question/css/39.html)
+[参考3](https://juejin.im/entry/59478ce8a0bb9f006bda9756)
+
 ### 垂直居中：
 
 1、PC端有兼容性要求，宽高固定

@@ -1,20 +1,22 @@
 愿望的大小，深度，广度，热度。
 
-离职倒计时 -------
-
-仅为自己复习使用，不对外提供。
-
 ## 移动端
 
 [移动端适配之rem总结](./mobile/rem.md) (6月6日)
 
 ## HTML
 
-html5 
+[HTML 相关](./html)
 
 ## CSS
 
 [css 相关](./css)
+
+## js
+
+[基础js 相关](./basic-js)
+
+[有关promise](./promise)
 
 ## webpack
 
@@ -28,21 +30,22 @@ html5
 
 [网络相关](./network)
 
-## javascript
+## vue
 
-[有关promise](./promise)
+[vue 相关](./vue/vue-note.md)
+
+## react
+
+[react 相关](./react)
 
 ## coding
 
-1、防抖和节流函数
+[一步一步手写promise](.promise/promise-note.md)
 
-2、手写 new
+[深拷贝 (map set function symbol object, array)](./coding/deepClone1.js)
+
+[手写简版koa](./koa)
 
 ## 数据结构和算法
 
-我觉得很有必要重新学习下了，以前都没有方向，和社会严重脱轨。
-
-过去的我，一定是在什么地方做错了。
-
-无知者无罪。
 

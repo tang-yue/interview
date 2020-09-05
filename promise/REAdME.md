@@ -2,7 +2,7 @@ promise
 
 promise 相关笔记
 
-[参考文章](https://juejin.im/post/6844904077537574919)
+[45道 promise](https://juejin.im/post/6844904077537574919)
 
 相关面试题
 
@@ -25,6 +25,7 @@ setTimeout
 [手动 实现promise](./promise-note.md)
 
 [参考文章](https://juejin.im/post/6850037281206566919)
+
 [参考文章](https://github.com/careteenL/blog/issues/1)
 
 [手动 实现 promise.all](./api-promise-all.js)
