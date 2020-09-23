@@ -8,4 +8,45 @@
 <body>
     interview
 </body>
+<script>
+
+// Object.prototype.myBind = function (context, ...arg) {
+//     if (typeof this !== 'function') {
+//         throw TypeError('holp caller is function')
+//     }
+
+//     let obj = context || window;
+
+//     return (...arg2) => {
+//         this.call(obj, ...arg, ...arg2)
+//     }
+// }
+
+// 默写一遍深度克隆
+
+// 思路：
+
+// 1 原始对象类
+// 2 需要循环遍历的
+
+// 只记忆下面这个
+
+function clone(target, map = new Map()) {
+    if(typeof target === 'object') {
+        let cloneTarget = Array.isArray(target) ? [] : {};
+        if(map.get(target)) {
+            return map.get(target)
+        }
+        map.set(target, cloneTarget);
+
+        for (const key in target) {
+            cloneTarget[key] = clone(target[key], map)
+        }
+        return cloneTarget
+    } else {
+        return target;
+    }
+}
+
+</script>
 </html>

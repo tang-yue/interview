@@ -32,9 +32,13 @@ BFC 即Block Formatting Contexts （块级格式化上下文）。它是一个�
 #### 触发BFC
 
 1、body 根元素
+
 2、浮动元素：float: left；float: right
+
 3、定位元素：position为absolute或fixed
+
 4、display：inline-block；table-cell；table-caption；flex；inline-flex
+
 5、overflow：hidden；scroll；auto
 
 #### 利用BFC 能解决哪些问题
@@ -44,7 +48,9 @@ BFC 即Block Formatting Contexts （块级格式化上下文）。它是一个�
 3、BFC可以阻止元素被浮动元素覆盖
 
 [参考1](https://www.zhihu.com/search?type=content&q=BFC)
+
 [参考2](https://muyiy.cn/question/css/39.html)
+
 [参考3](https://juejin.im/entry/59478ce8a0bb9f006bda9756)
 
 ## 垂直居中：
@@ -89,6 +95,9 @@ BFC 即Block Formatting Contexts （块级格式化上下文）。它是一个�
     display: table-cell;
     text-align: center;
     vertical-align: middle;
+// vertical-align 起作用的前提元素为inline水平元素或table-cell元素，
+// 包括span，img，input，button，td 以及通过display改变了显示水平为inline水平或者table-cell的元素。
+// 但是 display: inline，无法设置宽高，所以这里用table-cell.
     border: 1px solid #aaa;
     width: 200px;
     height: 200px;
@@ -137,6 +146,7 @@ BFC 即Block Formatting Contexts （块级格式化上下文）。它是一个�
   top: 50%;
   left: 50%;  
   background: green;
+  // transform 下的 translate 做的是移动变换，相对于的是自身的宽和高
   transform: translate(-50%, -50%)  
 }
 </style>
@@ -154,7 +164,6 @@ flex-direction flex-wrap flex-flow justify-content align-items align-content
 设置在项目上的属性
 
 order flex-grow (放大) flex-shrink (缩小)  flex-basis  flex align-self
-
 
 ## animation
 
@@ -198,34 +207,43 @@ order flex-grow (放大) flex-shrink (缩小)  flex-basis  flex align-self
 
 ## 布局
 
-左边固定右边自适应
+### 两栏布局
+
++ 左边固定右边自适应
+
+[代码参考](./left-fixed-right.html)
+
+1. 第一种实现方式 利用浮动，然后利用bfc 清除覆盖元素 达到目的
+2. 第二种实现方式，左浮动固定，右边利用margin-left
+3. 第三种方式，父级元素，`display:table` 属性，子级元素都为`display: table-cell`
+4. 第四种方式，父级table，子级都为`table-cell`
+5. 第五种方式，父级`display: flex`，右边 `flex-grow: 1` 占据剩余的空间
+6. 第六种方式，父级采用`display: grid`的网格布局，然后左边占据第一个位置，右边占据第二个位置
 
 [参考地址](https://blog.csdn.net/caicai1171523597/article/details/86642535)
 
-```html
-<div class="container">
-  <div class="left">固定</div>
-  <div class="right"></div>
-<div>
-```
+### 三栏布局
 
-第一种 float
+[参考文章](https://juejin.im/post/6844903826885967880)
 
-```css
-  .left {
-    float: left;
-    width: 100px;
-  }
-  .right {
-    margin-left: 100px;
-  }
-  /* 请除浮动  */
-  .container {
-    content: '';
-    clear: both;
-    display: block;
-  }
-```
+1. 第一种方式：通过左边向左浮动，右边向右浮动，中间部分创建bfc
+2. 第二种方式：左，中，右，设置绝对定位，左边left,0，右边right:0, 中间 left right, 等于左右的宽， 缺点脱离文档流
+3. 第三种方式：通过 display: flex，center 部分flex-grow 占据剩余部分 
+4. 第四种方式： 左，中，右 table-cell 父级 table
+
+## position 的几个属性，以及解释
+
+定位元素：位置属性为除static 以外的任务东西
+
++ static：该关键字指定元素使用正常的布局行为，即元素在文档常规流中当前的布局位置。此时top，right，bottom，left 和 z-index 属性都无效。
+
++ relative：元素先放置在未添加定位时的位置，再不改变页面布局的前提下调整元素位置。
+
++ absolute：元素会被移出正常文档流，并不为元素预留空间，通过指定元素**相对于最近的非static 定位祖先元素的偏移**，来确定元素位置。
+
++ sticky：粘性定位
+
+[参考文章](https://developer.mozilla.org/zh-CN/docs/Web/CSS/position)
 
 
 

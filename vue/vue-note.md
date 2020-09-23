@@ -25,7 +25,7 @@
 
 ## Proxy 与 Object.defineProperty() 对比
 
-1. proxy 可以直接监听对象而非属性，并返回一个新对象，而 Object.defineProperty() 只能劫持对象的属性，我们需要对每个对象的每个属性进行遍历。
+1. proxy 可以直接监听对象而非属性，并返回一个新对象，而 Object.defineProperty() 只能劫持对象的属性，我们需要对对象进行深度遍历去对属性进行操作。
 2. proxy 是 es6提供的新特性，兼容性不好，而 Object.defineProperty() 兼容性好，支持 IE9，IE9 以下的版本不兼容。
 3. proxy 可以直接监听数组的变化，而 Object.defineProperty() 只提供了8种检测数组的变化。
 
@@ -51,6 +51,34 @@
 ## vue 双向绑定实现原理
 
 将ViewModel 进行 “变异操作”，即使用Proxy或者getter/setter方式将普通属性变为”可监听“的属性，从而实现正向绑定。反向绑定是针对input的，监听change事件以自动更新对应的ViewModel属性。
+
+### 手写一个数据绑定
+
+```js
+<input id="input" type="text" />
+<div id="text"></div>
+
+let input = document.getElementById('input');
+
+let text = document.getElementById('text');
+
+let data = { value: '' };
+
+
+Object.defineProperty(data, 'value', {
+  set: function(val) {
+    text.innerHTML = val;
+    input.value = val;
+  },
+  get: function() {
+    return input.value;
+  }
+});
+
+input.onkeyup = function(e) {
+  data.value = e.target.value;
+}
+```
 
 ## 手写一个简易的Virtual DOM
 
@@ -142,6 +170,8 @@ Data 通过 Observer 转换成了 getter/setter 的形式来追踪变化。
 Watcher 接受到通知后，会向外界发送通知，变化通知到外界后可能会触发视图更新，从而可能触发用户的某个回调函数等。
 
 参考： 深入浅出 vue.js 书籍
+
+和解释vue响应式系统，一样的答案。
 
 ## vue 怎么自定义过滤器
 
@@ -236,6 +266,12 @@ path 给真实的DOM打补丁。
 
 
 更详细的更新操作可以参考  深入浅出 vue.js  书籍
+
+## 列表diff中key的作用
+
+默认列表diff中使用索引进行变更前后的对比，此时若某项数据被移除或新增，可能会导致后续所有项均被认为需要移除重建，效率极低。
+因此需要一个key替代索引作为对比依据，当发现相同key的项在不同索引，则会使用移动替代移除重建。
+
 
 ## 剖析前端路由管理
 

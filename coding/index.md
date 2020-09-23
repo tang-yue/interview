@@ -507,6 +507,21 @@ console.log(bar.myCall(obj, 'name', 18))
 ```
 [参考](https://github.com/ConardLi/awesome-coding-js/blob/master/JavaScript/%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0call%E3%80%81apply%E3%80%81bind.md)
 
+### 手写bind
+
+```js
+Object.prototype.myBind = function (context, ...arg) {
+  if(typeof this !== 'function') {
+    throw TypeError('holp caller is function')
+  }
+
+  let obj = context || window
+  
+  return (...arg2) => {
+    this.call(obj, ...arg, ...arg2)
+  }
+}
+```
 
 ### 手写一个new
 
@@ -538,10 +553,14 @@ const flatten = (arr) => {
 
 ### 输出最长连续子序列
 
-### 数组里
+### 编程题
+
+题目描述
+
+有一个数组，数组里面有字母字符串
 
 ```js
- // ['ab', 'a', '']
+
 
  // 先按长度排列，然后再按字母排序
 
@@ -565,6 +584,8 @@ const flatten = (arr) => {
  ```
  
  ### 有效括号问题
+
+ ### 数组的
 
 
 

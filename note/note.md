@@ -56,11 +56,7 @@ await 和 async 的底层原理
 
 [手写双向数据绑定](https://juejin.im/post/5acc17cb51882555745a03f8)
 
-
 #### 极简版的双向绑定
-
-
-
 
 ### 2、react 的生命周期  react 16 版本
 

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html * {
+            padding: 0;
+            margin: 0;
+        }
+        .layout {
+            margin-top: 10px;
+        }
+        .layout article div {
+            min-height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 方法一 通过浮动，当center块的内容太长，就会使得center部分溢出，所以在center下加了overflow：hidden -->
+    <section class="layout float">
+        <style>
+            .layout.float .left {
+                width: 300px;
+                float: left;
+                background: yellow;
+            }
+            .layout.float .right {
+                width: 300px;
+                float: right;
+                background: blue;
+            }
+            .layout.float .center {
+                background: red;
+                overflow: hidden;
+           }        
+        </style>
+       <article class="left-center-right"> 
+           <div class="left"></div>
+            <div class="right"></div>
+            <div class="center">
+                <h2>我的float布局解决方案哈哈哈啊哈哈哈哈哈</h2>
+            </div>
+        </article>
+    </section>
+    <!-- 第二种方式 左，中，右，设置绝对定位，左边left,0，右边right:0, 中间 left right, 等于左右的宽 -->
+    <section class="layout absoluted">
+        <style>
+            .layout.absoluted .left-center-right>div {
+                position: absolute;  /* 相对的是 html */
+            }
+            .layout.absoluted .left {
+                left: 0px;
+                width: 300px;
+                background: yellow;
+            }                        
+            .layout.absoluted .center {
+                left: 300px;
+                right: 300px;
+                background: red;
+            } 
+             .layout.absoluted .right {
+                right: 0px;
+                width: 300px;
+                background: blue;
+            }
+        </style>        
+        <article class="left-center-right">
+            <div class="left"></div>
+            <div class="center">
+                <h2>我是absoluted布局解决方案</h2>
+            </div>
+            <div class="right"></div>
+        </article>
+    </section>
+    <!-- 第三种方式：通过 display: flex，center 部分flex-grow 占据剩余部分 -->
+    <section class="layout flexb">
+        <style>
+            .layout.flexb {
+                margin-top: 120px;
+            }
+            .layout.flexb .left-center-right {
+                display: flex;
+            }
+            .layout.flexb .left {
+                width: 300px;
+                background: yellow;
+            }            
+            .layout.flexb .center {
+                flex-grow: 1;
+                background: red;
+            }           
+            .layout.flexb .right {
+                width: 300px;
+                background: blue;
+            } 
+       </style>
+       <article class="left-center-right">
+            <div class="left"></div>
+            <div class="center">
+                <h2>我是flex解决方案</h2>
+            </div>
+            <div class="right"></div>
+        </article>
+    </section>
+    <!-- 第四种方式： 左，中，右 table-cell 父级 table -->
+    <section class="layout table">
+        <style>
+            .layout.table .left-center-right {
+                display: table;
+                width: 100%;
+                height: 100px;
+            }          
+            .layout.table .left-center-right>div {
+                display: table-cell;
+            }            
+            .layout.table .left {
+                width: 300px;
+                background: yellow;
+            }             
+           .layout.table .center {
+                background: red;
+            }             
+           .layout.table .right {
+                width: 300px;
+                background: blue;
+            }
+        </style>
+        <article class="left-center-right">
+            <div class="left"></div>
+            <div class="center">
+                <h2>我是Table解决方案</h2>
+            </div>
+            <div class="right"></div>
+        </article>
+    </section>
+    <!--第五种 grid -->
+    <section class="layout grid">
+        <style>
+            .layout.grid .left-center-right {
+                display: grid;
+                width: 100%;
+                grid-template-rows: 100px;
+                grid-template-columns: 300px auto 300px;
+            }           
+            .layout.grid .left {
+                background: yellow;
+            } 
+            .layout.grid .center {
+                background: red;
+            }              
+          .layout.grid .right {
+                background: blue; 
+           } 
+       </style>
+       <article class="left-center-right">
+            <div class="left"></div>
+            <div class="center">
+                <h2>我是grid解决方案</h2>
+            </div>
+            <div class="right"></div>
+        </article>    
+    </section>
+</body>
+</html>
