@@ -204,7 +204,23 @@ order flex-grow (放大) flex-shrink (缩小)  flex-basis  flex align-self
 2、keyframes-selector  必需的，动画持续时间的百分比
 3、css-styles  必需的，一个或多个合法的css样式属性
 
+举列：
 
+```css
+@keyframes myAnim{
+  from { background: #f00; }
+  50% { background: #0f0; }
+  to { background: yellowgreen; }
+}
+```
+```css
+@keyframes myAnim{
+  0% { background: #f00; }
+  50% { background: #0f0; }
+  100% { background: yellowgreen; }
+}
+```
+[效果地址](./animation.html)
 ## 布局
 
 ### 两栏布局
