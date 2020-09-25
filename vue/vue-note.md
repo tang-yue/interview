@@ -23,6 +23,15 @@
 3. 新的 Composition API
 4. Virtual DOM 重构
 
+## vue的内部机制
+
+首先vue会调用_init函数进行初始化，然后调用$mount挂载组件，编译，之后得到render Function，
+
+当render function 被渲染的时候，读取data 值 触发getter 函数，将观察者watch对象存放起来
+
+当修改data的值，触发setter函数， 通知watcher，然后调用update 函数，然后更新视图。
+
+
 ## Proxy 与 Object.defineProperty() 对比
 
 1. proxy 可以直接监听对象而非属性，并返回一个新对象，而 Object.defineProperty() 只能劫持对象的属性，我们需要对对象进行深度遍历去对属性进行操作。

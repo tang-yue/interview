@@ -30,12 +30,13 @@ leetcode 高频题精选
 
 [leetcode 高频题](https://github.com/Jack-cool/blog/issues/40)
 
-
 [温度控制器](https://github.com/ibrahima92/fullstack-typescript-mern-todo)
 
 [文章介绍说明](https://www.freecodecamp.org/news/how-to-build-a-todo-app-with-react-typescript-nodejs-and-mongodb/)
 
 
 [中大长面试总结](https://github.com/funnycoderstar/blog/issues/156)
+
+[阮一峰](http://www.ruanyifeng.com/blog/archives.html)
 
 

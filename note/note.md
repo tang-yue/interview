@@ -98,7 +98,6 @@ https://zhuanlan.zhihu.com/p/23155051
 
 https://segmentfault.com/a/1190000006879700
 
-
 ### 5、vue 的响应式原理
 
 [vue 面试题](https://www.zhihu.com/search?type=content&q=vue)

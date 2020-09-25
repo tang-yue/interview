@@ -240,12 +240,14 @@ order flex-grow (放大) flex-shrink (缩小)  flex-basis  flex align-self
 
 ### 三栏布局
 
-[参考文章](https://juejin.im/post/6844903826885967880)
+[代码参考](./three-column.html)
 
 1. 第一种方式：通过左边向左浮动，右边向右浮动，中间部分创建bfc
 2. 第二种方式：左，中，右，设置绝对定位，左边left,0，右边right:0, 中间 left right, 等于左右的宽， 缺点脱离文档流
 3. 第三种方式：通过 display: flex，center 部分flex-grow 占据剩余部分 
 4. 第四种方式： 左，中，右 table-cell 父级 table
+
+[参考文章](https://juejin.im/post/6844903826885967880)
 
 ## position 的几个属性，以及解释
 
