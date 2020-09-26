@@ -1,8 +1,6 @@
 
 ## CSS 盒模型详解
 
-起源于 回答错误
-
 盒模型 分为IE盒模型和W3C 标准盒模型
 
 1. W3C 标准盒模型：
@@ -24,6 +22,14 @@
 浏览器都会把盒模型解释为 W3C 盒模型。
 
 [参考文章](https://juejin.im/post/6844903505983963143)
+
+## 块状元素和行内元素
+
+1. 块状元素：div、 p、 h1 ~ h6、ul、ol、dl、li、dd、table、hr、blockquote、address、table、menu、pre，HTML5新增的header、section、aside、footer 等
+
+2. 行内元素：span、img、a、lable、input、abbr （缩写）、em（强调）、big、cite （引用）、i (斜体)、q （短引用）、textarea、select、small、
+
+sub、sup、strong、button
 
 ## 理解BFC原理
 
@@ -152,6 +158,12 @@ BFC 即Block Formatting Contexts （块级格式化上下文）。它是一个�
 </style>
 <div class="wp">
     <div class="box">123123</div>
+</div>
+```
+
+```html
+<div style=” position: absolute; width: 100%; height: 100%;”>
+<div style=”width: 2rem; height:2rem; background-color: red; position: absolute; left: calc(50% - 1rem); top: calc(50% - 1rem)”/>
 </div>
 ```
 

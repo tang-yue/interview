@@ -1,10 +1,27 @@
-## 如何优雅的说 let, const, var 的区别
+## es6 的新特性
 
-1. 只在 let 命令 所在的代码块内有效，块级作用域。 比如for 循环。
+1. let 和const 命令的出现
+2. 解构赋值
+```js
+let [a, b, c] = [1, 2, 3];
+// 相当于 a 为1，b 为2，c 为3
+let { foo, bar } = { foo: 'aaa', bar: 'bbb' }
+```
+3. 字符串，数组，对象的扩展
+4. 箭头函数，promise
+5. 导入模块
+
+[参考文章](https://juejin.im/post/6844903831977852936)
+
+## let, const, var 的区别
+
+1. let和const声明的时候，必须赋值。而 var 不用。var 可以重复声明，let 和const 不可以。
 
 2. let，const 不存在变量提升。
 
-3. const 声明一个只读的常量。
+3. 作用域，var是函数作用域，let，const 是块级作用域
+
+4. const 常量不可以修改，但是const 是一个对象，就可以被修改。
 
 [参考文章](https://es6.ruanyifeng.com/#docs/let)
 

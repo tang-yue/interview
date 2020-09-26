@@ -39,4 +39,6 @@ leetcode 高频题精选
 
 [阮一峰](http://www.ruanyifeng.com/blog/archives.html)
 
+[vue 面试题汇总](https://juejin.im/post/6876002080235274247#heading-2)
+
 

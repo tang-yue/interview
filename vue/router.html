@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="hash.js"></script>  <!-- hash 模式 -->
+    <!-- <script src="history.js"></script>     history 模式 -->
+</head>
+<body>
+    <button id="btn">点击跳转 list</button>
+    <div id="list"></div>
+    <script>
+        var router = new Router();
+
+        router.add('/list', function() {
+            let list = document.getElementById('list');
+            list.innerHTML = 'list'
+        })
+
+        router.add('/detail', function() {
+
+        })
+
+        router.listen()
+
+        var btn = document.getElementById('btn')
+        
+        btn.addEventListener('click', function (e) {
+            router.replace('/list')
+        })
+    </script>
+</body>
+</html>

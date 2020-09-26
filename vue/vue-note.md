@@ -37,16 +37,23 @@
 1. proxy 可以直接监听对象而非属性，并返回一个新对象，而 Object.defineProperty() 只能劫持对象的属性，我们需要对对象进行深度遍历去对属性进行操作。
 2. proxy 是 es6提供的新特性，兼容性不好，而 Object.defineProperty() 兼容性好，支持 IE9，IE9 以下的版本不兼容。
 3. proxy 可以直接监听数组的变化，而 Object.defineProperty() 只提供了8种检测数组的变化。
+4. Proxy 有多达13种拦截方法，不限于apply，ownKeys，deletePropery、has 等等是 Object.defineProperty不具备的。
 
 ### Vue 的父组件和子组件生命周期钩子执行顺序
 
-原则： 父组件的mounted在子组件mouted之后。
+归类为以下 四种情况
 
-父beforeCreate -> 父 created -> 父 beforeMount -> 子 beforeCreate -> 子created -> 子 beforeMount -> 子 mounted -> 父 mounted
+1. 加载渲染过程：父 beforeCreate -> 父 created -> 父 beforeMount -> 子 beforeCreate -> 子 created -> 子 beforeMount -> 子 mounted -> 父 mounted
 
-子组件更新过程
+2. 子组件更新过程：父 beforeUpdate -> 子 beforeUpdate -> 子 updated -> 父 updated
+
+3. 父组件更新过程：父 beforeUpdate -> 父 updated
+
+4. 父组件销毁过程：父 beforeDestroy -> 子 beforeDestroy -> 子 destroyed -> 父 destroyed
 
 [参考文章](https://www.cnblogs.com/wtsx-2019/p/12411987.html)
+
+[参考文章](https://juejin.im/post/6876002080235274247)
 
 ## vue 中，为什么data是一个方法返回一个对象，而不是直接赋给一个对象
 
@@ -72,7 +79,6 @@ let input = document.getElementById('input');
 let text = document.getElementById('text');
 
 let data = { value: '' };
-
 
 Object.defineProperty(data, 'value', {
   set: function(val) {
@@ -284,78 +290,62 @@ path 给真实的DOM打补丁。
 
 ## 剖析前端路由管理
 
+先定义一个父类 BaseRouter，用于实现Hash 路由和 History 路由的一些共有方法；
+
+基本的前端路由提供以下功能
+
+1. 前端Router 可以控制浏览器的history，使得浏览器不会在URL发生改变时刷新整个页面。
+2. 前端Router 需要维护一个 URL 历史栈，通过这个栈可以返回之前的页面，进入下一个页面。
+
+hash 模式
+
+hash 值变化，不会刷新页面，也就是浏览器不会向服务器发送请求，但会触发hashchange 事件，通过监听这个事件，可以根据不同hash渲染不同视图。
+
+history 模式
+
+在H5中新增了history.pushState() 和 history.replaceState()，分别可以添加和修改历史记录，同时，不会刷新页面，浏览器历史记录的变更会触发
+
+window 的 onpopstate 事件，可以根据这个事件来监听URL的变化。
+
+[参考文章](https://zhuanlan.zhihu.com/p/116023681)
+
 [参考文章](https://juejin.im/post/6844903906024095751)
 
 [vue routre 原理](https://www.zhihu.com/search?type=content&q=vue%20router%20%E5%8E%9F%E7%90%86)
 
-先定义一个父类 BaseRouter，用于实现Hash 路由和 History 路由的一些共有方法；
-
-```js
-export class BaseRouter {
-  // list 表示路由表
-  constructor(list) {
-    this.list = list;
-  }
-  // 页面渲染函数
-  render(state) {
-    let ele = this.list.find(ele => ele.path === state);
-    ele = ele ? ele : this.list.find(ele => ele.path === '*')  // 比如 404 页面
-    ELEMENT.innerText = ele.component;
-  }
-}
-```
-
-```js
-export class HashRouter extends BaseRouter {
-  constructor(list) {
-    super(list);
-    this.handler();
-    // 监听 hashchange 事件
-    window.addEventListener('hashchange', e => {
-      this.handler()
-    })
-  }
-
-   // hash 改变时，重新渲染页面
-   handler() {
-     this.render((this.getState()))
-   }
-   // 获取 hash 值
-   getState() {
-     const hash = window.location.hash;
-     return hash ? hash.slice(1) : '/'
-   }
-
-   // push 新的页面
-   push(path) {
-    window.location.hash = path;
-   }
-   // 获取默认页 url
-   getUrl(path) {
-     const href = window.location.href;
-     const i = href.indexOf('#');
-     const base = i >= 0 ? href.slice(0, i) : href;
-     return base + '#' + path;
-   }
-
-   // 替换页面
-   replace(path) {
-     window.location.replace(this.getUrl(path))
-   }
-
-   // 前进 or 后退浏览历史
-   go(n) {
-     window.history.go(n)
-   }
-}
-```
-
-## vue router 解读
-
-[参考文章](https://github.com/careteenL/vue-router)
-
 ## vuex 简述
 
+Vuex 是一个专门为Vue.js 应用程序开发的状态管理模式。每一个Vuex应用的核心就是store (仓库)。”store“基本上就是一个容器，它包含着你的应用中
+大部分的状态 （state）。
+
+1. Vuex 的状态存储是响应式的。当Vue 组件从store 中读取状态的时候，若store 中的状态发生变化，那么相应的组件也会相应地得到高效更新。
+
+2. 改变 store 中的状态的唯一途径就是显式地提交(commit) mutation。这样使得我们可以方便地跟踪每一个状态的变化。
+
+主要包括以下几个模块
+
+1. State：定义了应用状态的数据结构，可以在这里设置默认的初始状态。
+2. Getter：允许组件从Store 中获取数据，mapGetters 辅助函数仅仅是将store 中的getter 映射到局部计算属性。
+3. Mutatio：是唯一更改store中状态的方法，且必须是同步函数。
+4. Action：用于提交mutation，而不是直接变更状态，可以包含任意异步操作。
+5. Module：允许将单一的Store 拆分为多个store且同时保存在单一的状态树中。
+
+## vue 和 react 的区别
+
+1. 相同点：
+- 数据驱动页面，提供响应式的视图组件
+- 都有virtual DOM，组件化的开发，通过props参数进行父子之间组件传递数据，都实现了webComponents规范
+- 数据流动单向，都支持服务器的渲染SSR
+- 都有支持native的方法，react 有React native，vue 有wexx
+
+2. 不同点：
+- 数据绑定：Vue 实现了双向的数据绑定，react数据流动单向的
+- 数据渲染：大规模的数据渲染，react更快
+- 使用场景：React配合Redux架构适合大规模多人协作复杂项目，Vue适合小块的项目
+- 开发风格：React 推荐做法 jsx + inline style 把html 和css 都写在js了；vue 是采用webpack + vue-loader 单文件组件格式，html,js,css 同一个文件
+
+[参考文章](https://juejin.im/post/6876002080235274247#heading-7)
+          
 
 
 

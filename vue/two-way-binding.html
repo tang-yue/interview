@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <input id="input" />
+        <span id="show"></span>
+    </div>
+    <script>
+        const data = {};
+        const input = document.getElementById('input');
+        Object.defineProperty(data, 'text', {
+            configurable: true,
+            get: function() {
+                return document.getElementById('input').value
+            },
+            set: function(newValue) {
+                document.getElementById('input').value = newValue;
+                document.getElementById('show').innerHTML = newValue;
+            }
+        });
+        input.onchange = function(e) {
+            data.text = e.target.value;
+        }
+    </script>
+</body>
+</html>
