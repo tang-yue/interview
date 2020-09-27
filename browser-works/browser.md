@@ -1,11 +1,4 @@
 
-
-笔记
-
-HTTP 请求分为三个部分： TCP 三次握手、http 请求响应信息、关闭 TCP 连接
-
-相关面试题
-
 ## 输入url到页面呈现发生了什么
 
 + DNS 解析：将域名解析成IP地址
@@ -16,6 +9,7 @@ HTTP 请求分为三个部分： TCP 三次握手、http 请求响应信息、�
 + 断开连接：TCP 四次挥手
 
 [参考文章](https://zhuanlan.zhihu.com/p/57895541)
+
 [参考文章](https://github.com/impeiran/Blog/issues/3)
 
 ## 浏览器的渲染过程
@@ -64,44 +58,20 @@ js
 
 [参考文章](https://juejin.im/post/6844904160329285639)
 
-## TCP 三次握手 和 四次挥手
-
-客户端发起连接请求=》服务器确认连接请求=》客户端确认收到确认连接请求=》服务器等待接收请求、客户端发送请求
-
-建立连接--三次握手
-
-1. 主机向服务器发送一个建立连接的请求 （您好，我想认识您）
-2. 服务器接到请求后发送同意连接的信号  （好的，很高兴认识您）
-3. 主机接到同意连接的信号后，再次向服务器发送了确认信号（我也很高兴认识您），自此，主机与服务器两者建立了连接。
-
-说明：
-采用tcp协议，保证信息传输的可靠性，三次握手过程中，若一方收不到确认信号，协议会要求重新发送信号。
-
-断开连接--四次挥手
-
-1. 主机向服务器发送一个断开连接的请求 （不早了，我该走了）
-2. 服务器接到请求后发送确认收到请求的信号（知道了）
-3. 服务器向主机发送断开通知（我也该走了）
-4. 主机接到断开通知后断开连接并反馈一个确认信号（嗯，好的），服务器收到确认信号后断开连接。
-
 ## Event Loop
 
 js 是 单线程的， 有了Event Loop 的加持， JS 才能非阻塞地运行。
 
-
 同步任务指的是：在主线程上排队执行的任务，只有前一个任务执行完毕，才能执行后一个任务
 异步任务指的是：不进入主线程，而是进入任务队列，通过Event Loop 机制等待合适的时间调用
-
 
 流程图如下：
 
 ![event-loop](https://tang-yue.github.io/interview/promise/event-loop.jpg)
 
-
 总结：
 
 先执行宏任务，后执行微任务，同步任务立即执行，异步任务将回调函数放入Event Queue等待下一轮事件循环
-
 
 具体流程：
 
@@ -121,11 +91,9 @@ js 是 单线程的， 有了Event Loop 的加持， JS 才能非阻塞地运行
 
 8、重复第3～7个步骤
 
-9、重复3～7 步骤
-
-
 [参考文章](https://zhuanlan.zhihu.com/p/165149415)
 
+[Node.js 事件循环](https://zhuanlan.zhihu.com/p/161557376)
 
 ## 浏览器安全
 
@@ -133,7 +101,7 @@ js 是 单线程的， 有了Event Loop 的加持， JS 才能非阻塞地运行
 
 #### 什么是XSS攻击
 
-  XSS 攻击是指黑客往 HTML 文件中或者 DOM 中注入恶意脚本，从而在用户浏览页面时利用注入的恶意脚本对用户实施攻击的一种手段。
+  XSS 攻击：跨站脚本攻击，是指黑客往 HTML 文件中或者 DOM 中注入恶意脚本，从而在用户浏览页面时利用注入的恶意脚本对用户实施攻击的一种手段。
 
 #### 危害
 
@@ -201,9 +169,7 @@ Cookie 数据正常发送
 在浏览器向服务器发起请求时，服务器生成一个 CSRF Token。CSRF Token  其实就是服务器生成的字符串，然后将该字符串植入到返回的页面中。
 在浏览器端如果要发起转账的请求，那么需要带上页面中的 CSRF Token，然后服务器会验证该Token是否合法。
 
-
 [浏览器工作原理与实践](https://time.geekbang.org/column/intro/216)
-
 
 ## 什么是同源策略
 
@@ -260,7 +226,6 @@ sessionStorage 把表单页面拆分成多个子页面，然后按步骤引导�
 任何数据都不能放在以上三种中，需要时刻注意是否有代码存在xss注入的风险。
 因为只要打开控制台，你就随意修改它们的值，也就是说如果你的网站中有xss的风险，它们就能对你的localStorage 肆意妄为。
 
-
 ## 浏览器缓存
 
 ### 浏览器缓存机制
@@ -275,7 +240,6 @@ sessionStorage 把表单页面拆分成多个子页面，然后按步骤引导�
 
 4. 当协商缓存也没有命中的时候，浏览器直接从服务器加载资源数据。
 
-
 ### 强缓存
 
 `Cache-Control: max-age=315360000` 这是一个相对时间，在配置缓存的时候，以秒为单位，根据它第一次的请求时间和Cache-Control 设定的有效期，计算出一个资源过期时间。
@@ -284,7 +248,7 @@ sessionStorage 把表单页面拆分成多个子页面，然后按步骤引导�
 
 ### 协商缓存
 
-+ 【Last-Modified, If-Modified-Since】 这对 Header 控制缓存
++ 【If-Modified-Since，last-modified】 这对 Header 控制缓存
 
   - 1、浏览器第一次跟服务器请求一个资源，服务器在返回这个资源的同时，在response的header 加上 Last-Modified，表示这个资源在服务器上的最后修改时间。
 
@@ -296,20 +260,32 @@ sessionStorage 把表单页面拆分成多个子页面，然后按步骤引导�
 
   - 5. 如果协商缓存没有命中，浏览器直接从服务器加载资源时，Last-Modified Header 在重新加载的时候会被更新，下次请求时，If-Modified-Since会启用上次返回的 Last-Modified 值。
 
-+ 【ETag、If-None-Match】 这对 header
++ 【if-none-match, etag】 这对 header
 
     相同的原理
 
-
 Etag 和 Last-Modified 相似，但是 ETag 相对 Last-Modified 也有其优势，可以更加准确的判断文件内容是否被修改。（因为会存在服务器上资源有变化，但是修改时间却没有变化的情况）
 
-
 流程图如下：
-
 
 ![browser-cache](https://tang-yue.github.io/interview/browser-works/browser-cache.png)
 
 [参考文章](https://juejin.im/post/6844903672556552205)
+
+### 页面渲染的过程中，执行了哪些事件
+
+1、页面加载开始，首先肯定是先发出加载资源的请求，加载未完成之前，不触发任何事件。
+
+2、document加载结束并解析，此时css等其他资源未加载完成
+
+此时 readyState 为 'interactive'，表明document已经load并解析完成，触发readystatechange，然后触发DOMContentLoaded，捎带提一句，此时
+加载完成且带有defer标记的脚本，会按顺序开始执行
+
+3、css、img 等子资源加载完成之后
+
+此时触发window.load 事件
+
+4、点击关闭标签或者刷新时，会依次触发beforeunload、unload 事件
 
 
 

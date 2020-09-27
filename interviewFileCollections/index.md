@@ -41,4 +41,6 @@ leetcode 高频题精选
 
 [vue 面试题汇总](https://juejin.im/post/6876002080235274247#heading-2)
 
+[vue 面试题](https://juejin.im/post/6876327630212169735#heading-14)
+
 

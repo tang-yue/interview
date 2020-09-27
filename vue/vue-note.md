@@ -336,12 +336,12 @@ Vuex 是一个专门为Vue.js 应用程序开发的状态管理模式。每一�
 - 数据驱动页面，提供响应式的视图组件
 - 都有virtual DOM，组件化的开发，通过props参数进行父子之间组件传递数据，都实现了webComponents规范
 - 数据流动单向，都支持服务器的渲染SSR
-- 都有支持native的方法，react 有React native，vue 有wexx
+<!-- - 都有支持native的方法，react 有React native，vue 有wexx 这条感觉也不用 -->
 
 2. 不同点：
 - 数据绑定：Vue 实现了双向的数据绑定，react数据流动单向的
 - 数据渲染：大规模的数据渲染，react更快
-- 使用场景：React配合Redux架构适合大规模多人协作复杂项目，Vue适合小块的项目
+<!-- - 使用场景：React配合Redux架构适合大规模多人协作复杂项目，Vue适合小块的项目  这条感觉不同吧 -->
 - 开发风格：React 推荐做法 jsx + inline style 把html 和css 都写在js了；vue 是采用webpack + vue-loader 单文件组件格式，html,js,css 同一个文件
 
 [参考文章](https://juejin.im/post/6876002080235274247#heading-7)
