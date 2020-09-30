@@ -465,7 +465,6 @@ function all(list) {
 
 ### 手写 call, bind, apply
 
-
 > 手写 call
 
 思路:
@@ -532,8 +531,11 @@ function new() {
 ```
 
 ### 数组排平
+
 输入： [1,[[2], 3, 4],5]
 返回： [1,2,3,4,5]
+
+1. 第一种 全拉平
 
 ```js
 const flatten = (arr) => {
@@ -547,6 +549,21 @@ const flatten = (arr) => {
   }
   return res;
 }
+```
+
+2. 第二种 通过传入整数参数控制'拉平'层数
+
+```js
+// reduce + 递归
+function flat(arr, num = 1) {
+  return num > 0
+  ? arr.reduce((pre, cur) => pre.concat(Array.isArray(cur) ? flat(cur, num-1) : cur), []
+  ) : arr.slice();
+}
+
+// 全展开 执行
+
+flat(arr, Infinity)
 ```
 
 ### 手写双向绑定

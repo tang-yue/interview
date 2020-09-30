@@ -149,7 +149,15 @@ apply 接收的是数组，并会立即执行
 call  接收的是用逗号隔开的参数，并会立即执行
 bind  接收的是用逗号隔开的参数，但是不会立即执行，而是返回一个新的函数
 
+## 原型对象和构造函数有何关系?
+
+1. 在JavaScript中，每当定义一个函数数据类型（普通函数、类）时候，都会天生自带一个prototype属性，这个属性指向函数的原型对象。
+
+2. 当函数经过new调用时，这个函数就成为了构造函数，返回一个全新的实例对象，这个实例对象有一个_proto_属性，指向构造函数的原型对象。
+
 ## 说一下 原型链
+
+1. 首先要明白实例的proto属性与构造函数的
 
 流程图：
 
@@ -236,7 +244,7 @@ function SubType() {
 
 SubType.prototype = new SuperType()  // 将实例挂载上去
 
-subType.prototype.getSubValue = function () {
+SubType.prototype.getSubValue = function () {
     return this.subproperty
 }
 
@@ -274,7 +282,6 @@ instance1.colors // ['red', 'blue', 'green', 'yellow'] 被改变了
 ### 借用构造函数
 
 思想：子类型构造函数的内部调用超类型构造函数。
-
 
 ```js
 
@@ -316,7 +323,6 @@ instance.age = 29
 问题：
 
 1. 方法都在函数中定义，导致函数无法复用。
-
 
 ### 组合继承
 
@@ -427,6 +433,3 @@ anotherPerson = sayHi();  // ‘hi’
 ## EventEmitter 简单实现
 
 [参考文章](https://www.jianshu.com/p/45994e03ac33)
-
-
-
