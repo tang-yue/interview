@@ -275,5 +275,13 @@ order flex-grow (放大) flex-shrink (缩小)  flex-basis  flex align-self
 
 [参考文章](https://developer.mozilla.org/zh-CN/docs/Web/CSS/position)
 
+## svg 和 canvas 的区别
 
+相同点：都是有效的图形工具；都使用javascript和html；都遵守万维网联合会（W3C）标准。
+
+svg： 矢量图，不依赖于像素，无限放大后不会失真；以dom的形式表示，事件绑定由浏览器直接分发到节点上；dom形式，涉及到动画时候需要更新dom, 性能较低。
+
+canvas：定制型更强，可以绘制自己想要的东西；非dom结构形式，用JavaScript进行绘制，涉及到动画性能较高；事件分发由canvas处理，绘制的内容的事件需要自己做处理；依赖于像素，无法高效保真，画布较大时候性能较低。
+
+[参考文章](https://juejin.im/post/6844903715669999629#heading-10)
 

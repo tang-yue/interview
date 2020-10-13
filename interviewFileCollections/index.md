@@ -43,4 +43,7 @@ leetcode 高频题精选
 
 [vue 面试题](https://juejin.im/post/6876327630212169735#heading-14)
 
+[面试题](https://juejin.im/post/6876327630212169735)
+
+[面试题](https://segmentfault.com/a/1190000027083997)
 

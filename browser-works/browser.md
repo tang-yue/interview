@@ -246,6 +246,13 @@ sessionStorage 把表单页面拆分成多个子页面，然后按步骤引导�
 
 `Expires`和`Cache-Control`同时存在时，Cache-Control 优先级高于Expires.
 
+Cache-Control 的其他字段
+
+可缓存性：`public: 表明响应可以被任何对象缓存`； `private: 响应只能被单个用户缓存，不能作为共享缓存`；`no-cahe: 协商缓存`
+`no-store: 不缓存`
+
+到期：`max-age=<seconds> 设置缓存存储的最大周期，超过这个时间缓存被认为过期（单位秒）。时间是相对于请求的时间。`
+
 ### 协商缓存
 
 + 【If-Modified-Since，last-modified】 这对 Header 控制缓存

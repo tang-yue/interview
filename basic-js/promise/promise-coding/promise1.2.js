@@ -96,14 +96,14 @@ then(onFulfilled, onRejected) {
 }
 // 内部核心方法 处理， 成功或者失败执行的返回值 和 promise2的关系
 _resolvePromise(promise2, x, resolve, reject) {
-// 有可能这个x 是一个promise 但是 这个 promise 并不是我自己的
-if(promise2 === x) {
-    return reject(new TypeError('Chaining cycle detected for promise'))
-}
-// 不单单需要考虑自己 还有考虑 有可能是别人的promise
+    // 有可能这个x 是一个promise 但是 这个 promise 并不是我自己的
+    if(promise2 === x) {
+        return reject(new TypeError('Chaining cycle detected for promise'))
+    }
+    // 不单单需要考虑自己 还有考虑 有可能是别人的promise
 
-let called;  // 文档要求，一旦成功了，不能调用失败
-if((x !== null && typeof x === 'object') || typeof x === 'function') {
+    let called;  // 文档要求，一旦成功了，不能调用失败
+    if((x !== null && typeof x === 'object') || typeof x === 'function') {
     // 这样只能说 x 可能是一个 promise
     try {
         let then = x.then  // 取 then 方法
@@ -202,6 +202,16 @@ if((x !== null && typeof x === 'object') || typeof x === 'function') {
              })
          })
      }
+
+     // 追加deferred方法以供检查
+     static deferred() {
+        let dfd = {}
+        dfd.promise = new Promise((resolve, reject) => {
+            dfd.resolve = resolve
+            dfd.reject = reject
+        })
+        return dfd
+     }
 }
 
 // 下面是测试用例
@@ -245,13 +255,13 @@ if((x !== null && typeof x === 'object') || typeof x === 'function') {
 // })
 
 
-let p4 = Promise.resolve(100)
-p4.then(data => {
-  throw new Error('error p4')
-}).finally(data => {
-  console.log(`p4 ahhh finally`)
-}).catch(err => {
-  console.log(`p4 err ${err}`)
-})
+// let p4 = Promise.resolve(100)
+// p4.then(data => {
+//   throw new Error('error p4')
+// }).finally(data => {
+//   console.log(`p4 ahhh finally`)
+// }).catch(err => {
+//   console.log(`p4 err ${err}`)
+// })
 
-// module.exports = Promise
+module.exports = Promise
