@@ -293,13 +293,16 @@ SubType.prototype.getSubValue = function () {
 
 var instance = new SubType();
 
-instance.getSuperValue   // true
+instance.getSuperValue()   // true
+
+instance.getSubValue()  // false
 ```
 
 ```js
 // 示例二
 
 function SuperType () {
+    this.name = 'super'
     this.colors = ['red', 'blue', 'green']
 }
 
@@ -311,15 +314,21 @@ SubType.prototype = new SuperType()
 
 instance = new SubType()
 
-instance1 = new SuperType()
+instance1 = new SubType()
 
 instance.colors.push('yellow')
+instance.name = 'sub'
 
 instance1.colors // ['red', 'blue', 'green', 'yellow'] 被改变了
+instance1.name
 
 ```
 问题：
 1. 包含引用类型值的原型属性会被所有实例共享，这也是为什么要在构造函数中，而不是原型对象中定义属性的原因。
+2. 没有办法在不影响所有对象实例的情况下，给超类型的构造函数传递参数
+
+缺点：
+1. 包含引用类型的原型属性会被所有实例共享，如果改变一个实例上的属性，其他实例上的该属性也会被改变
 2. 没有办法在不影响所有对象实例的情况下，给超类型的构造函数传递参数
 
 ### 借用构造函数
@@ -342,7 +351,7 @@ var instance1 = new SubType()
 instance1.colors.push('black');
 instance1.colors // ['red', 'blue', 'green', 'black']
 
-var instance2 = new SuperType()
+var instance2 = new SubType()
 instance2.colors // ['red', 'blue', 'green']
 ```
 
@@ -350,6 +359,7 @@ instance2.colors // ['red', 'blue', 'green']
 // 可以传递参数
 function SuperType(name) {
     this.name = name;
+    this.height = 20;
 }
 
 function SubType() {
@@ -433,9 +443,10 @@ var yetAnotherPerson = Object.create(person)
 
 ```js
 function createAnother(original) {
-    var clone = object(original);   // 这里不理解，通过调用函数创建一个新对象
+    var clone = Object.create(original);   // 这里不理解，通过调用函数创建一个新对象
     clone.sayHi = function() {      // 以某种方式来增强这个对象
-        alert('hi')
+        // alert('hi')
+        console.log('hi')
     };
     return clone;
 }
@@ -449,10 +460,65 @@ var person = {
 
 var anotherPerson = createAnother(person);
 
-anotherPerson = sayHi();  // ‘hi’
+anotherPerson.sayHi();  // ‘hi’
 ```
 
 ### 寄生组合式继承
+
+高程上好像没有具体写。
+
+补充一个
+
+寄生式 + 构造函数 + 原型链 的组合
+
+```js
+function inherit(child, parent) {
+    // 继承父类的原型
+    const p = Object.create(parent.prototype)
+    // 重写子类的原型
+    child.prototype = p;
+    // 重写被污染的子类的constructor
+    p.constructor = child;
+}
+
+function parent(name, age) {
+    this.age = age;
+    this.name = name;
+}
+
+parent.prototype.info = function () {
+    return this.name + '年龄' + this.age
+}
+
+parent.prototype.getName = function () {
+    return '哈哈 我要返回 age' + this.age
+}
+
+function child(name, age) {
+    parent.call(this, name, age) // 继承属性
+    this.height = 160
+}
+
+// 实现原型上的方法
+inherit(child, parent)
+
+// 在原型上添加新方法
+
+child.prototype.getName = function () {
+    return this.name
+}
+
+const child1 = new child('child1', 10)
+
+const parent1 = new parent('parent1', 20)
+
+console.log(child1.name, child1.age, child1.getName()) // child1 10 child1
+
+console.log(parent1.name, parent1.age, parent1.info(), parent1.getName()) // parent1 20 parent1年龄20 哈哈 我要返回 age20
+```
+
+如果子类和父类有同一个方法，那么子类的该用自己的方法，而不用父类的方法
+别的没什么太大的缺陷。
 
 [参考 高级js程序设计书籍]
 [深入JavaScript继承原理](https://juejin.im/post/5a96d78ef265da4e9311b4d8)
@@ -479,7 +545,136 @@ anotherPerson = sayHi();  // ‘hi’
 
 ## await/async 的底层原理
 
-
 [手写async await 的最简实现 20行](https://juejin.im/post/6844904102053281806)
+
+async 关键词有两个作用
+
+1. Makes it always return a promise
+2. Allows await to be used it
+
+The await keyword before a promise makes JavaScript wait until that promise settles, and then:
+
+1. if it's an error, the exception is generated -- same as if throw error were called at that very place;
+2. Otherwies, it returns the result.
+
+
+### async functions
+
+
+```js
+async function f() {
+    return 1;
+}
+
+f().then(alert); // 1
+```
+
+```js
+async function f() {
+    return Promise.resolve(1);
+}
+f().then(alert)   // 1
+```
+
+### await functions
+
+```js
+async function f() {
+
+  let promise = new Promise((resolve, reject) => {
+    setTimeout(() => resolve("done!"), 1000)
+  });
+
+  let result = await promise; // wait until the promise resolves (*)
+
+  alert(result); // "done!"
+}
+
+f();
+```
+
+### Error handling
+
+```js
+async function f() {
+  await Promise.reject(new Error("Whoops!"));
+}
+```
+
+```js
+async function f() {
+  throw new Error("Whoops!");
+}
+```
+
+try catch
+
+```js
+async function f() {
+
+  try {
+    let response = await fetch('http://no-such-url');
+  } catch(err) {
+    alert(err); // TypeError: failed to fetch
+  }
+}
+
+f();
+```
+
+### await promise.all
+
+```js
+let results = await Promise.all([
+  fetch(url1),
+  fetch(url2),
+  ...
+]);
+```
+
+async/await 语法糖 就是使用 Generator 函数 + 自动执行器来运作的，参考以下例子
+
+```js
+// 定义了一个promise，用来模拟异步请求，作用是传入参数 ++
+
+function getNum(num) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(num+1)
+        }, 1000)
+    })
+}
+
+// 自动执行器，如果一个 Generator 函数没有执行完， 则递归调用
+
+function asyncFun(func) {
+    var gen = func();
+
+    function next(data) {
+        var result = gen.next(data);
+        if(result.done) return result.value;
+        result.value.then(function(data) {
+            next(data);
+        })
+    }
+
+    next();
+}
+
+// 所需要执行的Generator 函数，内部的数据在执行完成一步的promise 之后，再调用下一步
+
+var func = function* () {
+    var f1 = yield getNum(1);
+    var f2 = yield getNum(f1);
+    console.log(f2);
+}
+
+asyncFun(func)
+```
+
+但是我看上面，并没有实现一个 async/await 呀，其实就是 babel 对 async 函数的实现思路
+
+[async/await 原理及简单实现](https://juejin.im/post/6844903840303546382)
+
 
 

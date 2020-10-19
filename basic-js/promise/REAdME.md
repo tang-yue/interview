@@ -33,7 +33,7 @@ MutationObserver: MO 是 HTML5 中的新API，是个用来监视DOM变动的接�
 
 [手动 实现 promise.all](./api-promise-all.js)
 
-[参考文章](https://juejin.im/post/6844904182017687559)
+[promise.all 参考文章](https://juejin.im/post/6844904182017687559)
 
 
 

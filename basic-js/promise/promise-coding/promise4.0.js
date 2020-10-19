@@ -18,7 +18,7 @@ class AjPromise {
           this.state = FULFILLED;
           this.value = value;
           this.onFulfilledCallbacks.map(cb => {
-            cb = cb(this.value);
+            cb(this.value);
           });
         }
       });
@@ -29,7 +29,7 @@ class AjPromise {
           this.state = REJECTED;
           this.reason = reason;
           this.onRejectedCallbacks.map(cb => {
-            cb = cb(this.reason);
+            cb(this.reason);
           });
         }
       });
@@ -99,6 +99,7 @@ class AjPromise {
     return this.then(null, onRejected);
   }
 }
+
 function resolvePromise(promise2, x, resolve, reject) {
   if (x === promise2) {
     reject(new TypeError('循环引用'));
@@ -117,7 +118,7 @@ function resolvePromise(promise2, x, resolve, reject) {
       x.then(resolve, reject);
     }
   } else if (x && (typeof x === 'function' || typeof x === 'object')) {
-    let called = false;
+    let called = false; // 避免多次调用，？？
     try {
       let then = x.then;
       if (typeof then === 'function') {
@@ -142,46 +143,46 @@ function resolvePromise(promise2, x, resolve, reject) {
       called = true;
       reject(e);
     }
-  } else {
+  } else {   // 说明是一个普通对象/函数
     resolve(x);
   }
 }
 
-AjPromise.all = function(promises) {
-  return new AjPromise((resolve, reject) => {
-    let done = gen(promises.length, resolve);
-    promises.forEach((promise, index) => {
-      promise.then(value => {
-        done(index, value);
-      }, reject);
-    });
-  });
-};
+// AjPromise.all = function(promises) {
+//   return new AjPromise((resolve, reject) => {
+//     let done = gen(promises.length, resolve);
+//     promises.forEach((promise, index) => {
+//       promise.then(value => {
+//         done(index, value);
+//       }, reject);
+//     });
+//   });
+// };
 
-function gen(length, resolve) {
-  let count = 0;
-  let values = [];
-  return function(i, value) {
-    values[i] = value;
-    if (++count === length) {
-      resolve(values);
-    }
-  };
-}
+// function gen(length, resolve) {
+//   let count = 0;
+//   let values = [];
+//   return function(i, value) {
+//     values[i] = value;
+//     if (++count === length) {
+//       resolve(values);
+//     }
+//   };
+// }
 
-AjPromise.race = function(promises) {
-  return new AjPromise((resolve, reject) => {
-    for (var i = 0; i < promises.length; i++) {
-      promises[i].then(resolve, reject);
-    }
-  });
-};
-AjPromise.resolve = function(value) {
-  return new AjPromise((resolve, reject) => resolve(value));
-};
-AjPromise.reject = function(reason) {
-  return new AjPromise((resolve, reject) => reject(reason));
-};
+// AjPromise.race = function(promises) {
+//   return new AjPromise((resolve, reject) => {
+//     for (var i = 0; i < promises.length; i++) {
+//       promises[i].then(resolve, reject);
+//     }
+//   });
+// };
+// AjPromise.resolve = function(value) {
+//   return new AjPromise((resolve, reject) => resolve(value));
+// };
+// AjPromise.reject = function(reason) {
+//   return new AjPromise((resolve, reject) => reject(reason));
+// };
 
 AjPromise.deferred = function() {
   let defer = {};
