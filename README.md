@@ -18,8 +18,6 @@
 
 [基础js 相关](./basic-js)
 
-[有关promise](./promise)
-
 ## webpack
 
 [深入浅出 Webpack 书籍笔记及webpck-demo](./webpack) (8月6日)
@@ -42,9 +40,9 @@
 
 ## coding
 
-[一步一步手写promise](.promise/promise-note.md)
+[一步一步手写promise](./basic-js/promise/promise-note.md)
 
-[深拷贝 (map set function symbol object, array)](./coding/deepClone1.js)
+[手写 coding](./basic-js/coding)
 
 [手写简版koa](./koa)
 

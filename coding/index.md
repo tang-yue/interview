@@ -107,7 +107,7 @@ arr.concat()
 
 需要兼容 set、map、symbol、object
 
-```
+```js
 const mapTag = '[object Map]';
 const setTag = '[object Set]';
 const arrayTag = '[object Array]';
@@ -118,10 +118,10 @@ const symbolTag = '[object Symbol]'
 
 const deepTag = [mapTag, setTag, arrayTag, objectTag]
 
-function isObject(target) {
-    const type = typeof target
-    return type !== null &&(type === 'object' || type === 'function')
-}
+// function isObject(target) {
+//     const type = typeof target
+//     return type !== null &&(type === 'object' || type === 'function')
+// }
 
 function getType(target) {
     return Object.prototype.toString.call(target)
@@ -132,15 +132,16 @@ function getInit(target) {
     return new Ctor()
 }
 
-function clone(target, map = new Map()) {
+function clone(target, map = new WeakMap()) {
 
     // 克隆原始类型
-    if(!isObject(target)) {
+    if(typeof target !== 'object') {
         return target;
     }
 
     // 初始化
     const type = getType(target);
+
     let cloneTarget;
 
     if(deepTag.includes(type)) {
@@ -208,6 +209,7 @@ const target = {
     set,
     symbol: Symbol(42)
 };
+
 console.log(clone(target))
 ```
 

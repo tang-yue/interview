@@ -263,9 +263,48 @@ console.log(Function.prototype.__proto__ === Object.prototype)  // true
 
 ## for of 和 for in 的区别
 
-for in 遍历对象 [[[[ 遍历字符串 key ===> 0 1 2 3 ]]]]
+for in 遍历对象 [[[[ 遍历字符串 key ===> 0 1 2 3 ]]]] 数组
 
 for of 数组， 类对象，遍历字符串
+
+## js 对象遍历
+
+```js
+// 可枚举属性
+
+let obj = { a: 1 } 
+
+// 不可枚举属性
+Object.defineProperty(obj, 'b', {
+    enumerable: false,
+    value: 2
+})
+
+// 添加原型链属性
+Object.prototype.c = 3
+
+// 下面用三种方法进行测试
+
+// for...in
+
+for(var key in obj) {
+    console.log(key, obj[key])  // a 1 c 3
+}
+
+// for...in 会遍历对象本身的，以及原型链上的所有可枚举属性
+
+// Object.keys
+
+console.log(Object.keys(obj)) // ['a']
+
+// Object.keys 只会遍历对象本身的可枚举属性，不会遍历原型链上的属性
+
+console.log(Object.getOwnPropertyNames(obj)) // ['a', 'b']
+
+// Object.getOwnPropertyNames 会遍历对象的所有属性，不会遍历原型链上的属性
+```
+
+[参考文章](https://juejin.im/post/6844904161453015054)
 
 ## javascript 继承方式
 

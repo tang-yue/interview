@@ -196,4 +196,321 @@ function throttle (fn, wait=300) {
 }
 ```
 
+### 冒泡排序
+
++ 冒泡排序 只会操作相邻的两个数据。
++ 每次冒泡操作都会对相邻的两个元素进行比较，看是否满足大小要求。如果不满足就让它俩互换
+
+```js
+function bubbleSort(arr) {
+    if(arr.length <= 1) return arr;
+
+    for(let i = 0; i < arr.length; i++) {
+        for(let j = i; j < arr.length; j++) {
+            if(arr[j] <= arr[i]) {
+                let temp;
+                temp = arr[j];
+                arr[j] = arr[i];
+                arr[i] = temp;
+            }
+        }
+    }
+    return arr;
+}
+```
+
+
+### 快速排序
+
+思路：
+
++ 先找到一个基准点（一般指数组的中部），然后数组被该基准点分为两个部分，依次与该基准点数据比较，如果比它小，放左边；反之，放右边。
++ 左右分别用一个空数组去存储比较后的数据。
++ 最后递归执行上述操作，直到数组长度 <= 1
+
+```js
+function quickSort(arr) {
+    
+    if(arr.length <=1) return arr;
+    let index = arr.length/2;
+    
+    let middleValue = arr.splice(index, 1)
+
+    let left = [];
+    let right = [];
+
+    for(let i = 0; i < arr.length; i++) {
+        if(arr[i] >= middleValue) {
+            right.push(arr[i])
+        } else {
+            left.push(arr[i])
+        }
+    }
+    return quickSort(left).concat(middleValue, quickSort(right))
+}
+```
+
+### 手写 虚拟 dom
+
+```js
+class VNode {
+  constructor(tagName, props, children) {
+    this.tagName = tagName;
+    this.props = props;
+    this.children = children;
+  }
+}
+
+const h = function (t, p, c) {
+  return new VNode(t, p, c)
+}
+```
+
+[思路过程](./../vue/vue-note.md)
+
+
+### 手写 深拷贝和浅拷贝
+
+#### 浅拷贝
+
+创建一个新对象，这个对象有着原始对象属性值的一份精确拷贝。如果属性是基本类型，拷贝的就是基本类型的值，如果属性是引用类型，拷贝的就是内存地址，所以如果其中一个对象改变了这个地址，就会影响到另一个对象。引用类型属性是共享同一个内存地址。
+
+
+```js
+arr.slice()
+arr.concat()
+```
+
+实现
+
+```js
+var shallowCopy = function(obj) {
+    // 只拷贝对象
+    if(typeof obj !== 'object') return obj;
+    var newObj = obj instanceof Array ? [] : {};
+    // 遍历obj，并且判断是 obj 的属性才拷贝
+    for(var key in obj) {
+        if(obj.hasOwnPropery(key)) {
+            newObj[key] = obj[key]
+        }
+    }
+    return newObj;
+}
+```
+
+举例说明：
+
+```js
+var arr = ['old', 1, true, ['old1', 'old2'], {old: 1}]
+
+// 用上面的方法进行拷贝得到 new_arr
+
+var new_arr = shallowCopy(arr);
+
+arr[3][0] = 'old3'
+
+console.log(arr, new_arr) // 发现 arr  和 new_arr  都被改变了
+```
+
+#### 深拷贝
+
+将一个对象从内存中完整的拷贝一份出来，从堆内存中开辟一个新的区域存放新对象，且修改新对象不会影响原对象。引用类型属性不是共用同一个内存地址。
+
+
+### 第一种方式
+
+```js
+JSON.parse(JSON.stringify())
+```
+存在弊端：
+
+1. 不能拷贝其他引用类型 如 map set
+2. 不能拷贝函数
+3. 不能循环引用
+
+### 第二种方式
+
+```js
+// 再重新默写一下  clone
+
+let arrayTag = '[object Array]';
+
+let setTag = '[object Set]';
+
+let mapTag = '[object Map]';
+
+let objectTag = ['object Object'];
+
+let objTag = [arrayTag, setTag, mapTag, objectTag];
+
+let symbolTag = '[object Symbol]';
+
+function getType(target) {
+    return Object.prototype.toString.call(target)
+}
+
+function init(target) {
+    const Ctor = target.constructor;
+    return new Ctor()
+}
+
+function clone(target, map = new WeakMap()) {
+
+    // 克隆原始类型
+
+    if(typeof target !== 'object') {
+        return target;
+    }
+
+    // 初始化
+
+    const type = getType(target);
+
+    let cloneTarget;
+
+    if(objTag.includes(type)) {
+        cloneTarget = init(target)
+    }
+
+
+    // 防止循环引用出错
+
+    if(map.get(target)) {
+        return map.get(target)
+    }
+
+    map.set(target, cloneTarget)
+
+    // 克隆 map
+
+    if(type === mapTag) {
+        target.forEach((value, key) => {
+            cloneTarget.set(key, clone(value, map))
+        })
+        return cloneTarget
+    }
+
+     // 克隆 set
+
+    if(type === setTag) {
+        target.forEach((value) => {
+            cloneTarget.add(clone(value, map))
+        })
+        return cloneTarget
+    }
+
+    // 克隆 symbol
+
+    if(type === symbolTag) {
+        return Object(String.prototype.valueOf.call(target))
+    }
+   
+    // 克隆对象和数组
+    
+    cloneTarget = typeof target === arrayTag ? [] : {};
+
+    for(var key in target) {
+        cloneTarget[key] = clone(target[key], map)
+    }
+
+    return cloneTarget
+}
+```
+
+```js
+// 测试用例
+
+let map = new Map();
+
+let set = new Set();
+
+let sym = Symbol()
+
+map.set('key', 'value')
+
+set.add('key')
+
+
+let obj = {
+    a: 'a',
+    b: [2,3],
+    map,
+    set,
+    sym: sym
+}
+
+let res = clone(obj);
+
+console.log(res, 'res')
+```
+
+[如何写出一个惊艳面试官的深拷贝](http://www.conardli.top/blog/article/JS%E8%BF%9B%E9%98%B6/%E5%A6%82%E4%BD%95%E5%86%99%E5%87%BA%E4%B8%80%E4%B8%AA%E6%83%8A%E8%89%B3%E9%9D%A2%E8%AF%95%E5%AE%98%E7%9A%84%E6%B7%B1%E6%8B%B7%E8%B4%9D.html)
+
+[参考文章](https://github.com/mqyqingfeng/Blog/issues/32)
+
+[完整版深拷贝代码参考](https://github.com/ConardLi/ConardLi.github.io/blob/master/demo/deepClone/src/clone_6.js)
+
+### 数组拍平
+
+#### 第一种方式
+
+```js
+function flat(arr) {
+    let res = []
+
+    arr.forEach((item) => {
+        if(Array.isArray(item)) {
+            res = res.concat(flat(item))
+        } else {
+            res.push(item)
+        }
+    })
+    return res 
+}
+```
+
+#### 第二种方式
+
+```js
+function flat2(arr, num) {
+    return num > 0 ?
+        arr.reduce((res, value) => {
+            Array.isArray(value) ? res = res.concat(flat2(value, num-1)): res.push(value)
+            return res;
+        }, [])
+    : arr;
+}
+```
+
+```js
+  function flat3(arr, num = 1) {
+    return num > 0
+    ? arr.reduce(
+      (pre, cur) => 
+        pre.concat(Array.isArray(cur) ? flat3(cur, num-1): cur), []
+    ) : arr.slice();
+  }
+```
+
+### 数组去重
+
+```js
+
+Array.from(new Set(arr1));
+
+```
+
+
+```js
+function unique(arr) {
+    return arr.filter((item, index) => arr.indexOf(item) === index)
+}
+```
+
+
+
+
+
+
+
 
