@@ -500,13 +500,266 @@ Array.from(new Set(arr1));
 
 ```
 
-
 ```js
 function unique(arr) {
     return arr.filter((item, index) => arr.indexOf(item) === index)
 }
 ```
 
+### 实现instanceof
+
+typeof 用来检测给定变量的数据类型
+
+typeof 原理：不同的对象在底层都表示为二进制，在Javascript中二进制前（低）三位存储其类型信息。
+
+instanceof 可以判断某个实例是否属于某种类型
+
+举例说明
+
+```js
+[] instanceof Array; // true
+[] instanceof Object; // true
+[] instanceof RegExp; // false
+new Date instanceof Date; // true
+```
+instanceof 可以判断一个实例是否是是父类型或者祖先类型的实例
+
+举例说明
+
+```js
+function Person() {
+
+}
+
+const xiaoming = new Person();
+
+console.log(auto instanceof Person)  // true
+console.log(auto instanceof Object)  // true
+```
+
+实现
+```js
+function _instanceof(L, R) { // L 是左边， R 是右边
+    const O = R.prototype;
+    L = L.__proto__;
+    while(true) {
+        if(L === null) return false;
+        if(L === O) return true;
+        L = L.__proto__;
+    }
+}
+```
+
+### 给定一个字符串数组，请输出先按字符串长度排序，如果长度相等按照ASCII码值排序
+
+例如：`['aaaa', 'bbb', 'cc', 'rrr', 'dd', 'da']`
+
+实现：
+
+```js
+let arr = ['aaaa', 'bbb', 'cc', 'rrr', 'dd', 'da']
+
+const res = arr.sort((a,b) => {
+    if(a.length > b.length) {
+        return 1;
+    }
+    if(a.length < b.length) {
+        return -1;
+    }
+    if(a.length === b.length) {
+        for(var s in a) {
+            if(a.charCodeAt(s) > b.charCodeAt(s)) {
+                return 1;
+            } else {
+                return -1;
+            }
+            return 0;
+        }        
+    }
+})
+
+console.log(res) // [ 'cc', 'da', 'dd', 'bbb', 'rrr', 'aaaa' ]
+```
+
+
+### 给定一个字符串，请统计字符串中出现最多的字母和次数
+
+例如：`aaaabbaa`
+
+```js
+let strArr = [];
+let numArr = [];
+
+function getRes(str) {
+    for(var s of str) {
+        if(strArr.includes(s)) {
+            let i = strArr.indexOf(s);
+            numArr[i] ++;
+        } else {
+            strArr.push(s);
+            numArr.push(1);
+        }
+    }
+    let resObj = []
+
+    numArr.map((item, index) => {
+        resObj.push({str: strArr[index], num: item})
+    })
+
+    resObj.sort((a,b) => b.num - a.num)
+    
+    return resObj[0]   // { str: 'a', num: 6 }
+}
+```
+
+### 数字千分位
+
+js 实现
+
+```js
+function transformNum(num) {
+    // 如果有小数，要保留小数
+    // 转成 string
+    let strNum = num.toString();
+    let index = strNum.indexOf('.');
+
+    // 末尾数是.34
+    let rightStr = strNum.slice(index);
+
+    // 前面的进行分割
+    let leftStr = strNum.slice(0, index);
+    let leftArr = leftStr.split('').reverse();
+
+    // 每隔三位加一个逗号，并且还要是倒过来的
+    let str = ''
+
+    for(let i = 0; i < leftArr.length; i++) {
+        if((i+1)%3 === 0 && i !== leftArr.length -1) {
+            str = str + leftArr[i] + ','
+        } else {
+            str = str + leftArr[i]
+        }
+    }
+
+    return str.split('').reverse().join('') + rightStr
+}
+```
+
+正则表达式实现
+
+```js
+function transformNum1(num) {
+    let parts = num.toString().split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+$)/g, ',')
+    return parts.join('.')
+}
+```
+
+调用全局方法
+
+```js
+function formatNumber2(num) {
+  const parts = num.toString().split('.');
+  parts[0] = Number(parts[0]).toLocaleString()
+  return parts.join('.')
+}
+```
+
+### 最长不含重复字符的子字符串
+
+```js
+function getRes(str) {
+    let arr = [];
+    let lenObjArr = []
+
+    for(let s of str) {
+        if(arr.includes(s)) {
+            lenObjArr.push(arr.join(''))
+            arr = []
+        } else {
+            arr.push(s)
+        }
+    }
+    lenObjArr.push(arr.join(''))
+
+    lenObjArr.sort((a,b) => b.length - a.length)
+
+    return lenObjArr[0]
+}
+
+console.log(getRes('abcdefgeeegbeedgef')) // 'abcdefg'
+```
+
+
+### 简单的验证回文 leetcode 125
+
+实现
+
+```js
+var isPalindrome = function(s) {
+    const str =  s.replace(/[^0-9a-zA-Z]+/g, '').toLowerCase();
+    const len = str.length;
+    
+    for(let i = 0;  i < parseInt(len/2); i++) {
+        console.log(str[i], str[len - i -1])
+        if(str[i] !== str[len - i -1]) {
+            return false
+        }
+    }
+    return true;
+}
+```
+
+第二种简便解法
+
+```js
+var isPalindrome = function(s) {
+    let strArr = s.replace(/[^0-9a-zA-Z]/g, '').toLowerCase().split('');
+    return strArr.join('') === strArr.reverse().join('');
+}
+```
+
+### 验证回文字符串II leetcode 680
+
+给定一个非空字符串 s，最多删除一个字符。判断是否能成为回文字符串。
+
+实现
+
+```js
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+var validPalindrome = function(s) {
+      const str =  s.replace(/[^0-9a-zA-Z]+/g, '').toLowerCase();
+    const len = str.length;
+    
+    for(let i = 0;  i < parseInt(len/2); i++) {
+        if(str[i] !== str[len - i -1]) {
+            let arr = str.split('');
+            let arr2 = str.split('');
+
+            arr.splice(i, 1)
+            arr2.splice(len - i - 1, 1)
+
+            return arr.join('') === arr.reverse().join('') || arr2.join('') === arr2.reverse().join('')
+        }
+    }
+    return true;
+}
+```
+
+### 路径总和 leetcode 112
+
+```js
+
+```
+
+### 二叉树找指定和的路径  剑指offer 34
+
+```js
+
+```
 
 
 

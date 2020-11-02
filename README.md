@@ -42,7 +42,7 @@
 
 [一步一步手写promise](./basic-js/promise/promise-note.md)
 
-[手写 coding](./basic-js/coding)
+[手写 coding](./coding)
 
 [手写简版koa](./koa)
 
