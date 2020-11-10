@@ -1,7 +1,7 @@
 
-[手写new](#手写new)
+[· 手写new](#手写new)
 
-[手写call](#手写call)
+[· 手写call](#手写call)
 
 
 ### <a id="手写new">手写 new</a>
