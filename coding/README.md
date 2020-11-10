@@ -1,6 +1,8 @@
-手写 coding
 
-### 手写 new
+- [手写new](#手写 new)
+- [手写call](#手写 call)
+
+### <a id="手写 new">手写 new</a>
 
 实现思路：
 
@@ -25,7 +27,7 @@ function NEW() {
 
 [参考文章](https://github.com/yy9306/yy9306.github.io/issues/3)
 
-### 手写 call
+### <a id="手写 call">手写 call</a>
 
 实现思路：
 

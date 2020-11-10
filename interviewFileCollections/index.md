@@ -47,3 +47,5 @@ leetcode 高频题精选
 [面试题](https://segmentfault.com/a/1190000027083997)
 
 [音乐](http://iyccd.com)
+
+[javascript实现剑指offer](https://xin-tan.com/passages/2019-06-23-algorithm-offer/#%E4%BB%8B%E7%BB%8D)
