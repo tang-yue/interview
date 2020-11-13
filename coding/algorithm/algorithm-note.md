@@ -679,7 +679,7 @@ var minDepth = function (root) {
     const q = [[root, 1]];
     let res = 0;
     while(q.length) {
-        const [n, l] = q.shift();      // 先进后出
+        const [n, l] = q.shift();      // 先进先出
         if(!n.left && !n.right) {
            return l;
         }
@@ -790,7 +790,6 @@ var hasPathSum = function(root, sum) {
     if(!root) return false;
     let res = false;
     const dfs = (n, s) => {
-        console.log(n.val, s);
         if(!n.left && !n.right && s === sum) {
             res = true;
         }

@@ -1,7 +1,7 @@
 
-[· 手写new](#手写new)
+[手写new](#手写new)
 
-[· 手写call](#手写call)
+[手写call](#手写call)
 
 
 ### <a id="手写new">手写 new</a>
@@ -663,13 +663,74 @@ function transformNum1(num) {
 
 ```js
 function formatNumber2(num) {
-  const parts = num.toString().split('.');
+  const parts = num.toString().split('.');    // 如果后面的小数位很多，会被截掉，用String 或.toString方法
   parts[0] = Number(parts[0]).toLocaleString()
   return parts.join('.')
 }
 ```
+### 函数柯里化
 
-### 最长不含重复字符的子字符串
+一个接受任意多个参数的函数，如果执行的时候传入的参数不足，那么它会返回新的函数，新的函数会接受剩余的参数，直到所有参数都传入才执行操作。这种技术就叫柯里化。
+
+```js
+const curry = (fn, arr = []) => {
+    return (...args) => {
+        if([...arr, ...args].length === fn.length) {
+            return fn(...arr, ...args)
+        } else {
+            return curry(fn, [...arr, ...args])
+        }
+    }
+}
+```
+
+### 斐波拉契数列
+
+#### 递归版
+
+```js
+function fibonacci(n) {
+    if(n < 2) {
+        return n;
+    }
+    return fibonacci(n-1) + fibonacci(n-2);
+}
+```
+
+### 洗牌算法
+
+将数组中的数字，打乱顺序，保证每个位置的概率相等
+
+```js
+// 一种实现
+function disorder(array) {
+    const length = array.length;
+    let current = length - 1;
+    let random;
+    while(current > -1) {
+        random = Math.floor(length * Math.random());
+        [array[current], array[random]] = [array[random], array[current]];
+        current--;
+    }
+    return array;
+}
+```
+
+```js
+// 另一种实现
+const flush = function(num = []) {
+    for (let i = 0; i < num.length; i++) {
+        let index = Math.floor(Math.random() * num.length);
+        let temp = num[i];
+        num[i] = num[index];
+        num[index] = temp;
+    }
+    return num;
+};
+```
+
+
+### 无重复字符的最长子串
 
 ```js
 function getRes(str) {
@@ -753,17 +814,227 @@ var validPalindrome = function(s) {
 }
 ```
 
-### 路径总和 leetcode 112
+### [路径总和 leetcode 112](https://leetcode-cn.com/problems/path-sum/)
+
+解题思路：
+
+1. 在深度优先遍历的过程中，记录当前路径的节点值的和。
+2. 在叶子节点处，判断当前路径的节点值的和是否等于目标值。
 
 ```js
-
+var hasPathSum = function(root, sum) {
+    if(!root) return false;
+    let res = false;
+    const dfs = (n, s) => {
+        if(!n.left && !n.right && s === sum) {
+            res = true;
+        }
+        if(n.left) dfs(n.left, s + n.left.val)
+        if(n.right) dfs(n.right, s + n.right.val)
+    }
+    dfs(root, root.val);
+    return res;
+}
 ```
 
 ### 二叉树找指定和的路径  剑指offer 34
 
-```js
+思路：
 
+1. 和路径总和有点类似的，在深度优先遍历的过程中，记录当前路径的节点值的和，以及当前值。
+2. 在叶子节点处，判断当前路径的节点值和是否等于目标值，并将所有路径返回。
+
+
+```js
+var pathSum = function(root, sum) {
+     if(!root) return []
+    let res = [];
+    const dfs = (n, s, path) => {
+        if(!n.left && !n.right && s === sum) {
+            res.push(path)
+        }
+        if(n.left) dfs(n.left, s + n.left.val, path.concat(n.left.val))
+        if(n.right) dfs(n.right, s + n.right.val, path.concat(n.right.val))
+    }
+    dfs(root, root.val, [root.val]);
+    return res;
+};
 ```
+
+### x 的平方根 leetCode 69
+
+思路：
+
+存在一个值的2次方，是等于 x。我们现在就要找到这个值。首先肯定是小于 x 的，而且题目要求是整数。
+
+```js
+function mySqrt(x) {
+    var re = 0;
+    while(!(re * re <= x && (re+1) * (re+1) > x)) {
+        re++;
+    }
+    return re;
+}
+```
+
+二分查找解法
+
+```js
+var mySqrt = function(x) {
+    let l = 0;
+    let r = x;
+    let m = 0;
+    let res = -1;
+    while(l <= r) {
+        m = Math.floor((l+r) / 2);
+        // 也可写成 m = (l + r) >> 1
+        if(m * m <= x) {
+            res = m;
+            l = m + 1;
+        } else {
+            r = m - 1;
+        }
+    }
+    return res
+}
+```
+
+
+### 深度优先遍历二叉树
+
+```js
+function dfs(root) {
+    if(!root && !root.left && !root.right) return;
+    if(root.left) dfs(root.left)
+    if(root.right) dfs(root.right)
+}
+```
+
+### 广度优先遍二叉树
+
+
+```js
+    1
+  2   3
+4  5 6 7
+```
+
+```js
+var bfs = function(root) {
+    const q = [root];
+    while(q.length) {
+        const n = q.shift();
+        if(!n.left && !n.right) {
+            return;
+        }
+        if(n.left) q.push(n.left);
+        if(n.right) q.push(n.right);
+    }
+}
+```
+
+### 0-1 背包问题
+
+感觉这个问题和分饼干问题，虽说分饼干是贪心算法。但是背包问题是动态规划。
+
+问题描述：
+
+给你一个可装载重量为 W的背包 和 N 个物品，每个物品有重量和价值两个属性。其中第i个物品的重量为wt[i]，价值为
+
+val[i]，现在让你用这个背包装物品，最多能装的价值是多少？
+
+思路：
+
+就是第i个物品是装入还是不装入。
+
+这里的状态有两个，背包容量和可选择的物品。
+
+如果把第 i 个物品不装入背包，最大价值`f[i][j]`等于`f[i-1][j]`，继承之前的结果。
+
+如果把第 i 个物品装入背包，最大价值`f[i][j]` 等于`f[i-1][W-wt[i-1]] + val[i]`
+
+```js    
+function knapsack(weights, values, W) {
+    let n = weights.length;
+    let f = new Array(n);
+    for(let i = 0; i < n; i++) {
+        f[i] = [];
+    }
+    for(var i = 0; i < n; i++) {
+        for(var j = 0; j <= W; j++) {
+            if(i === 0) {
+                f[i][j] = j - weights[i] < 0 ? 0 : values[i] // 连一个都不够装
+            } else {
+                if(j < weights[i]) { // 等于之前的最优值
+                    f[i][j] = f[i-1][j]
+                } else {
+                    f[i][j] = Math.max(f[i-1][j], f[i-1][j-weights[i]] + values[i])
+                }
+            }
+        }
+    }
+    return f[n-1][W]
+}
+```
+[参考文章](https://segmentfault.com/a/1190000012829866)
+
+[参考文章](https://juejin.im/post/6891247226044350478)
+
+
+### 集合的子集
+
+### 二分查找
+
+给定一个排序好的数组，用二分查找的办法找出目标元素
+
+### 最长连续递增序列  leetCode  674
+
+这道题比较解，不需要返回序列的内容，只需要返回长度就可以了。
+
+```js
+var findLengthOfLCIS = function(nums) {
+    if(!nums.length) return 0;
+    let count = 1;
+    let temp = 1;
+    for(let i = 0; i < nums.length -1; i++) {
+        if(nums[i+1] > nums[i]) {
+            temp++;
+        } else {
+            count = Math.max(temp, count);
+            temp = 1;
+        }
+    }
+    return Math.max(temp, count);
+}
+```
+
+### 最长连续子序列 leetCode 128
+
+最长连续数列的意思是，左右元素相差一。
+
+参考答案：
+
+还是比较好理解的。
+
+```js
+var longestConsecutive = function(nums) {
+    let numsSet = new Set(nums), max = 0;
+    numsSet.forEach(n => {
+        if(numsSet.has(n-1)) {
+            return;
+        }
+        let currConse = 0, currNum = n;
+        while(numsSet.has(currNum)) {
+            currConse++;
+            currNum++;
+        }
+        max = Math.max(max, currConse);
+    })
+    return max;
+}
+```
+
+
 
 
 

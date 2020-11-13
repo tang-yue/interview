@@ -5,10 +5,6 @@ promise 相关笔记
 
 相关面试题
 
-#### 如何将一个同步函数包装为异步函数
-
-setTimeout
-
 ####  宏任务有哪些，微任务有哪些
 
 微任务包括： MutationObserver、Promise.then() 或 catch()、Promise 为基础开发的其他技术，比如fetch API、V8的垃圾回收过程、Node独有的process.nextTick。

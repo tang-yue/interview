@@ -576,6 +576,27 @@ console.log(parent1.name, parent1.age, parent1.info(), parent1.getName()) // par
 如果子类和父类有同一个方法，那么子类的该用自己的方法，而不用父类的方法
 别的没什么太大的缺陷。
 
+### 实现一个继承函数
+
+```js
+function myExtends(parent, child) {
+    const p = Object.create(parent.prototype);
+    child.prototype = p;
+    p.constructor = child;
+}
+```
+使用：
+
+```js
+function Child() {
+    Parent.call(this);
+    //....
+}
+myExtends(Parent, Child);
+
+Man.prototype.fun = ...
+```
+
 [参考 高级js程序设计书籍]
 [深入JavaScript继承原理](https://juejin.im/post/5a96d78ef265da4e9311b4d8)
 
