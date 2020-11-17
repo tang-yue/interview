@@ -1846,6 +1846,12 @@ var permute = function(nums) {
 
 15-3 LeetCode：子集  78
 
+解题步骤：
+
+1. 用递归模拟出所有情况。
+2. 保证接的数字都是后面的数字。
+3. 收集所有到达递归终点的情况，并返回。
+
 ```js
 var subsets = function(nums) {
     const res = [];
@@ -1855,7 +1861,7 @@ var subsets = function(nums) {
             return;
         }
         for (let i = start; i < nums.length; i++) {
-            backtrack(path.concat(nums[i]), l, i+1);
+            backtrack(path.concat(nums[i]), l, i+1);     //  保证接的数字都是后面的数字。
         }
     };
     for(let i = 0; i <= nums.length; i++) {

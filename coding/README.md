@@ -980,12 +980,81 @@ function knapsack(weights, values, W) {
 
 [参考文章](https://juejin.im/post/6891247226044350478)
 
+### 全排列 LeetCode 46
 
-### 集合的子集
+解题思路
 
-### 二分查找
+1. 所有排列情况；
+2. 没有重复元素。
+3. 也就是两种情况，如果已经有了该值，那么不要，如果没有那么就留下。
+4. 用回溯解法
 
-给定一个排序好的数组，用二分查找的办法找出目标元素
+```js
+var permute = function(nums) {
+    const res = [];
+    const backtrack = (path) => {
+        if(path.length === nums.length) {
+            res.push(path);
+        }
+        nums.forEach(n => {
+            if(path.includes(n)) { return; }
+            backtrack(path.concat(n))
+        })
+    }
+    backtrack([]);
+    return res;
+}
+
+// 时间复杂度：O(n!), 因为是嵌套的 for循环，而循环每次的次数又都减一
+// 空间复杂度：递归的深度，就是数组的长度，即 O(n)
+```
+
+### 子集  LeetCode 78
+
+```js
+var subsets = function(nums) {
+    const res = [];
+    const backtrack = (path, l, start) => {
+        if(path.length === l) {
+            res.push(path);
+            return;
+        }
+        for (let i = start; i < nums.length; i++) {
+            backtrack(path.concat(nums[i]), l, i+1);
+        }
+    }
+    for(let i = 0; i <= nums.length; i++) {
+        backtrack([], i, 0)
+    }
+    return res;
+}
+
+// 时间复杂度：O(2的n 次方)，因为每个元素都有两种可能 (存在或不存在)
+// 空间复杂度：O(n) 即递归的深度，即 nums的长度
+```
+
+### 二分查找   leetCode  704
+
+给定一个排序好的数组，用二分查找的办法找出目标元素，返回其下标。
+
+```js
+var search = function(nums, target) {
+    let low = 0; 
+    let high = nums.length - 1;
+    while(low <= high) {
+        const mid = Math.floor((low + high)/2);
+        const element = nums[mid];
+        if(element < target) {
+            low = mid + 1;
+        } else if(element > target) {
+            high = mid - 1;
+        } else {
+            return mid;
+        }
+    }
+    return -1;
+}
+```
 
 ### 最长连续递增序列  leetCode  674
 
@@ -1033,6 +1102,36 @@ var longestConsecutive = function(nums) {
     return max;
 }
 ```
+
+### 分饼干问题 LeetCode 455
+
+解题思路
+
+1. 首先采用的是贪心算法
+2. 对饼干数组和胃口数组升序排序
+3. 遍历饼干数组，找到能满足第一个孩子的饼干。
+4. 然后继续遍历饼干数组，找到满足第二、三、..... n个孩子的饼干
+
+```js
+var findContentChildren = function(g, s) {
+    const sortFunc = function(a, b) {
+        return a - b;
+    }
+    g.sort(sortFunc);
+    s.sort(sortFunc);
+    let i = 0;
+    s.forEach(n => {
+        if(n >= g[i]) {
+            i += 1;
+        }
+    })
+    return i;
+}
+```
+
+### 64 匹马
+
+
 
 
 

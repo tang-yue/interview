@@ -292,6 +292,3 @@ Etag 和 Last-Modified 相似，但是 ETag 相对 Last-Modified 也有其优势
 此时触发window.load 事件
 
 4、点击关闭标签或者刷新时，会依次触发beforeunload、unload 事件
-
-
-
