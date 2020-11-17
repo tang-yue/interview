@@ -61,7 +61,7 @@ var mySqrt = function(x) {
 
 ```
 // 防抖函数
-// 疯狂点击按钮，每次点击的时间间隔都小于规定时间，那么相应的方法不会执行
+// debounce表示每次事件触发与上次时间间隔小于某数值就不执行handler
 // 应用场景：
 
 function debounce (fn, wait=300) {

@@ -1,3 +1,15 @@
+## 谈谈你对MVVM开发模式的理解
+
+MVVM 分为Model、View、ViewModel 三者。
+
+Model：代表数据模型，处理数据和业务逻辑
+
+View：代表UI视图，负责数据的展示
+
+ViewModel：负责监听Model 中数据的改变并且控制视图的更新，处理用户交互操作
+
+Model 和 View 并无直接关联，而是通过 ViewModel 来进行联系的，Model 和 ViewModel 之间有着双向数据绑定的联系。因此当 Model 中的数据改变时会触发 View 层的刷新，View 中由于用户交互操作而改变的数据也会在 Model 中同步。这种模式实现了 Model 和 View 的数据自动同步，因此开发者只需要专注对数据的维护操作即可，而不需要自己操作 dom。
+
 ## vue 的生命周期
 
 1、beforeCreate 在实列初始化前被触发
@@ -23,6 +35,18 @@
 3. 新的 Composition API
 4. Virtual DOM 重构
 
+## vue 3.0 解决了什么问题
+
+1. Composition API 代替了 OptionApi
+
+> Composition API 可以替换Vue Mixins，而mixin模式会导致命名冲突，如果重构一个组件，修改了mixin需要的变量，可能导致引起依赖该文件的文件发生报错。
+
+2. Virtual dom 重构
+
+> vue-next 对virtual dom的patch更新做了一系列的优化，从编译时加入了block以减少vdom之间的对比次数，另外还有hoisted的操作减少了内存的开销。
+
+3.  Vue3 中 响应式数据原理改成proxy
+
 ## vue的内部机制
 
 首先vue会调用_init函数进行初始化，然后调用$mount挂载组件，编译，之后得到render Function，
@@ -39,7 +63,46 @@
 3. proxy 可以直接监听数组的变化，而 Object.defineProperty() 只提供了8种检测数组的变化。
 4. Proxy 有多达13种拦截方法，不限于apply，ownKeys，deletePropery、has 等等是 Object.defineProperty不具备的。
 
-### Vue 的父组件和子组件生命周期钩子执行顺序
+### 变题
+
+vue 为什么不能检测数组和对象的变化，怎么处理，（为什么通过索引操作数组不能触发响应式）
+
+1. Vue不能检测对象属性的添加、删除（仅此而已，可直接对该对象重新赋值、修改该对象或内层对象的属性）
+
+2. Vue不能检测数组的项修改（根据index）、length修改（仅此而已，可直接对数组重新赋值，如使用filter、map、concat、slice等方式生成新数组对其赋值）
+
+#### 针对对象的处理方式
+
+1. $set、set、$delete、delete
+
+```js
+// $set是Vue.set的别名
+   this.$set(this.obj, k, v)
+   Vue.set(this.obj, k, v)
+    
+   this.$delete(this.obj, k)
+   Vue.delete(this.obj, k)
+```
+
+2. Object.assign()
+
+```js
+this.someObject = Object.assign({}, this.someObject, { a: 1, b: 2 })
+```
+
+#### 针对数组的处理方式
+
+1. $set、set、$delete、delete
+
+2. 使用数组的操作函数 （其实已被Vue进行了修改）
+
+> `splice()` `push()` `pop()` `shift()` `unshift()` `sort()` `reverse()`
+
+3. Array 拷贝
+
+[参考文章](https://juejin.im/post/6844903918858665998)
+
+## Vue 的父组件和子组件生命周期钩子执行顺序
 
 归类为以下 四种情况
 
@@ -345,6 +408,60 @@ Vuex 是一个专门为Vue.js 应用程序开发的状态管理模式。每一�
 - 开发风格：React 推荐做法 jsx + inline style 把html 和css 都写在js了；vue 是采用webpack + vue-loader 单文件组件格式，html,js,css 同一个文件
 
 [参考文章](https://juejin.im/post/6876002080235274247#heading-7)
+
+## v-model 的原理
+
+我们在vue项目中主要使用v-model指令在表单input、textarea、select等元素上创建双向数据绑定，我们知道v-model本质上不过是语法糖，v-model 在内部为不同的输入元素使用不同的属性并抛出不同的事件：
+
++ text 和 textarea 元素使用value属性和input事件；
++ checkbox 和 radio 使用checked属性和change事件；
++ select字段将value作为prop并将change作为事件；
+
+以input表单元素为例
+
+```js
+<input v-model='something'>
+    
+相当于
+
+<input v-bind:value="something" v-on:input="something = $event.target.value">
+```
+
+如果在自定义组件中，v-model 默认会利用名为 value 的 prop 和名为 input 的事件，如下所示：
+
+```js
+// 父组件：
+<ModelChild v-model="message"></ModelChild>
+
+// 子组件：
+<div>{{value}}</div>
+
+props:{
+    value: String
+},
+methods: {
+  test1(){
+     this.$emit('input', '小红')
+  },
+},
+```
+
+## vue.nextTick
+
+nextTick 可以做什么？
+
+> `$nextTick` 为了在数据变化之后等待Vue完成更新DOM，可以在数据变化之后立即使用
+> `$nextTick`，则可以在回调中获取更新后的DOM
+
+因为目前浏览器平台并没有实现nextTick方法，所以Vue.js源码中分别用 Promise、setTimeout、setImmediate 等方式在microtask 中创建一个事件，
+目的是在当前调用栈执行完毕后才会去执行这个事件。
+
+nextTick好处: 碰到太频繁的js操作,只需要显示最后一次的数据的视图,如果每次都实时更新视图,会消耗太多性能
+
+
+[参考文章](https://github.com/Advanced-Frontend/Daily-Interview-Question/issues/281)
+
+
           
 
 
