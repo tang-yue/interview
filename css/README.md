@@ -50,7 +50,7 @@ BFC 即Block Formatting Contexts （块级格式化上下文）。它是一个�
 #### 利用BFC 能解决哪些问题
 
 1、解决同一BFC容器中的相邻块级元素垂直方向的外边距重叠问题
-2、清除浮动
+2、BFC 可以包含浮动元素，(即内部是个浮动元素，高度塌陷，父级利用bfc，清除浮动)
 3、BFC可以阻止元素被浮动元素覆盖
 
 [参考1](https://www.zhihu.com/search?type=content&q=BFC)
@@ -169,13 +169,96 @@ BFC 即Block Formatting Contexts （块级格式化上下文）。它是一个�
 
 ## 手写flex常用的属性，并且讲出作用
 
-设置在容器上的属性
+### 设置在容器上的属性
 
-flex-direction flex-wrap flex-flow justify-content align-items align-content
+**flex-direction** 属性决定主轴的方向（即项目的排列方向）
 
-设置在项目上的属性
+```css
+.box {
+  flex-direction: row | row-reverse | column | column-reverse;
+}
+```
++ row (默认值)：主轴为水平方向，起点在左端。
++ row-reverse：主轴为水平方向，起点在右端。
++ column：主轴为垂直方向，起点在上沿。
++ column-reverse：主轴为垂直方向，起点在下沿。
 
-order flex-grow (放大) flex-shrink (缩小)  flex-basis  flex align-self
+**flex-wrap** 默认情况下，项目都排在一条线（又称“轴线”）上。flex-wrap 属性定义，如果一条轴线排不下，如何换行。
+
+```css
+.box {
+  flex-wrap: nowrap | wrap | wrap-reverse;
+}
+```
+
++ nowrap（默认）：不换行。
++ wrap：换行，第一行在上方。
++ wrap-reverse：换行，第一行在下方。
+
+**flex-flow** 属性是flex-direction 属性和flex-wrap 属性的简写形式，默认为 row nowrap.
+
+```css
+.box {
+  flex-flow: <flex-direction> || <flex-wrap>
+}
+```
+
+**justify-content** 属性定义项目在主轴上的对齐方式。
+
+```css
+  .box {
+    justify-content: flex-start | flex-end | center | space-between | space-around;
+  }
+```
++ flex-start（默认值）：左对齐
++ flex-end：右对齐
++ center：居中
++ space-between：两端对齐，项目之间的间隔都相等。
++ space-around：每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。
+
+**align-items** 属性定义项目在交叉轴上如何对齐
+
+```css
+.box {
+  align-items: flex-start | flex-end | center | baseline | stretch;
+}
+```
+
++ flex-start：交叉轴的起点对齐。
++ flex-end：交叉轴的终点对齐。
++ cener：交叉轴的中点对齐。
++ baseline：`项目的第一行文字的基线对齐`。
++ stretch（默认值）：如果项目未设置高度或设为auto，将沾满整个容器的高度。
+
+**align-content** 属性定义了多根轴线的对齐方式，如果项目只有一根轴线，该属性不起作用。
+
+```css
+.box {
+  align-content: flex-start | flex-end | center | space-between | space-around | stretch;
+}
+```
+
++ flex-start：与交叉轴的起点对齐。 
++ flex-end： 与交叉轴的终点对齐。
++ center：与交叉轴的中点对齐。
++ space-between：与交叉轴两端对齐，轴线之间的间隔平均分布。
++ space-around：每根轴线两侧的间隔都相等。
++ stretch（默认值）：轴线沾满整个交叉轴。
+
+### 作用在项目上的属性
+
++ order：属性定义项目的排列顺序。数值越小，排列越靠前，默认为0.
++ flex-grow： 属性定义项目的放大比例。
++ flex-shrink：属性定义了项目的缩小比例。
++ flex-basis：属性定义了在分配多余空间之前，项目占据的主轴空间。
++ flex：属性是`flex-grow`,`flex-shrink` 和 `flex-basis` 的简写。
++ align-self：属性允许单个项目有与其他项目不一样的对齐方式，可覆盖`align-items`属性。
+
+```css
+.item {
+  align-self: auto | flex-start | flex-end | center | baseline | stretch;
+}
+```
 
 ## animation
 
@@ -219,7 +302,7 @@ order flex-grow (放大) flex-shrink (缩小)  flex-basis  flex align-self
 举列：
 
 ```css
-@keyframes myAnim{
+@keyframes myAnim {
   from { background: #f00; }
   50% { background: #0f0; }
   to { background: yellowgreen; }
@@ -241,8 +324,8 @@ order flex-grow (放大) flex-shrink (缩小)  flex-basis  flex align-self
 
 [代码参考](./left-fixed-right.html)
 
-1. 第一种实现方式 利用浮动，然后利用bfc 清除覆盖元素 达到目的
-2. 第二种实现方式，左浮动固定，右边利用margin-left
+1. 第一种实现方式 利用浮动，然后利用bfc 清除覆盖元素 达到目的， 再在父级上清除浮动
+2. 第二种实现方式，左浮动固定，右边利用margin-left， 再在父级上清除浮动
 3. 第三种方式，父级元素，`display:table` 属性，子级元素都为`display: table-cell`
 4. 第四种方式，父级table，子级都为`table-cell`
 5. 第五种方式，父级`display: flex`，右边 `flex-grow: 1` 占据剩余的空间
@@ -250,13 +333,13 @@ order flex-grow (放大) flex-shrink (缩小)  flex-basis  flex align-self
 
 [参考地址](https://blog.csdn.net/caicai1171523597/article/details/86642535)
 
-### 三栏布局
+### 三栏布局 （左右固定，中间不固定）
 
 [代码参考](./three-column.html)
 
 1. 第一种方式：通过左边向左浮动，右边向右浮动，中间部分创建bfc
 2. 第二种方式：左，中，右，设置绝对定位，左边left,0，右边right:0, 中间 left right, 等于左右的宽， 缺点脱离文档流
-3. 第三种方式：通过 display: flex，center 部分flex-grow 占据剩余部分 
+3. 第三种方式：通过 display: flex，中间（center）部分flex-grow 占据剩余部分 
 4. 第四种方式： 左，中，右 table-cell 父级 table
 
 [参考文章](https://juejin.im/post/6844903826885967880)
@@ -270,6 +353,10 @@ order flex-grow (放大) flex-shrink (缩小)  flex-basis  flex align-self
 + relative：元素先放置在未添加定位时的位置，再不改变页面布局的前提下调整元素位置。
 
 + absolute：元素会被移出正常文档流，并不为元素预留空间，通过指定元素**相对于最近的非static 定位祖先元素的偏移**，来确定元素位置。
+
++ fixed：生成绝对定位的元素，相对于浏览器窗口进行定位。元素的位置通过 "left", "top", "right" 以及 "bottom" 属性进行规定
+
++ inherit：规定应该从父元素继承 position 属性的值。
 
 + sticky：粘性定位
 

@@ -751,7 +751,14 @@ asyncFun(func)
 
 但是我看上面，并没有实现一个 async/await 呀，其实就是 babel 对 async 函数的实现思路
 
-[async/await 原理及简单实现](https://juejin.im/post/6844903840303546382)
+### 加深generator函数的理解
 
+实现一个方法，参数是一个generator函数，执行结果是执行完所有generator中的yield
+
+```js
+// 待完续
+```
+
+[async/await 原理及简单实现](https://juejin.im/post/6844903840303546382)
 
 
