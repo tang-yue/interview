@@ -19,7 +19,12 @@ const tree = {
             children: [
                 {
                     val: 'f',
-                    children: []
+                    children: [
+                        {
+                            val: 'k',
+                            children: []
+                        }
+                    ]
                 },
                 {
                     val: 'g',

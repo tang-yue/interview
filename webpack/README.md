@@ -109,3 +109,7 @@ Babel 是一个编译器：
 
 test1.js、test2.js 引用了React.js，test3.js 引用了Vue.js， 这个时候，我通过配置一些打包分割的规则，react 和 vue 打包后的代码会分别提取到公共代码里。
 
+### happyPack
+
+Webpack 是单线程模型的，所以Webpack需要处理的事情需要一件一件的做，不能多件事一起做。我们需要Webpack能同一时间处理多个任务，发挥多核CPU电脑的威力，HappyPack 就能让Webpack做到这点，它把任务分解给多个子进程去并发的执行，子进程处理完后再把结果发送给主进程。
+

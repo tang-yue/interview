@@ -10,6 +10,10 @@ const bt = require('./bt');
 // inorder(bt)
 
 
+    //         1
+    //     2     3
+    //  4    5  6   7
+
 // 4 2 5 1 6 3 7
 
 const inorder = (root) => {
@@ -28,5 +32,6 @@ const inorder = (root) => {
         p = n.right;
     }
 }
+
 
 inorder(bt);

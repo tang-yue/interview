@@ -237,6 +237,10 @@ var deleteNode = function(node) {
 
 5-3 leetCode: 206 反转链表
 
+解题思路：
+
+1. 反转两个节点：将 n+1 的 next 指向 n。
+
 解题步骤
 
 1. 双指针一前一后遍历链表
@@ -309,6 +313,11 @@ var deleteDuplicates = function (head) {
 ```
 
 5-6 leetcode 141. 环形链表
+
+解题思路
+1. 两个人在圆形操场上的起点同时起跑，速度快的人一定会超过速度慢的人一圈。
+2. 用一快一慢两个指针遍历链表，如果指针能够相逢，那么链表就有圈。
+3. 慢指针一次走一步，快指针一次走两步，如果指针能够相逢代表有圈。
 
 解题步骤
 1. 用一快一慢两个指针变遍历链表，如果指针能够相逢，就返回true。
@@ -481,11 +490,16 @@ var twoSum = function(nums, target) {
     }
 }
 ```
+// 上述的题目有点问题呀，如果改成用 forEach 去遍历，居然会返回 undefined
 
 7-5 leetcode 3 无重复字符的最长子串
 
+题目描述：给定一个字符串，请你找出其中不含有重复字符的最长子串的长度
 解题思路
+1. 先找出所有的不包含重复字符的子串
+2. 找出长度最大的那个字串，返回其长度即可
 
+解题步骤
 1. 用双指针维护一个滑动窗口，用来剪切子串。
 2. 不断移动右指针，遇到重复字符，就把左指针移动到重复字符的下一位
 
@@ -495,10 +509,10 @@ var lengthOfLongestSubstring = function (s) {
     let res = 0; 
     const map = new Map();
     for(let r = 0; r < s.length; r += 1) {
-        if(map.has(s[r]) && map.get(s[r]) >= l) {
+        if(map.has(s[r]) && map.get(s[r]) >= l) {   // 并且这个值必须在滑动窗口里面，也就是说这个值的位置应该大于等于左指针
             l = map.get(s[r]) + 1;
         }
-        res = Math.max(res, r - 1 + 1);
+        res = Math.max(res, r - l + 1);
         map.set(s[r], r);
     }
     return res;
@@ -624,6 +638,8 @@ var minWindow = function(s, t) {
 1. 对根节点的左子树进行后序遍历。
 2. 对根节点的右子树进行后序遍历。
 3. 访问根节点
+
+其实有前，中，后，层，垂序遍历
 
 代码见 tree/postorder.js
 
@@ -1432,7 +1448,7 @@ visualgo.net  观看算法的动画
 
 ```js
 var mergeTwoLists = function(l1, l2) {
-    const res = new ListNode(0);
+    const res = new ListNode(0);  // 注意如果直接写成 p = new ListNode(0) 是不对的
     let p = res;
     let p1 = l1;
     let p2 = l2;

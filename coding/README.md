@@ -15,15 +15,23 @@
 
 ```js
 function NEW() {
+    // 取出构造函数
     let construct = [].shift.call(arguments)
 
-    let obj = Object.create(construct.prototype)   // 继承方法
+    let obj = Object.create(construct.prototype)   // 访问方法
 
-    let result = construct.apply(obj, arguments)   // 继承属性
+    let result = construct.apply(obj, arguments)   // 让obj拥有Construct中的属性
 
     return typeof result === 'object' ? result || obj : obj
 }
 ```
+
+延伸知识点：通过new 一个构造函数后，发生了什么。
+
+1. 创建了一个对象
+2. 执行构造函数，并且把属性方法设置给了对象
+3. 把this的指向指向给对象
+4. 将对象的__proto__跟函数的prototype做对应
 
 [参考文章](https://juejin.im/post/6844903956859060231)
 
@@ -46,12 +54,13 @@ count.apply(obj, [1, 1]);
 
 ```js
 Function.prototype.call = function(context) {
-    let context = context || window;
+    context = context || window; // context 就是传入的对象obj
 
-    context.fn = this;
+    context.fn = this; // 用this就可以获取到方法如上面的count
     
     let args = [];
 
+    // i 要从1开始哦，因为第一个参数是对象
     for(let i = 1; i < arguments.length; i++) {
         args.push(arguments[i])
     }
@@ -82,10 +91,11 @@ Function.prototype.apply = function (context, arr) {
         result = context.fn()
     } else {
         var args = [];
-        for (let i = 1; i < arr.length; i++) {
-            args.push(arguments[i])
+        for (let i = 0; i < arr.length; i++) {
+            args.push(arr[i])
         }
         result = context.fn(...args)
+        // 或者直接是写成 result = context.fn(...arr);
     }
     delete context.fn;
 
@@ -135,10 +145,12 @@ Function.prototype.bind = function(context) {
     var args = Array.prototype.slice.call(arguments, 1);
 
     var fBound = function () {
+        // 下面括号里的arguments，是调用bind函数之后返回的函数里的参数
         var bindArgs = Array.prototype.slice.call(arguments);
         // this instanceof fBound 这个比较好
         // 当作为构造函数， this 指向实例，此时结果为 true, 将绑定函数的this 指向该实例，可以让实例获得来自绑定函数的值
         // 当作为普通函数时， this 指向 window, 此时结果为 false，将绑定函数 的this 指向 context
+
         return self.apply(this instanceof fBound ? this : context, args.concat(bindArgs));
     }
     // fBound.prototype = this.prototype; // 直接修改fBound.prototype 的时候， 也会直接修改绑定函数的 prototype。这个时候，通过一个空函数来中转下
@@ -149,6 +161,10 @@ Function.prototype.bind = function(context) {
     return fBound;
 }
 ```
+
+注意点：
+
+1. 当bind返回的函数作为构造函数的时候，bind时指定的this值会失效，但传入的参数依然生效，但是已经指向new 之后的对象了。
 
 [参考文章](https://github.com/mqyqingfeng/Blog/issues/12)
 
@@ -272,6 +288,35 @@ const h = function (t, p, c) {
 
 [思路过程](./../vue/vue-note.md)
 
+### 手写双向绑定
+
+```html
+    <div>
+        <input id="input" />
+        <span id="span" class="span"></span>
+    </div>
+```
+
+```js
+    let obj = {}
+
+    var oSpan = document.getElementById('span');
+    var oInput = document.getElementById('input');
+
+    oInput.onchange = function (e) {
+        obj.data = e.target.value;
+    }
+
+    Object.defineProperty(obj, 'data', {
+        get: function() {
+            return oInput.value
+        },
+        set: function(newValue) {
+            oInput.value = newValue;
+            document.getElementById('span').innerHTML = newValue;
+        }
+    })
+```
 
 ### 手写 深拷贝和浅拷贝
 
@@ -370,12 +415,7 @@ function clone(target, map = new WeakMap()) {
 
     const type = getType(target);
 
-    let cloneTarget;
-
-    if(objTag.includes(type)) {
-        cloneTarget = init(target)
-    }
-
+    let cloneTarget = init(target)
 
     // 防止循环引用出错
 
@@ -404,15 +444,13 @@ function clone(target, map = new WeakMap()) {
     }
 
     // 克隆 symbol
-
+    // 克隆 symbol 这段代码是可以去掉的，感觉不影响
     if(type === symbolTag) {
         return Object(String.prototype.valueOf.call(target))
     }
    
     // 克隆对象和数组
     
-    cloneTarget = typeof target === arrayTag ? [] : {};
-
     for(var key in target) {
         cloneTarget[key] = clone(target[key], map)
     }
@@ -420,6 +458,7 @@ function clone(target, map = new WeakMap()) {
     return cloneTarget
 }
 ```
+注意：仍旧觉得上述的克隆有点问题，应该是些细节问题，待完续
 
 ```js
 // 测试用例
@@ -447,12 +486,103 @@ let res = clone(obj);
 
 console.log(res, 'res')
 ```
+// 上述也可写成如下这样
+
+[参考coding文章](https://github.com/yinhaiying/Javascript/blob/master/deep_clone/index1.js)
 
 [如何写出一个惊艳面试官的深拷贝](http://www.conardli.top/blog/article/JS%E8%BF%9B%E9%98%B6/%E5%A6%82%E4%BD%95%E5%86%99%E5%87%BA%E4%B8%80%E4%B8%AA%E6%83%8A%E8%89%B3%E9%9D%A2%E8%AF%95%E5%AE%98%E7%9A%84%E6%B7%B1%E6%8B%B7%E8%B4%9D.html)
 
 [参考文章](https://github.com/mqyqingfeng/Blog/issues/32)
 
 [完整版深拷贝代码参考](https://github.com/ConardLi/ConardLi.github.io/blob/master/demo/deepClone/src/clone_6.js)
+
+### 手写发布--订阅模式
+
+```js
+class EventEmitter {
+    constructor() {
+        this.events = {}
+    }
+
+    on(eventName, callback) {
+        if(this.events[eventName]) {
+            this.events[eventName].push(callback)
+        } else {
+            this.events[eventName] = [callback]
+        }
+    }
+
+    // 以上 on 是正确的
+    
+    off(eventName, callback) {
+        if(this.events[eventName]) {
+            this.events[eventName] = this.events[eventName].filter((cb) =>  {cb !== callback} )
+        }
+    }
+    // 
+
+    once(eventName, callback) {
+        const one = (...args) => {
+            callback.apply(this, args)
+            this.off(eventName, callback)
+        }
+        this.on(eventName, one)
+    }
+
+    emit(eventName, callback) {
+        if(this.events[eventName]) {
+            this.events[eventName].forEach((cb) => {
+                cb();
+            })
+        }
+    }
+}
+
+const execute = new EventEmitter();
+
+execute.on('失恋', () => { console.log('心情不好') })
+
+execute.emit('失恋')
+
+execute.once('one', () => { console.log('我只执行一次的')})
+
+// execute.emit('失恋')
+
+execute.off('失恋', () => { console.log('心情不好') })
+
+execute.emit('one')
+
+execute.emit('失恋')
+
+execute.emit('失恋')
+```
+
+### 手写 jsonp
+
+```js
+function jsonp(url, data, callback) {
+    let dataStr = ''
+    dataStr + = url.indexOf('?') === -1 ? '?' : '&'
+
+    for(var key in data) {
+        dataStr += key + '=' + data[key] + '&'
+    }
+
+    let cb_name = 'jsonpCallback'
+
+    dataStr += 'callback=' + cb_name;
+
+    let scriptBody = document.createElement('script');
+
+    scriptBody.src = url  + dataStr;
+    
+    window[callbackName] = function (data) {
+        callback(data)
+        document.body.removeChild(scriptBody)   // 这步出错了
+    }
+    document.body.appendChild(scriptBody);   // 这步也出错了
+}
+```
 
 ### 数组拍平
 
@@ -563,32 +693,36 @@ function _instanceof(L, R) { // L 是左边， R 是右边
 ```js
 let arr = ['aaaa', 'bbb', 'cc', 'rrr', 'dd', 'da']
 
-const res = arr.sort((a,b) => {
-    if(a.length > b.length) {
-        return 1;
-    }
-    if(a.length < b.length) {
-        return -1;
-    }
-    if(a.length === b.length) {
-        for(var s in a) {
-            if(a.charCodeAt(s) > b.charCodeAt(s)) {
-                return 1;
-            } else {
-                return -1;
+function sortLetter(arr) {
+    return arr.sort(function(a, b) {
+        if(a.length === b.length) {
+            for(var s in a) {
+                if(a.charCodeAt(s) > b.charCodeAt(s)) {
+                    return 1;
+                } else if(a.charCodeAt(s) < b.charCodeAt(s)){
+                    return -1;
+                } else {
+                    continue;
+                }
             }
-            return 0;
-        }        
-    }
-})
+        } else if(a.length > b.length) {
+            return 1;
+        } else {
+            
+            return -1;
+        }
+    })
+}
 
-console.log(res) // [ 'cc', 'da', 'dd', 'bbb', 'rrr', 'aaaa' ]
+console.log(sortLetter(arr)) // [ 'cc', 'da', 'dd', 'bbb', 'rrr', 'aaaa' ]
 ```
 
 
 ### 给定一个字符串，请统计字符串中出现最多的字母和次数
 
 例如：`aaaabbaa`
+
+下面两种解法，都没有考虑到两个不同字母，出现的次数相同，因为最后我都是返回一个
 
 ```js
 let strArr = [];
@@ -613,6 +747,37 @@ function getRes(str) {
     resObj.sort((a,b) => b.num - a.num)
     
     return resObj[0]   // { str: 'a', num: 6 }
+}
+```
+
+另一种解法：差不多
+
+```js
+function getRes(str) {
+    let strArr = [];
+    let numArr = [];
+
+    for(var s of str) {
+        let index = strArr.indexOf(s);
+        if(index !== -1) {
+            // 存在
+            numArr[index]++;
+        } else {
+            // 不存在
+            strArr.push(s)
+            numArr.push(1)
+        }
+    }
+    // 找到最大值的下标
+    let max = numArr[0];
+    let maxI = 0;
+    for(let i = 0; i < numArr.length; i++) {
+        if(numArr[i] > max) {
+            max = numArr[i];
+            maxI = i;
+        }
+    }
+    return { str: strArr[maxI], num: max}
 }
 ```
 
@@ -649,6 +814,29 @@ function transformNum(num) {
 }
 ```
 
+另一种解法： 一样的思路
+
+```js
+function transformNum(value) {
+    let arr = String(value).split('.');
+    // arr[0]  1,123,456
+    // arr[1]  78
+    // 主要针对 arr[0]，进行循环遍历，并且再加上逗号
+    // 先把 arr[0] 进行一个翻转 654,321,1
+    let arr_reverse = arr[0].split('').reverse();
+    let str = '' + arr_reverse[0]
+    
+    for(let i = 1; i < arr_reverse.length; i++) {
+        if(i%3 === 0) {
+            str = str + ',' + arr_reverse[i]
+        } else {
+            str = str + arr_reverse[i];
+        }       
+    }
+    return str.split('').reverse().join('') +  '.' + arr[1]
+}
+```
+
 正则表达式实现
 
 ```js
@@ -672,13 +860,23 @@ function formatNumber2(num) {
 
 一个接受任意多个参数的函数，如果执行的时候传入的参数不足，那么它会返回新的函数，新的函数会接受剩余的参数，直到所有参数都传入才执行操作。这种技术就叫柯里化。
 
+举例说明：
+
+```js
+const f = (a, b, c, d) => { .... }
+const curried = curry(f)
+
+curried(a,b,c,d)
+curried(a,b,c)(d)
+```
+
 ```js
 const curry = (fn, arr = []) => {
     return (...args) => {
         if([...arr, ...args].length === fn.length) {
             return fn(...arr, ...args)
         } else {
-            return curry(fn, [...arr, ...args])
+            return curry(fn, [...arr, ...args]) // 需要把参数全部传进去，然后再接受新的参数
         }
     }
 }
@@ -700,6 +898,8 @@ function fibonacci(n) {
 ### 洗牌算法
 
 将数组中的数字，打乱顺序，保证每个位置的概率相等
+
+思路：首先应该是交换，交换的下标是随机的，还有一个条件是这个随机下标的范围在 [0 原数组的长度]， 然后循环一遍交换
 
 ```js
 // 一种实现
@@ -732,6 +932,8 @@ const flush = function(num = []) {
 
 ### 无重复字符的最长子串
 
+题目描述：给定一个字符串，请你找出其中不含有重复字符的最长字串的长度。
+
 ```js
 function getRes(str) {
     let arr = [];
@@ -741,6 +943,7 @@ function getRes(str) {
         if(arr.includes(s)) {
             lenObjArr.push(arr.join(''))
             arr = []
+            arr.push(s);
         } else {
             arr.push(s)
         }
@@ -752,7 +955,28 @@ function getRes(str) {
     return lenObjArr[0]
 }
 
-console.log(getRes('abcdefgeeegbeedgef')) // 'abcdefg'
+console.log(getRes('abcdefgaabcdefgegbeedgef')) // 'abcdefg'
+```
+以上答案是错误的。不是这么简单的，因为并不是遇到重复字符然后就重新开始了。
+
+正确答案如下：
+
+```js
+var lengthOfLongestSubstring = function (s) {
+    let l = 0;
+    let res = 0; 
+    const map = new Map();
+    for(let r = 0; r < s.length; r += 1) {
+        if(map.has(s[r]) && map.get(s[r]) >= l) {   
+            // 并且这个值必须在滑动窗口里面，也就是说这个值的位置应该大于等于左指针
+            // 举例说明：abbcdea
+            l = map.get(s[r]) + 1; // 重复字符位置加1
+        }
+        res = Math.max(res, r - l + 1);
+        map.set(s[r], r);
+    }
+    return res;
+}
 ```
 
 
@@ -788,6 +1012,12 @@ var isPalindrome = function(s) {
 
 给定一个非空字符串 s，最多删除一个字符。判断是否能成为回文字符串。
 
+思路：
+1. 遍历字符串的一半，如果这个值和其应该对应的回文位置的值不相等的话，那么尝试删除。
+2. 需要考虑 如果不删除的话，是否本身就是回文。
+
+注意：
+1. 翻转会改变原数组，因此要写在后面
 实现
 
 ```js
@@ -795,31 +1025,38 @@ var isPalindrome = function(s) {
  * @param {string} s
  * @return {boolean}
  */
-var validPalindrome = function(s) {
-      const str =  s.replace(/[^0-9a-zA-Z]+/g, '').toLowerCase();
+function validPalindrome(str) {
     const len = str.length;
-    
-    for(let i = 0;  i < parseInt(len/2); i++) {
+    str = str.replace(/[^0-9a-zA-Z]/g, '').toLowerCase();
+    if(str.split('').reverse().join('') === str) return true;
+    for(let i = 0; i < parseInt(len/2); i++) {
         if(str[i] !== str[len - i -1]) {
             let arr = str.split('');
             let arr2 = str.split('');
-
-            arr.splice(i, 1)
-            arr2.splice(len - i - 1, 1)
-
-            return arr.join('') === arr.reverse().join('') || arr2.join('') === arr2.reverse().join('')
+            arr.splice(i, 1);
+            arr2.splice(len - i -1, 1);
+            return arr.join('') === arr.reverse().join('') ||
+            arr2.join('') === arr2.reverse().join('')
         }
     }
-    return true;
+    return false;
 }
 ```
 
 ### [路径总和 leetcode 112](https://leetcode-cn.com/problems/path-sum/)
 
+题目描述：
+
+给定一个二叉树和一个目标和，判断该树中是否存在根节点到叶子节点的路径，这条路径上所有节点值相加等于目标和。
+
 解题思路：
 
 1. 在深度优先遍历的过程中，记录当前路径的节点值的和。
 2. 在叶子节点处，判断当前路径的节点值的和是否等于目标值。
+
+注意点：
+
+1. 要考虑空节点
 
 ```js
 var hasPathSum = function(root, sum) {
@@ -879,6 +1116,9 @@ function mySqrt(x) {
 
 二分查找解法
 
+思路：
+
+左边和右边，之间的距离不断的缩小。然后用两者和的一半的乘积去和 x 值进行比较。
 ```js
 var mySqrt = function(x) {
     let l = 0;
@@ -923,7 +1163,7 @@ function dfs(root) {
 var bfs = function(root) {
     const q = [root];
     while(q.length) {
-        const n = q.shift();
+        const n = q.shift(); // 先取出来左节点喽
         if(!n.left && !n.right) {
             return;
         }
@@ -986,8 +1226,10 @@ function knapsack(weights, values, W) {
 
 1. 所有排列情况；
 2. 没有重复元素。
-3. 也就是两种情况，如果已经有了该值，那么不要，如果没有那么就留下。
+3. 也就是两种情况，如果已经有了该值即重复，那么不要，如果没有那么就留下。
 4. 用回溯解法
+
+// 这个设计思想的确是挺不错的。
 
 ```js
 var permute = function(nums) {
@@ -1045,9 +1287,9 @@ var search = function(nums, target) {
         const mid = Math.floor((low + high)/2);
         const element = nums[mid];
         if(element < target) {
-            low = mid + 1;
+            low = mid + 1;   // 这里才是二分查找的关键点吧
         } else if(element > target) {
-            high = mid - 1;
+            high = mid - 1;  // 同理
         } else {
             return mid;
         }
@@ -1058,7 +1300,11 @@ var search = function(nums, target) {
 
 ### 最长连续递增序列  leetCode  674
 
-这道题比较解，不需要返回序列的内容，只需要返回长度就可以了。
+题目描述：
+
+给定一个未经排序的整数数组，找到最长且连续递增的子序列，并返回该序列的长度。
+
+这道题相对比较简单，不需要返回序列的内容，只需要返回长度就可以了。
 
 ```js
 var findLengthOfLCIS = function(nums) {
@@ -1074,6 +1320,25 @@ var findLengthOfLCIS = function(nums) {
         }
     }
     return Math.max(temp, count);
+}
+```
+
+或者如下：
+
+```js
+function findLengthOfLCIS(num) {
+    if(num.length === 0) return 0;
+    let temp = 1;
+    let res = 1;
+    for(let i = 0; i < num.length-1; i++) {
+        if(num[i+1] > num[i]) {
+            temp++;
+            res = Math.max(res, temp);
+        } else {
+            temp = 1;
+        }
+    }
+    return res;
 }
 ```
 
@@ -1113,6 +1378,7 @@ var longestConsecutive = function(nums) {
 4. 然后继续遍历饼干数组，找到满足第二、三、..... n个孩子的饼干
 
 ```js
+// s 代表饼干，g代表3个小孩的胃口值
 var findContentChildren = function(g, s) {
     const sortFunc = function(a, b) {
         return a - b;
@@ -1129,7 +1395,11 @@ var findContentChildren = function(g, s) {
 }
 ```
 
-### 64 匹马
+### 有64 匹马，一共有8个赛道，想要找出最快的4匹马，要比赛最少多少轮才可以？
+
+[答案众说纷纭](https://juejin.cn/post/6896025445839011853)
+
+我没有看下去 过
 
 
 

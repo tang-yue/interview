@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 记录些 this 比较好玩的代码
+        var a = 1;
+        function foo() {
+            var a = 2;
+            console.log(this);   // window
+            console.log(this.a); // 这里是this.a，而不是a，因此是window下的a，因此值为1
+        }
+        foo();
+        
+    </script>
+</body>
+</html>

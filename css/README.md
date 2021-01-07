@@ -31,6 +31,10 @@
 
 sub、sup、strong、button
 
+## css 选择器
+
+!important > 行内样式 > id 选择器样式 > 类选择器/伪类选择器 > 元素名/伪元素
+
 ## 理解BFC原理
 
 BFC 即Block Formatting Contexts （块级格式化上下文）。它是一个独立的渲染区域，里面的元素和外部的元素相互不影响。
@@ -316,6 +320,16 @@ BFC 即Block Formatting Contexts （块级格式化上下文）。它是一个�
 }
 ```
 [效果地址](./animation.html)
+
+### 相关的transition属性
+
+`transition: property duration timing-function delay;`
+
+1. transition-property: 规定设置过渡效果的CSS属性的名称
+2. transition-duration: 规定完成过渡效果需要多少秒或毫秒
+3. transition-timing-function: 规定速度效果的速度曲线
+4. transition-delay: 定义过渡效果何时开始
+
 ## 布局
 
 ### 两栏布局

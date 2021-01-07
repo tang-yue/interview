@@ -131,5 +131,3 @@ module.exports = {
 
 [参考设计稿尺寸](https://blog.csdn.net/chelen_jak/article/details/84632804?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase)
 
-
-

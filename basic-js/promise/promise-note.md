@@ -487,8 +487,8 @@ then(onFulfilled, onRejected) {
     // then 里面的FULFILLED/REJECTED状态时，为什么要加setTimeout ?
     // 原因：
     // 其一 对于一个promise，它的then方法可以调用多次.(当在其他程序中多次调用同一个promise的then 时，由于之前状态已经为FULFILLED/REJECTED状态，则会走的下面逻辑)，所以要确保为FULFILLED/REJECTED状态后 也要异步执行onFulfilled/onRejected
-    // resolve 函数和 then 里面加 setTimeout 的原因
-    // 总之都是让 then 方法异步执行，也就是确保onFulfilled/onRejected异步执行
+    // resolve or reject 函数和 then 里面加 setTimeout 的原因
+    // 总之都是让 then 方法异步执行，***也就是确保onFulfilled/onRejected异步执行***
     // ```
 
 
@@ -641,7 +641,8 @@ function resolvePromise(promise2, x, resolve, reject) {
         let called = false;
         try {
             // 把 x.then 赋值给 then
-            let then = x.then;
+            let then = x.then; 
+            // 即使x不是promise，但如果x.then是promise，那么和promise也一样是走同样的流程。
             if (typeof then === 'function') {
                 // 如果 then 是函数，将 x 作为 函数的作用域 this 调用之。
                 // 传递两个回调函数作为参数，第一个参数叫做 resolvePromise，第二个参数叫做 rejectPromise
@@ -833,9 +834,12 @@ const REJECTED = 'REJECTED';
         } else if ( x && (typeof x === 'function' || typeof x === 'object')) {
             // 避免多次调用
             let called = false;
+            // 这里为什么要加上 try catch？？？？
+            // 理由是如果执行x.then的值，会抛出错误，如果抛出错误，那么就拒绝执行promise。
             try {
                 // 把 x.then 赋值给 then
                 let then = x.then;
+                // 如果x为函数，且x.then也为函数，那么就是和x是promise相同逻辑。
                 if (typeof then === 'function') {
                     // 如果 then 是函数，将 x 作为 函数的作用域 this 调用之。
                     // 传递两个回调函数作为参数，第一个参数叫做 resolvePromise，第二个参数叫做 rejectPromise
@@ -862,7 +866,7 @@ const REJECTED = 'REJECTED';
             } catch (e) {
                 // 如果x.then 的值时抛出错误 e, 则以 e 为 拒因 拒绝promise
                 // 如果调用 then 方法 抛出了异常e;
-                // 如果 resolvePromise或 rejectPromise 已经被调用，则忽略之
+                // 如果 resolvePromise 或 rejectPromise 已经被调用，则忽略之
                 // 否则以 e 为 拒因拒绝 promise
                 if (called) return;
                 called = true;
@@ -927,6 +931,8 @@ const REJECTED = 'REJECTED';
 
 ```js
 // all
+// 1.传入的是一个promise数组
+// 2.输出也是一个promise
 APromise.all = function(list) {
     return new APromise((resolve, reject) => {
         let resValues = [];
@@ -954,6 +960,9 @@ APromise.race = function(promises) {
 }
 
 // finally
+// 思路：无论成功还是失败都会执行finally
+// 注意：1. finally 的回调没有参数，2. promise 如果成功，则将成功的值正常传递下去，不会因finally而断掉 3. promise 如果失败，同上
+
 APromise.prototype.finally = function(onFinished) {
     return this.then(val => {
       onFinished()
