@@ -1,7 +1,5 @@
 愿望的大小，深度，广度，热度。
 
-![知识图谱](https://tang-yue.github.io/interview/baseNote/interview.png)
-
 ## 移动端
 
 [移动端适配之rem总结](./mobile/rem.md) (6月6日)
@@ -22,7 +20,7 @@
 
 [深入浅出 Webpack 书籍笔记及webpck-demo](./webpack) (8月6日)
 
-## web
+## 浏览器相关
 
 [浏览器工作原理相关](./browser-works/browser.md)
 
@@ -48,8 +46,6 @@
 
 ## 数据结构和算法
 
-重学数据结构和算法
-
-
+[基本数据结构和算法](./coding/algorithm/algorithm-note.md)
 
 
