@@ -3,7 +3,7 @@
 
 [手写call](#手写call)
 
-[手写apply](#手写apply)
+[apply](#手写apply)
 
 
 ### <a id="手写new">手写 new</a>
