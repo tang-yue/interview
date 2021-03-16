@@ -1,6 +1,6 @@
 ## 谈谈你对MVVM开发模式的理解
 
-MVVM 分为Model、View、ViewModel 三者。
+MVVM 分为Model、View、ViewModel 三者
 
 Model：代表数据模型，处理数据和业务逻辑
 
@@ -46,6 +46,11 @@ Model 和 View 并无直接关联，而是通过 ViewModel 来进行联系的，
 > vue-next 对virtual dom的patch更新做了一系列的优化，从编译时加入了block以减少vdom之间的对比次数，另外还有hoisted的操作减少了内存的开销。
 
 3.  Vue3 中 响应式数据原理改成proxy
+    解决了2.x的响应式哪些痛点
+    1. 递归，消耗大
+    2. 数组需要额外实现
+    3. 增加，删除属性，需要使用额外的API
+    4. Map Set Class 等数据类型，无法响应式
 
 ## vue的内部机制
 
@@ -342,7 +347,6 @@ path 给真实的DOM打补丁。
 
 3. 如果不是同一节点，那么使用vnode创建真实节点并插入到视图中旧节点的旁边，然后将视图中的旧节点删除。
 
-
 更详细的更新操作可以参考  深入浅出 vue.js  书籍
 
 ## 列表diff中key的作用
@@ -461,16 +465,60 @@ nextTick好处: 碰到太频繁的js操作,只需要显示最后一次的数据�
 
 [参考文章](https://github.com/Advanced-Frontend/Daily-Interview-Question/issues/281)
 
+## proxy 版数据劫持
 
-          
+`Reflect`对象的方法与Proxy对象的方法--对应，只要是Proxy对象的方法，就能在Reflect对象上找到对应的方法。
+也就是说，不管Proxy怎么修改默认行为，你总可以在Reflect 上获取默认行为。
+
+```js
+function observe(target) {
+  if(typeof target !== 'object' || target === null) {
+    return target;
+  }
+  const observed = new Proxy(target, {
+    get(target, key, receiver) {
+      return observe(Reflect.get(target, key, receiver))
+    },
+
+    set(target, key, value, receiver) {
+      if(value === target[key]) {
+        return true;
+      }
+       console.log('检测到'+ 'key值：' + key +  '的变化了吗？')
+      // const ownKeys = Reflect.ownKeys(target);
+      // if(ownKeys.includes(key)) {
+      //   console.log('旧属性');
+      // } else {
+      //   console.log('新添加的属性');
+      // }
+      return Reflect.set(target, key, value, receiver);
+    },
+    deleteProperty(target, key) {
+      return Reflect.deleteProperty(target, key);
+    }
+  })
+  return observed;
+}
+
+const data = {
+  name: '你不知道的前端',
+  age: 25,
+  info: {
+    city: 'beijing'
+  },
+  numbers: [1,2,3,4]
+}
+
+const proxyData = observe(data);
+```
+
+[参考文章](https://www.zhihu.com/search?type=content&q=%E6%95%B0%E6%8D%AE%E5%8A%AB%E6%8C%81)
 
 
+scoped 原理
+
+通过 Webpack 调用 VueJS 中相应 Loader , 给组件HTML模板添加自定义属性 (Attribute) data-v-x, 以及给组件内CSS选择器添加对应的属性选择器 (Attribute Selector) [data-v-x], 达到组件内样式只能生效与组件内HTML的效果
 
 
-
-
-
-
-
-
+[参考文章](https://juejin.cn/post/6844903826198102030)
 

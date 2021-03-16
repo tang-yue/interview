@@ -15,7 +15,7 @@ let { foo, bar } = { foo: 'aaa', bar: 'bbb' }
 
 ## let, const, var 的区别
 
-1. let和const声明的时候，必须赋值。而 var 不用。var 可以重复声明，let 和const 不可以。
+1.  // let和const声明的时候，必须赋值。而 var 不用。var 可以重复声明，let 和const 不可以。
 
 2. let，const 不存在变量提升。
 
@@ -368,6 +368,8 @@ function SubType() {
 
 SubType.prototype = new SuperType()
 
+// 有一个构造函数，但是可以对应多个实例
+
 instance = new SubType()
 
 instance1 = new SubType()
@@ -525,7 +527,7 @@ anotherPerson.sayHi();  // ‘hi’
 
 补充一个
 
-寄生式 + 构造函数 + 原型链 的组合
+寄生式 + 构造函数 + 用原型 继承方法 的组合
 
 ```js
 function inherit(child, parent) {
@@ -551,7 +553,7 @@ parent.prototype.getName = function () {
 }
 
 function child(name, age) {
-    parent.call(this, name, age) // 继承属性
+    parent.call(this, name, age) // 构造函数传参
     this.height = 160
 }
 
@@ -596,6 +598,34 @@ myExtends(Parent, Child);
 
 Man.prototype.fun = ...
 ```
+
+### 实现es6继承
+
+```js
+class A {
+    constructor() {
+        this.a = 'aaa'
+    }
+}
+
+class B extends A {
+    constructor() {
+        super()
+        this.b = 'bbb'
+    }
+}
+
+let obj = new B();
+console.log(obj.a, obj.b, 'obj.a obj.b')
+```
+
+### es5继承和es6继承的不同点
+
+1. ES5 的继承时通过原型或构造函数机制来实现。
+2. ES6 通过 class 关键字定义类，里面有构造方法，类之间通过extends关键字实现继承。
+3. ES5 的继承实质上是先创建子类的实例对象，然后再将父类的方法添加到this上
+4. ES6 的继承机制完全不同，实质上是先创建父类的实例对象this (所以必须先调用父类的 super() 方法)，然后再用子类的构造函数修改 this.
+5. 注意：在子类构造函数中，调用super后，才可使用this关键字，否则报错。
 
 [参考 高级js程序设计书籍]
 [深入JavaScript继承原理](https://juejin.im/post/5a96d78ef265da4e9311b4d8)
@@ -761,4 +791,112 @@ asyncFun(func)
 
 [async/await 原理及简单实现](https://juejin.im/post/6844903840303546382)
 
+## 手写async函数及过程分析
+
+
+```js
+
+function* testG () {
+  const data = yield getData();
+  console.log('data: ', data);
+  const data2 = yield getData();
+  console.log('data2: ', data2);
+  return 'success';
+}
+
+var gen = testG();
+var dataPromise = gen.next();
+dataPromise.value.then((value1) => {
+  var dataPromise2 = gen.next(value1);
+  dataPromise2.value.then((value2) => {
+    var dataPromise3 = gen.next(value2)
+    console.log(dataPromise3.value)
+  })
+})
+```
+只要理解了上述代码就比较好容易写出下面的代码。
+
+```js
+function asyncToGenerator(genFunc) {
+    return function() {
+        const gen = genFunc.apply(this, arguments);
+        return new Promise((resolve, reject) => {
+            function step(key, arg) {
+                let generatorResult;
+                try {
+                    generatorResult = gen[key](arg)
+                } catch(err) {
+                    return reject(err);
+                }
+                const { value, done } = generatorResult;
+                if(done) {
+                    return resolve(value);
+                } else {
+                    return Promise.resolve(value).then(val => {
+                        step('next', val);
+                    }, err => {
+                        step('throw', err);
+                    })
+                }
+            }
+            step('next');
+        })
+    }
+}
+
+// 使用方式如下：
+let gen = asyncToGenerator(genFunc);
+
+gen().then(res => { console.log(res)});
+```
+我的另一种实现方式好像没那么多复杂，也能达到效果.
+
+```js
+function myAsync(genFunc) {
+  return function() {
+    return new Promise((resolve, reject) => {
+    let gen = genFunc.apply(this, arguments);
+    function step(event, arg) {
+      let result = gen[event](arg)
+      result.value.then((value) => {
+        try {
+          if(result.done) { // 说明执行完毕
+            resolve(value)
+          } else {
+            step('next', value)
+          }
+        } catch(err) {
+          reject(err);
+        }
+      }, (err) => {
+        step('throw', err);
+      })
+    }
+    console.log('这里执行了吗')
+    step('next')
+  })
+  }
+}
+```
+
+[参考文章](https://juejin.cn/post/6844904153265733640)
+
+## 你知道有哪些设计模式？
+
+1. 单例模式
+2. 策略模式
+3. 代理模式
+4. 迭代器模式
+5. 发布-订阅模式
+6. 命令模式
+7. 组合模式
+8. 模板方法模式
+9. 享元模式
+10. 职责链模式
+11. 中介者模式
+12. 装饰者模式
+13. 状态模式
+14. 适配器模式
+
+[参考JavaScript开发模式与开发实战一书]
 

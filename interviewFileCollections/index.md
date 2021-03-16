@@ -49,3 +49,7 @@ leetcode 高频题精选
 [音乐](http://iyccd.com)
 
 [javascript实现剑指offer](https://xin-tan.com/passages/2019-06-23-algorithm-offer/#%E4%BB%8B%E7%BB%8D)
+
+[题霸](https://www.nowcoder.com/ta/job-code-high) 刷题
+
+[经典必刷库](https://www.nowcoder.com/ta/classic-code)

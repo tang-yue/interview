@@ -1,0 +1,91 @@
+<!-- https://juejin.cn/post/6844904083707396109 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 1.默认绑定
+        // 1.1 题目一
+        // var a = 10;
+        // function foo() {
+        //     console.log(this.a);
+        // }
+        // foo();
+        // 1.2 题目二
+        // "use strict"
+        // var a = 10;
+        // function foo() {
+        //     console.log('this1', this); // 指向undefined
+        //     console.log(window.a);
+        //     console.log(this.a); // 内部的this，指向undefined，并不会改变全局中this的指向
+        // }
+        // console.log(window.foo);  // foo 函数
+        // console.log('this2', this);    // window
+        // foo();
+        // 1.3 题目三
+        // let a = 10;
+        // const b = 20;
+        // function foo() {
+        //     console.log(this.a);
+        //     console.log(this.b);
+        // }
+        // foo();
+        // console.log(window.a);
+        // 如果把var改成let 或者 const，变量是不会被绑定到window上的。所以此时会打印出三个undefined
+        // 这么神奇
+        // 1.4 题目四 // 有点变态呀
+        // var a = 1;
+        // function foo() {
+        //     var a = 2;
+        //     console.log(this);   // 指向的是window
+        //     console.log(this.a); // 指向的也是window，所以值为1
+        // }
+        // foo();
+        // 1.5 题目五
+        // var a = 1;
+        // function foo() {
+        //     var a = 2;
+        //     function inner() {
+        //         console.log(this.a);   // this指向的还是window // 所以答案为1
+        //     }
+        //     inner()
+        // }
+        // foo();
+        // 2.隐式绑定
+        // 2.1 题目一
+        // function foo() {
+        //     console.log(this.a)
+        // }
+        // var obj = { a: 1, foo };
+        // var a = 2;
+        // obj.foo();  // 这个比较好理解 // 所以这里打印出的结果是1
+        // 类似于下面这样
+        // var obj = {
+        //     a: 1,
+        //     foo: function () {
+        //         console.log(this.a)
+        //     }
+        // } 
+        // var a = 2;
+        // obj.foo();
+        // 3.隐式绑定的隐式丢失问题
+        // 3.1 题目一 使用另一个变量来给函数取别名会发生隐式丢失
+        // function foo() {
+        //     console.log(this.a);
+        // };
+        // var obj = {a: 1, foo };
+        // var  a = 2;
+        // var foo2 = obj.foo;
+        // obj.foo();   // 这里是1
+        // foo2();      // 这里是2
+        // 这是因为虽然foo2指向的是obj.foo函数，不过调用它的却是window对象，所以它里面this的指向是为window
+
+        
+    </script>
+</body>
+</html>

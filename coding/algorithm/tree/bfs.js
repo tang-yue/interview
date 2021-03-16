@@ -19,7 +19,16 @@ const tree = {
             children: [
                 {
                     val: 'f',
-                    children: []
+                    children: [
+                        {
+                            val: 'k',
+                            children: []
+                        },
+                        {
+                            val: 'i',
+                            children: []
+                        }
+                    ]
                 },
                 {
                     val: 'g',
@@ -33,8 +42,9 @@ const tree = {
 const bfs = (root) => {
     const q = [root];
     while (q.length > 0) {
+        console.log(q, 'qqqq')
         const n = q.shift();
-        console.log(n.val);
+        console.log(n.val);  
         n.children.forEach((child) => {
             q.push(child);
         })
