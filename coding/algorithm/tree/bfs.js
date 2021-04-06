@@ -42,7 +42,7 @@ const tree = {
 const bfs = (root) => {
     const q = [root];
     while (q.length > 0) {
-        console.log(q, 'qqqq')
+        // console.log(q, 'qqqq')
         const n = q.shift();
         console.log(n.val);  
         n.children.forEach((child) => {

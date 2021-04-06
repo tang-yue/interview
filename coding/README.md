@@ -5,7 +5,6 @@
 
 [手写 apply](#手写apply)
 
-
 ### <a id="手写new">手写 new</a>
 
 实现思路：
@@ -77,7 +76,7 @@ Function.prototype.call = function(context) {
 
 [参考文章](https://github.com/mqyqingfeng/Blog/issues/11)
 
-### <a id="apply">手写 apply</a>
+### <a id="手写apply">手写 apply</a>
 
 与 call 类似
 
