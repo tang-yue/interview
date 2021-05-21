@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./review3.js" ></script>
+</head>
+<body>
+    <div>
+        <input id='input' />
+        <span id='span'></span>
+    </div>
+    <script>
+    let oinput = document.getElementById('input');
+    let span = document.getElementById('span');
+    let data = {
+        text: []
+    };
+
+    oinput.onchange = function(e) {
+        data.text = e.target.value;
+    }
+     
+     Object.defineProperty(data,'text', {
+         get() {
+            return oinput.value;
+         },
+         set(newValue) {
+            console.log('这里执行了吗？')
+            oinput.value = newValue;
+            span.innerHTML = newValue;
+         }
+     })
+    </script>
+</body>
+</html>
