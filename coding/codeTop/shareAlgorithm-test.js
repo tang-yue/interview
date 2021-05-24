@@ -142,20 +142,62 @@ function mergeSort(array) {
 
 var moveZeroes = function(nums) {
   let len = nums.length;
+  // 原nums
+  // let origin_nums = [].concat(nums);
+  let count = 0;
 
-  for(let i = 0; i < len; i++) {
-    if(nums[i] === 0) {
-      let v = nums.splice(i, 1);
-      nums.push(...v);
-      // if(i === 0) i = -1;
+  for(var i = 0; i < len; i++) {
+    // console.log(i, nums[i]);
+    // console.log(i, 'ii')
+    // i - count;
+    if(nums[i - count] === 0) {
+      
+      // console.log(i, 'i', count, nums)
+      nums.splice(i-count, 1);
+      nums.push(0);
+      count++;
+      // i = i - 1;
+      // console.log(nums, 'nums')
+      // nums.splice(i,1);
     }
   }
   return nums;
 }
+// 我想不出答案了
+
+  // return nums;
+// console.log(origin_nums, nums)
+
+// for(var i = 0; i < len; i++) {
+//   // console.log(i, nums[i]);
+//   if(origin_nums[i] === undefined) {
+//     nums.splice(i, 1);
+//     // nums.push(0);
+//     // console.log(i);
+//     // nums.splice(i,1);
+//   }
+// }
+// return nums;
+// }
 
 // console.log(moveZeroes([0,0,1]));
 
-console.log(moveZeroes([1,0,0,1]));
+console.log(moveZeroes([0,1,0,0,1]));
+
+// 我绕不过来了
+
+// [1,0,0,1,0]
+
+// i = 2  
+
+// 1 0 1 00
+
+// i = 3 -2
+
+// [1,0,1,0,0]
+
+
+// [undefined, 0 , 1 , 0];
 
 // console.log(moveZeroes([0,1,0,3,12]));
 

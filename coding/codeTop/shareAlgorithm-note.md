@@ -113,9 +113,22 @@ function isPrime(n) {
 // 二分查找 左闭右闭 or 左闭右开
 
 // 283. Move Zeros
-
-
+var moveZeroes = function(nums) {
+  let len = nums.length;
+  let count = 0;
+  for(var i = 0; i < len; i++) {
+    if(nums[i - count] === 0) {
+      nums.splice(i-count, 1);
+      nums.push(0);
+      count++;
+    }
+  }
+  return nums;
+}
+// 想明白思路其实就不难
 ```
+
+## 数据结构
 ## 疑问记录
 
 1、 2-1 中字母排序为什么是 slogs 呢（s 指的是 字母的长度）
