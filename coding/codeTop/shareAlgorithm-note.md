@@ -292,12 +292,14 @@ var lengthOfLongestSubstring = function(s) {
 4-6 灵活选择键值
 ```js
 // 447. Number of Boomerangs
-
+// 先过掉
 ```
 
 4-7 查找表和滑动窗口
 ```js
-// Contain Duplicate II
+// 219 Contains Duplicate II
+// 自己先思考下吧
+
 ```
 
 4-8 二分搜索树底层实现的顺序性
