@@ -140,71 +140,82 @@ function mergeSort(array) {
 
 // moveZeroes
 
-var moveZeroes = function(nums) {
-  let len = nums.length;
-  // 原nums
-  // let origin_nums = [].concat(nums);
-  let count = 0;
+// var moveZeroes = function(nums) {
+//   let len = nums.length;
+//   // 原nums
+//   // let origin_nums = [].concat(nums);
+//   let count = 0;
 
-  for(var i = 0; i < len; i++) {
-    // console.log(i, nums[i]);
-    // console.log(i, 'ii')
-    // i - count;
-    if(nums[i - count] === 0) {
+//   for(var i = 0; i < len; i++) {
+//     // console.log(i, nums[i]);
+//     // console.log(i, 'ii')
+//     // i - count;
+//     if(nums[i - count] === 0) {
       
-      // console.log(i, 'i', count, nums)
-      nums.splice(i-count, 1);
-      nums.push(0);
-      count++;
-      // i = i - 1;
-      // console.log(nums, 'nums')
-      // nums.splice(i,1);
-    }
-  }
-  return nums;
-}
+//       // console.log(i, 'i', count, nums)
+//       nums.splice(i-count, 1);
+//       nums.push(0);
+//       count++;
+//       // i = i - 1;
+//       // console.log(nums, 'nums')
+//       // nums.splice(i,1);
+//     }
+//   }
+//   return nums;
+// }
 // 我想不出答案了
 
-  // return nums;
-// console.log(origin_nums, nums)
+// var moveZeroes = function(nums) {
+//   let k = 0;
+//   for(let i = 0; i < nums.length; i++) {
+//     if(nums[i]) {
+//       nums[k++] = nums[i]
+//     }
+//   }
+//   for(let i = k; i < nums.length; i++) {
+//     nums[i] = 0;
+//   }
+//   return nums;
+// }
 
-// for(var i = 0; i < len; i++) {
-//   // console.log(i, nums[i]);
-//   if(origin_nums[i] === undefined) {
-//     nums.splice(i, 1);
-//     // nums.push(0);
-//     // console.log(i);
-//     // nums.splice(i,1);
+// console.log(moveZeroes([0,1,0,0,1]));
+
+// 心静，要静下心。
+// 脑袋里面是有杂念啊，
+
+// 167 Two Sum II
+
+// var twoSum = function(numbers, target) {
+//   let l = 0, r = numbers.length - 1;
+//   while(l < r) {
+//     if(numbers[l] + numbers[r] === target) {
+//       return [l +1, r + 1]
+//     } else if(numbers[l] + numbers[r] > target) {
+//       r--
+//     } else {
+//       l++;
+//     }
 //   }
 // }
-// return nums;
-// }
 
-// console.log(moveZeroes([0,0,1]));
+// 无重复字符的最长子串
 
-console.log(moveZeroes([0,1,0,0,1]));
+var lengthOfLongestSubstring = function(s) {
+  let map = new Map();
+  let max = 0, l = 0; // 左边是从0 开始的
+  for(let i = 0; i < s.length; i++) {
+    if(map.has(s[i]) && map.get(s[i]) >= l) {   // 此时表示已经存在了// 那么我要走什么样的逻辑呢
+      l = map.get(s[i]) + 1;
+    }
+    max = Math.max(max, i - l +1);
+    map.set(s[i], i)
+  }
+  return max;
+}
 
-// 我绕不过来了
+console.log(lengthOfLongestSubstring('pwwkew'));
 
-// [1,0,0,1,0]
-
-// i = 2  
-
-// 1 0 1 00
-
-// i = 3 -2
-
-// [1,0,1,0,0]
-
-
-// [undefined, 0 , 1 , 0];
-
-// console.log(moveZeroes([0,1,0,3,12]));
-
-
-
-
-
+// 第四章还没听完，，，哭泣中
 
 
 
