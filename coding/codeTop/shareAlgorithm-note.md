@@ -298,17 +298,123 @@ var lengthOfLongestSubstring = function(s) {
 4-7 查找表和滑动窗口
 ```js
 // 219 Contains Duplicate II
-// 自己先思考下吧
-
+// 第一种方法：用map存取新值的方法，有点取巧
+// 第二种方法：
+var containsNearbyDuplicate = function(nums, k) {
+  const set = new Set();
+  for(let i = 0; i < nums.length; i++) {
+    if(set.has(nums[i])) {
+      return true;
+    }
+    set.add(nums[i]);
+    if(set.size > k) {
+      set.delete(nums[i - k]);
+    }
+  }
+  return false;
+}
 ```
 
 4-8 二分搜索树底层实现的顺序性
 
 ```js
-
+// 220. Contains Duplicate III
+// 比较类似
+var containsNearbyAlmostDuplicate = function(nums, k, t) {
+  const set = new Set();
+  for(let i = 0; i < nums.length; i++) {
+    for (let item of set.values()) {
+        if(Math.abs(nums[i] - item) <= t) {
+            return true;
+        }
+    }
+    set.add(nums[i]);
+    if(set.size > k) {
+      set.delete(nums[i - k]);
+    }
+  }
+  return false;
+};
 ```
-
-
+第五章
+5-1 链表 在节点间穿针引线
+```js
+// 206 Reverse Linked List
+var reverseList = function(head) {
+  let pre = null;
+  let cur = head;
+  while(cur) {
+    const next = cur.next;
+    cur.next = pre;
+    pre = cur;
+    cur = next;
+  }
+  return pre;
+}
+// 如果想明白了就会比较容易了
+// 92. Reverse Linked List II
+```
+5-2 测试链表程序
+```js
+// 83. Remove Duplicates from Sorted List
+// 86. Partition List
+// 328. Odd Even Linked List
+// 2. Add Two Numbers
+// 445. Add Two Numbers II
+```
+5-3 设立链表的虚拟头结点
+```js
+// 203. Remove Linked List Elements
+// 思路是什么呢？这个应该是比较简单的
+// 思路过程：详细的讲解一道比较全的问题就可以了
+// 第一步讲解
+var removeElements = function(head, val) {
+    let p = head; // 这里的head有可能是null
+    if(!p) return p;
+    while(p.next) {
+        if(p.next.val === val) { // 这样的话会有什么问题
+            p.next = p.next.next; // 经典步骤删除p.next的值
+        } else {
+            console.log(p, 'pp');
+            p = p.next;
+        }
+    }
+    return head;
+};
+// 第一步遇到了问题，然后需要第二步
+// 如果头头结点本身就等于val 呢？如何解决？
+var removeElements = function(head, val) {
+  while( head && head.val === val) {
+      // 肯定是要执行删除的 // 那么这个代码如何写？
+      head = head.next;
+  }
+  let p = head; // 这里的head有可能是null
+  if(!head) return head;
+  while(p.next) {
+      if(p.next.val === val) { // 这样的话会有什么问题
+          p.next = p.next.next;
+      } else {
+          p = p.next;
+      }
+  }
+  return head;
+};
+// 第三步 上述步骤有个重复的部分，就是同是循环然后删除等于val的值
+// 所以我们可以设置一个虚拟头部，这样就不用循环第一个并判断了
+var removeElements = function(head, val) {
+    let p = new ListNode(0);
+    p.next = head;
+    let cur = p; // 是一定要赋值下的，不能用 p 直接循环
+    while(cur.next) {
+        if(cur.next.val === val) { // 这样的话会有什么问题
+            cur.next = cur.next.next;
+        } else {
+            cur = cur.next;
+        }
+    }
+    return p.next;
+};
+```
 
 
 ## 数据结构
@@ -316,3 +422,4 @@ var lengthOfLongestSubstring = function(s) {
 
 1、 2-1 中字母排序为什么是 slogs 呢（s 指的是 字母的长度）
 2、 数组有序，那么可以用二分查找
+3、 220 存在重复元素III 明明都return了，为什么还是会继续执行呢？ set 用 forEach 遍历就会出现
