@@ -404,7 +404,7 @@ var removeElements = function(head, val) {
 var removeElements = function(head, val) {
     let p = new ListNode(0);
     p.next = head;
-    let cur = p; // 是一定要赋值下的，不能用 p 直接循环
+    let cur = p; // 是一定要赋值下的，不能用 p 直接循环，如果是p直接循环返回的就是空数组了吧
     while(cur.next) {
         if(cur.next.val === val) { // 这样的话会有什么问题
             cur.next = cur.next.next;
@@ -414,6 +414,185 @@ var removeElements = function(head, val) {
     }
     return p.next;
 };
+// 82. Remove Duplicates from Sorted List II
+// 21. Merge Two Sorted Lists // merge 两个有序的链表
+```
+5-4 复杂的穿针引线 swap Nodes in Pairs
+
+```js
+// 24. Swap Nodes in Pairs
+// 视频答案
+var swapPairs = function(head) {
+    let q = new ListNode(0);
+    q.next = head;
+    let p = q;
+    console.log(p, 'pp init');
+    while(p.next && p.next.next) {
+        let node1 = p.next;
+        let node2 = node1.next;
+        let next = node2.next;
+        // swap start
+        node2.next = node1;
+        node1.next = next;
+        p.next = node2;
+        // end
+        p = node1; // 继续循环下一次两两
+    }
+    return q.next;
+};
+// 不设 next 指针
+// 25. Reverse Nodes in k-Group
+// 147. Insertion Sort List
+// 148. Sort List  用O(nlogn)的时间复杂度为一个链表进行排序 // 归并排序
+```
+5-5 不仅仅是穿针引线
+
+```js
+// 237. Delete Node in a Linked list
+var deleteNode = function(node) { // 传入的是被删除的节点
+    if(!node) return;
+    if(!node.next) {
+        node = null;
+    }
+    node.val = node.next.val;
+    node.next = node.next.next;
+};
+```
+5-6 链表与双指针
+```js
+// 19. Remove Nth Node From End of List
+// 先遍历一遍计算链表长度；再遍历一遍删除倒数第n个节点
+// 双指针 一般都是有一个固定长度的窗口
+// 这个不是很重要，先不仔细听，然后着手过掉
+// 视频里答案的思路还是不错的。0  n
+var removeNthFromEnd = function(head, n) {
+    // 照视频思路 然后写一下答案
+    let q = new ListNode(0);
+    q.next = head;
+    let p = q;
+    let res = p;
+    for(let i = 0; i < n + 1; i++) {
+        q = q.next;
+    }
+    while(q) {
+        q = q.next;
+        p = p.next;
+    }
+    p.next = p.next.next;
+    return res.next;
+};
+// 61 Rotate List
+// 143 Reorder List
+// 234 Palindrome Linked List // O(1) 空间复杂度
+```
+
+第六章 栈 队列 优先队列
+
+6-1 栈的基础应用
+
+```js
+// 20. valid Parentheses 经典的栈问题
+// 栈的话，就用这一道吧
+var isValid = function(s) {
+    // 自己实现一遍吧 // 用栈的方法
+    if(s.length === 1) return false;
+    let leftArr = ['{', '[', '('];
+    let rightArr = ['}', ']', ')'];
+    let left = [];
+    for(let item of s) {
+        // 遇到右括号就取出栈顶元素 进行比对，然后删除掉
+        if(leftArr.includes(item)) {
+            left.unshift(item);
+        } else {
+            let i = rightArr.indexOf(item);
+            console.log(leftArr[i], left[0]);
+            if(leftArr[i] === left[0]) {
+                left.shift();
+            } else {
+                return false;
+            }
+        }
+    }
+    return left.length === 0;
+};
+// 150. Evalute Reverse Polish Notation
+// 71. Simplify Path
+// 
+```
+6-2 栈和递归的紧密关系
+
+```js
+// 二叉树
+// 二叉树的前，中，后序遍历   144 94  145
+// 144 前序遍历 自己已实现过掉
+var preorderTraversal = function(root) {
+    // 二叉树的前序遍历
+    let res = [];
+    var dfs = function(n) {
+        if(!n) return; 
+        res.push(n.val);
+        if(n.left) dfs(n.left);
+        if(n.right) dfs(n.right);
+    }
+    dfs(root);
+    return res;
+};
+// 将前序遍历改用栈的方式实现
+var preorderTraversal = function(root) {
+    // 二叉树的前序遍历 改用栈的实现方式 // 根 左 右
+    let res = [], stack = [];
+    if(root) stack.push(root);
+    while(stack.length) {
+        // 取出栈顶的第一个元素
+        let n = stack.pop(); // 一定是要取出最新的，所以只能是用pop;
+        res.push(n.val);
+        if(n.right) stack.push(n.right);
+        if(n.left) stack.push(n.left);
+    }
+    // 
+    return res;
+};
+// 94 中序遍历
+// 下面这样居然都能过？
+var inorderTraversal = function(root) {
+    // 先访问左节点 根 右
+    let res = [];
+    var dfs = function(n) {
+        if(!n) return;
+        if(n.left) dfs(n.left);
+        res.push(n.val);
+        if(n.right) dfs(n.right);
+    }
+    dfs(root);
+    return res;
+};
+// 145 后序遍历
+var postorderTraversal = function(root) {
+    // 后序遍历 左 右 根
+    let res = [];
+    var dfs = function(n) {
+        if(!n) return;
+        if(n.left) dfs(n.left);
+        if(n.right) dfs(n.right);
+        res.push(n.val);
+    }
+    dfs(root);
+    return res;
+};
+```
+6-3 运用栈模拟递归
+```js
+// 用栈实现前，中，后序
+// 341. Flatten Nested List iterator
+
+```
+6-4 队列的基础应用
+```js
+// 队列的基本应用 -- 广度优先遍历
+// 树：层序遍历 图：无穷图的最短路径
+// 102 二叉树的层序遍历
+// 自己先实现一遍，为什么会用到队列呢？
+// 107 Binary Tree Level Order Traversal II
 ```
 
 
@@ -423,3 +602,4 @@ var removeElements = function(head, val) {
 1、 2-1 中字母排序为什么是 slogs 呢（s 指的是 字母的长度）
 2、 数组有序，那么可以用二分查找
 3、 220 存在重复元素III 明明都return了，为什么还是会继续执行呢？ set 用 forEach 遍历就会出现
+4、 用栈实现的前序遍历，还要不要判断 n 是否为 null 了呢
