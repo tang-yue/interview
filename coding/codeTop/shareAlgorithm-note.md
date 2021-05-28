@@ -592,9 +592,134 @@ var postorderTraversal = function(root) {
 // 树：层序遍历 图：无穷图的最短路径
 // 102 二叉树的层序遍历
 // 自己先实现一遍，为什么会用到队列呢？
+var levelOrder = function(root) {
+    // 自己实现一遍，然后看，有什么可以学习的
+    // 我怎么记得用的广度优先遍历啊 // 感觉是广度
+    let res = [];
+    var dfs = function(n, level) {
+        if(!n) return;
+        if(res[level]) {
+            res[level].push(n.val);
+        } else {
+            res[level] = [n.val]
+        }
+        if(n.left) dfs(n.left, level +1);
+        if(n.right) dfs(n.right, level +1);
+    }
+    dfs(root, 0);
+    return res;
+};
+// 上述的用前序栈也是可以的
 // 107 Binary Tree Level Order Traversal II
+// 103 Binary Tree Zigzag Level Order Traversal
+```
+6-5 BFS 和 图的最短路径
+
+```js
+// 279. Perfect Squares
+// 我觉得要先过掉了
+// 127. Word Ladder
+// 126. Word Ladder II
+```
+6-6 优先队列
+```js
+// 优先队列的底层实现： 堆
+// 对于堆的底层实现，白板编程 // 这个需要讲解下的
+// 需要再加一道经典列题
+```
+6-7 优先队列的相关算法问题
+```js
+// 347. Top K Frequent Elements
+// 堆的笔记
+// 实现：最小堆类
+class MinHeap {
+  constructor() {
+    this.heap = [];
+  }
+  getParentIndex(i) {
+    return Math.floor((i-1)/2);
+  }
+  getLeftIndex(i) {
+    return i * 2 + 1;
+  }
+  getRightIndex(i) {
+    return i * 2 + 2;
+  }
+  swap(i1, i2) {
+    const temp = this.heap[i1];
+    this.heap[i1] = this.heap[i2];
+    this.heap[i2] = temp;
+  }
+  shiftUp(index) {
+    if(index === 0) return;
+    const parentIndex = this.getParentIndex(index);
+    if(this.heap[parentIndex] > this.heap[index]) {
+      // 执行交换操作
+      this.swap(parentIndex, index);
+      this.shiftUp(parentIndex);
+    }
+  }
+  shiftDown(index) {
+    const leftIndex = this.getLeftIndex(index);
+    const rightIndex = this.getRightIndex(index);
+    if(this.heap[leftIndex] < this.heap[index]) {
+      this.swap(leftIndex, index)
+      this.shiftDown(leftIndex);
+    }
+    if(this.heap[rightIndex] < this.heap[index]) {
+      this.swap(rightIndex, index);
+      this.shiftDown(rightIndex);
+    }
+  }
+  insert(value) {
+    this.heap.push(value);
+    this.shiftUp(this.heap.length - 1);
+  }
+  // 删除堆顶
+  pop() {
+    this.heap[0] = this.heap.pop();
+    this.shiftDown(0)
+  }
+  // 获取堆顶
+  peek() {
+    return this.heap[0];
+  }
+  // 获取堆的大小
+  size() {
+    return this.heap.length;
+  }
+}
+
+const heap = new MinHeap();
+
+heap.insert(3);
+heap.insert(2);
+heap.insert(1);
+heap.pop();
+
+// 215. 数组中的第K个最大元素
+// 构建一个最小堆，并依次把数组里的值插入堆中
+// 当堆的容量超过K，就删除堆顶
+// 插入结束后，堆顶就是第 K个最大元素
+// 347. 前K个高频元素
+// 抄写一边
 ```
 
+第八章 递归和回溯法
+
+8-1 树形问题
+
+```js
+
+// 17. Letter Combinations of a Phone Number
+// 上述题目，我并没有听懂
+```
+8-2 什么是回溯
+```js
+// 递归调用的一个重要特征 ---- 要返回
+// 回溯法是暴力解法的一个主要实现手段
+// 长度是未知的，多重循环，回遡法
+```
 
 ## 数据结构
 ## 疑问记录
@@ -603,3 +728,4 @@ var postorderTraversal = function(root) {
 2、 数组有序，那么可以用二分查找
 3、 220 存在重复元素III 明明都return了，为什么还是会继续执行呢？ set 用 forEach 遍历就会出现
 4、 用栈实现的前序遍历，还要不要判断 n 是否为 null 了呢
+5、347 前K个高频元素  ————》非堆解法比较好
