@@ -40,4 +40,6 @@ function dfs(root) {
     root.children.forEach((child) => dfs(child))
 }
 
-dfs(tree);
+let res = dfs(tree);
+
+// a b d e c f k g
