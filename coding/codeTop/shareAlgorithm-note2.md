@@ -219,6 +219,11 @@ var removeNthFromEnd = function(head, n) {
  p.next = p.next.next;
  return res.next;
 };
+
+// 比如总共有7个数，删除倒数第二个结点
+// q 结点 和 p 结点 一开始相同
+// q 结点往前移动2个位置， p 节点要从开始位置移动第5个位置，
+// p 删除第五个元素后面的元素，其实也是倒数第二个结点
 ```
 
 ## 4.栈

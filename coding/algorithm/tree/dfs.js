@@ -23,6 +23,10 @@ const tree = {
                         {
                             val: 'k',
                             children: []
+                        },
+                        {
+                            val: 'i',
+                            children: []
                         }
                     ]
                 },
@@ -42,4 +46,4 @@ function dfs(root) {
 
 let res = dfs(tree);
 
-// a b d e c f k g
+// a b d e c f k i g
