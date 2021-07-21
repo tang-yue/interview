@@ -1,5 +1,6 @@
 [地址-字节跳动-频度由高到低](https://codetop.cc/#/home)
 
+怀疑人生 🤨🤨
 
 #1-3-无重复字符的最长子串
 
@@ -85,7 +86,7 @@ var hasPathSum = function(root, targetSum) {
 
 思路： 找到最大和的连续子数组，返回其最大和
 
-居然没哟思路，一点都没有
+居然没哟思路，一
 
 #6-1-两数之和
 
@@ -257,7 +258,7 @@ var getKthFromEnd = function(head, k) {
 };
 ```
 
-#14-93-复制ip地址
+#14-93-复原ip地址
 
 概述，给一串字符串，返回所有有效的ip 地址集合
 
@@ -602,7 +603,7 @@ var threeSum = function(nums) {
 
 贪心算法的本质
 
-我的答案如下：暴力法但是显示超时。
+别人的答案如下：暴力法但是显示超时。
 
 ```js
 var maxProfit = function(prices) {
@@ -723,15 +724,8 @@ var levelOrder = function(root) {
 
 #32-56-合并区间
 
-
-
 #33-剑指 Offer24-反转链表
 
-
-
-
-
-
-
-
+6月9日 新增备注：题目的频度上升和下降的有点快啊
+6月11日 看一些简单的吧
 
