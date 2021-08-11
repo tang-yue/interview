@@ -4,13 +4,13 @@
 
 webpack 类 相关文章
 
-[webpack中文文档](https://www.webpackjs.com/concepts/)
+[webpack 中文文档](https://www.webpackjs.com/concepts/)
 
 [webpack 相关面试题](https://juejin.im/post/6844904094281236487)
 
 [webpack 实践](https://github.com/vikingmute/webpack-for-fools/blob/master/entries/newchapter-1.md)
 
-极客学院  winter 的 重学前端
+极客学院 winter 的 重学前端
 
 [前端自检清单](https://juejin.im/post/6844903830887366670#heading-20)
 
@@ -18,13 +18,13 @@ webpack 类 相关文章
 
 promise 相关文章
 
-[promise 45道](https://juejin.im/post/6844904077537574919w)
+[promise 45 道](https://juejin.im/post/6844904077537574919w)
 
 [头条面经](https://juejin.im/post/6844904088337907720)
 
-[vue官方文档](https://cn.vuejs.org/v2/api/#directives)
+[vue 官方文档](https://cn.vuejs.org/v2/api/#directives)
 
-[react相关](https://juejin.im/post/6844904024534155277)
+[react 相关](https://juejin.im/post/6844904024534155277)
 
 leetcode 高频题精选
 
@@ -48,8 +48,10 @@ leetcode 高频题精选
 
 [音乐](http://iyccd.com)
 
-[javascript实现剑指offer](https://xin-tan.com/passages/2019-06-23-algorithm-offer/#%E4%BB%8B%E7%BB%8D)
+[javascript 实现剑指 offer](https://xin-tan.com/passages/2019-06-23-algorithm-offer/#%E4%BB%8B%E7%BB%8D)
 
 [题霸](https://www.nowcoder.com/ta/job-code-high) 刷题
 
 [经典必刷库](https://www.nowcoder.com/ta/classic-code)
+
+https://segmentfault.com/a/1190000027083997
