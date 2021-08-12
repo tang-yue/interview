@@ -44,3 +44,5 @@ var addTwoNumbers = function(l1, l2) {
   return List.next;
 };
 // @lc code=end
+
+// explain: 遍历l1和l2节点，遍历的顺序，和输出的顺序是一致的，需要注意满10的情况，以及最高位满10的情况。

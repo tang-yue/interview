@@ -47,5 +47,3 @@
 ## 数据结构和算法
 
 [基本数据结构和算法](./coding/algorithm/algorithm-note.md)
-
-ceshi
