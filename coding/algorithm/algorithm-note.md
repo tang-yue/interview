@@ -1,5 +1,3 @@
-来自慕课网 JavaScript版 数据结构与算法
-
 刷题
 
 1. 刷题网站：推荐使用 LeetCode.
@@ -253,8 +251,8 @@ var reverseList = function(head) {
     while(p1) {
         const tmp = p1.next;
         p1.next = p2;
-        p2 = p1;
-        p1 = tmp;
+        p2 = tmp;
+        // p1 = tmp;
     }
     return p2;
 }
@@ -1023,6 +1021,7 @@ var cloneGraph = function(node) {
 js 中的堆
 
 1. JS 中通常用数组表示堆
+下述的2，3，4是有条件的：将该二叉树按照广度优先遍历的顺序，并将顺序值依次存入数组，会有如下的规律
 2. 左侧子节点的位置是 2 * index + 1.
 3. 右侧子节点的位置是 2 * index + 2.
 4. 父节点位置是(index -1)/2;

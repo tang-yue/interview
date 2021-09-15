@@ -1,27 +1,35 @@
 const bt = {
-    val: 1,
+    val: 'a',
     left: {
-        val: 2,
+        val: 'b',
         left: {
-            val: 4,
+            val: 'd',
             left: null,
             right: null,
         },
         right: {
-            val: 5,
+            val: 'e',
             left: null,
             right: null,
         },
     },
     right: {
-        val: 3,
+        val: 'c',
         left: {
-            val: 6,
-            left: null,
-            right: null,
+            val: 'f',
+            left: {
+                val: 'k',
+                left: null,
+                right: null
+            },
+            right: {
+                val: 'i',
+                left: null,
+                right: null
+            },
         },
         right: {
-            val: 7,
+            val: 'g',
             left: null,
             right: null
         }

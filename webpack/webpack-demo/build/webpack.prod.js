@@ -18,7 +18,7 @@ const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
 
 // 分析打包文件
 
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 
 module.exports = merge(webpackConfig, {
@@ -52,10 +52,10 @@ module.exports = merge(webpackConfig, {
           }
         }
       }),
-      new BundleAnalyzerPlugin({
-        analyzerHost: '127.0.0.1',
-        analyzerPort: 8889
-      })
+      // new BundleAnalyzerPlugin({
+      //   analyzerHost: '127.0.0.1',
+      //   analyzerPort: 8889
+      // })
     ],
     splitChunks: {
       chunks: 'all',

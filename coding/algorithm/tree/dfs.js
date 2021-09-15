@@ -23,6 +23,13 @@ const tree = {
                         {
                             val: 'k',
                             children: []
+<<<<<<< HEAD
+=======
+                        },
+                        {
+                            val: 'i',
+                            children: []
+>>>>>>> f8222af9800e3b61c15314bbc12c5cd854082af4
                         }
                     ]
                 },
@@ -40,4 +47,6 @@ function dfs(root) {
     root.children.forEach((child) => dfs(child))
 }
 
-dfs(tree);
+let res = dfs(tree);
+
+// a b d e c f k i g
