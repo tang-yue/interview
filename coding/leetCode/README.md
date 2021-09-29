@@ -1,5 +1,7 @@
 来自 [leetCode 精选 Top 面试题](https://leetcode-cn.com/problem-list/2ckc81c/)
 
+参考 [别人整理的题目系列文章](https://juejin.cn/post/6992775762491211783)
+
 笔记记录
 
 1. 两数之和 过
