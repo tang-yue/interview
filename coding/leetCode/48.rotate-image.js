@@ -16,6 +16,7 @@ var rotate = function(matrix) {
         }
     }
     return matrix.map(item => item.reverse());
+    
 };
 // @lc code=end
 
