@@ -554,7 +554,7 @@ execute.once("one", () => {
   console.log("我只执行一次的");
 });
 
-// execute.emit('失恋')
+execute.emit('失恋')
 
 execute.off("失恋", () => {
   console.log("心情不好");
