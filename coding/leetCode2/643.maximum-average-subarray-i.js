@@ -24,7 +24,7 @@ var findMaxAverage = function(nums, k) {
     return maxAverage
 };
 // @lc code=end
-// 滑动窗口解法，时间复杂度为O(n) 真是太妙了赞赞赞！！
+// 滑动窗口解法，时间复杂度为O(n) 真是太妙了赞赞！！
 // 除了如下的解法，我并没有想到其他的方法
 /*
 // 暴力解法 但是超时了，时间复杂度为O(n^2)
