@@ -554,7 +554,7 @@ execute.once("one", () => {
   console.log("我只执行一次的");
 });
 
-// execute.emit('失恋')
+execute.emit('失恋')
 
 execute.off("失恋", () => {
   console.log("心情不好");
@@ -1421,4 +1421,4 @@ var findContentChildren = function (g, s) {
 
 [答案众说纷纭](https://juejin.cn/post/6896025445839011853)
 
-我没有看下去 过
+我没有看下去 pass
