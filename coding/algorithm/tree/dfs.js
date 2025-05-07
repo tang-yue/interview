@@ -23,13 +23,10 @@ const tree = {
                         {
                             val: 'k',
                             children: []
-<<<<<<< HEAD
-=======
                         },
                         {
                             val: 'i',
                             children: []
->>>>>>> f8222af9800e3b61c15314bbc12c5cd854082af4
                         }
                     ]
                 },
