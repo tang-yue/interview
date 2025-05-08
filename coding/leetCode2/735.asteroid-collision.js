@@ -11,31 +11,41 @@
  */
 var asteroidCollision = function(asteroids) {
     const stack = [];
-    for (const item of asteroids) {
+    
+    for (const asteroid of asteroids) {
+        // 当栈顶行星向右移动(>0)且当前行星向左移动(<0)时才会发生碰撞
+        let willSurvive = true;
         
-        if (stack[stack.length-1] && (stack[stack.length-1] > 0 && item < 0)) {
-            // 开始碰撞
-            while (stack[stack.length -1] > 0 && Math.abs(stack[stack.length -1]) < Math.abs(item)) {
-                if (stack.length > 0)  {
-                    stack.pop();
-                } else {
-                    stack = [item]
-                }
-            }
-           
+        while (willSurvive && stack.length > 0 && stack[stack.length - 1] > 0 && asteroid < 0) {
+            // 碰撞情况：
+            const topAsteroid = stack[stack.length - 1];
+            const topSize = Math.abs(topAsteroid);
+            const currentSize = Math.abs(asteroid);
             
-            if (stack[stack.length-1] && stack[stack.length-1] > 0 && Math.abs(stack[stack.length-1]) === Math.abs(item)) {
+            // 栈顶行星质量小，被摧毁
+            if (topSize < currentSize) {
                 stack.pop();
-            } else {
-                stack.push(item);
+            } 
+            // 两颗行星质量相等，都被摧毁
+            else if (topSize === currentSize) {
+                stack.pop();
+                willSurvive = false;
+            } 
+            // 当前行星质量小，被摧毁
+            else {
+                willSurvive = false;
             }
-        } else {
-            stack.push(item);
+        }
+        
+        // 如果当前行星存活下来，则加入栈中
+        if (willSurvive) {
+            stack.push(asteroid);
         }
     }
-    return stack
+    
+    return stack;
 };
 // @lc code=end
 
-// 还是用栈的思维
+// 我还没有看懂，需要复习下
 
