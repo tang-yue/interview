@@ -53,3 +53,5 @@ var oddEvenList = function(head) {
 // Input: head = [1,2,3,4,5]
 // Output: [1,3,5,2,4]
 // 链表感觉整个人很懵啊
+// 5月30日记录
+// 需要一个指针保存重要的位置，需要另一个指针用于移动和操作，这就是为什么要有evenHead和even 的原因
