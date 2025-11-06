@@ -46,4 +46,3 @@ var maxLevelSum = function(root) {
 // @lc code=end
 // 时间复杂度：O(n), 每个节点访问一次
 // 空间复杂度：O(w), w是树的最大宽度
-
